@@ -9,8 +9,8 @@ echo "Building Metal Performance Tracker..."
 
 # Build the project
 echo "Building project..."
-xcodebuild -project Metal-Perform-Tracker.xcodeproj \
-           -scheme Metal-Perform-Tracker \
+xcodebuild -project Metal-Performance-Tracker.xcodeproj \
+           -scheme Metal-Performance-Tracker \
            -configuration Debug \
            build
 
