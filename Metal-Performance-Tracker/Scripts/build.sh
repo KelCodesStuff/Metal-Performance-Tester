@@ -22,8 +22,8 @@ else
 fi
 
 # Get the executable path
-EXECUTABLE_PATH=$(xcodebuild -project Metal-Perform-Tracker.xcodeproj \
-                            -scheme Metal-Perform-Tracker \
+EXECUTABLE_PATH=$(xcodebuild -project Metal-Performance-Tracker.xcodeproj \
+                            -scheme Metal-Performance-Tracker \
                             -configuration Debug \
                             -showBuildSettings | grep -E "BUILT_PRODUCTS_DIR|EXECUTABLE_NAME" | head -2 | awk '{print $3}' | tr '\n' '/' | sed 's|/$||')
 
