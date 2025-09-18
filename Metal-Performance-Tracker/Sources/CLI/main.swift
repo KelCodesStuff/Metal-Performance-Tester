@@ -1,6 +1,6 @@
 //
 //  main.swift
-//  Metal-Perform-Tracker
+//  Metal-Performance-Tracker
 //
 //  Created by Kelvin Reid on 9/17/25.
 //
