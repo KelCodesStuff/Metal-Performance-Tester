@@ -21,7 +21,7 @@ struct PerformanceResult: Codable {
     /// Test configuration details
     let testConfig: TestConfiguration
     
-    // Creates a new performance result
+    /// Creates a new performance result
     init(gpuTimeMs: Double, deviceName: String, testConfig: TestConfiguration) {
         self.gpuTimeMs = gpuTimeMs
         self.timestamp = Date()
@@ -30,7 +30,7 @@ struct PerformanceResult: Codable {
     }
 }
 
-// Configuration parameters for the performance test
+/// Configuration parameters for the performance test
 struct TestConfiguration: Codable {
     /// Render target dimensions
     let width: Int
@@ -51,7 +51,7 @@ struct TestConfiguration: Codable {
     }
 }
 
-// Manages performance baseline data storage and retrieval
+/// Manages performance baseline data storage and retrieval
 class PerformanceBaselineManager {
     
     /// Default filename for the baseline JSON file
@@ -102,7 +102,7 @@ class PerformanceBaselineManager {
         return nil
     }
     
-    // Saves a performance result as the new baseline
+    /// Saves a performance result as the new baseline
     func saveBaseline(_ result: PerformanceResult) throws {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
@@ -116,7 +116,7 @@ class PerformanceBaselineManager {
         print("\nBaseline saved to: \(baselineFilePath.path)")
     }
     
-    // Loads the current baseline performance result
+    /// Loads the current baseline performance result
     func loadBaseline() throws -> PerformanceResult {
         let data = try Data(contentsOf: baselineFilePath)
         let decoder = JSONDecoder()
