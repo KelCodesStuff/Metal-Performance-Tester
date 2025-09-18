@@ -15,31 +15,26 @@ A tool for tracking GPU performance regressions in Metal applications. This tool
 ### Command Line Options
 
 ```bash
+# Update performance baseline
+Metal-Performance-Tracker --update-baseline
+
 # Run performance test with default 5% threshold
-Metal-Perform-Tracker --run-test
+Metal-Performance-Tracker --run-test
 
 # Run performance test with custom threshold
-Metal-Perform-Tracker --run-test --threshold 10.0
-
-# Update performance baseline
-Metal-Perform-Tracker --update-baseline
+Metal-Performance-Tracker --run-test --threshold 10.0
 
 # Show help
-Metal-Perform-Tracker --help
+Metal-Performance-Tracker --help
 ```
-
-### Exit Codes
-
-- `0`: Test passed (performance within threshold)
-- `1`: Test failed (performance regression detected)
-- `2`: Error (missing baseline, unsupported GPU, etc.)
 
 ## Building
 
 ### Xcode
-1. Open `Metal-Perform-Tracker.xcodeproj`
-2. Select your target device
-3. Build and run (⌘+R)
+1. Open `Metal-Performance-Tracker.xcodeproj`
+2. Select scheme
+3. Select your target device
+4. Build and run
 
 ### Command Line
 ```bash
@@ -54,18 +49,11 @@ The tool measures GPU performance by:
 3. **Precise Timing**: Converts GPU clock cycles to milliseconds
 4. **Regression Detection**: Compares against baseline with configurable thresholds
 
-## Use Cases
-
-- **CI/CD Integration**: Automated performance regression testing
-- **Development Workflow**: Catch performance regressions during development
-- **Hardware Testing**: Compare performance across different GPUs
-- **Optimization Validation**: Verify performance improvements
-
 ## Requirements
 
 - **macOS**: 10.15 or later
-- **GPU**: Metal-compatible GPU with counter sampling support
-- **Xcode**: 12.0 or later (for building)
+- **GPU**: Metal-compatible GPU
+- **Xcode**: 15.0 or later
 
 ## Supported GPUs
 
