@@ -1,0 +1,11 @@
+{
+  "testConfig" : {
+    "width" : 1920,
+    "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+    "height" : 1080,
+    "vertexCount" : 3
+  },
+  "timestamp" : "2025-09-18T16:46:29Z",
+  "gpuTimeMs" : 0.07648,
+  "deviceName" : "AMD Radeon Pro 5300M"
+}
