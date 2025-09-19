@@ -30,26 +30,6 @@ struct PerformanceResult: Codable {
     }
 }
 
-/// Configuration parameters for the performance test
-struct TestConfiguration: Codable {
-    /// Render target dimensions
-    let width: Int
-    let height: Int
-    
-    /// Pixel format used for rendering
-    let pixelFormat: String
-    
-    /// Number of vertices rendered
-    let vertexCount: Int
-    
-    /// Creates a test configuration from current renderer settings
-    init(width: Int, height: Int, pixelFormat: String, vertexCount: Int) {
-        self.width = width
-        self.height = height
-        self.pixelFormat = pixelFormat
-        self.vertexCount = vertexCount
-    }
-}
 
 /// Manages performance baseline data storage and retrieval
 class PerformanceBaselineManager {
@@ -64,13 +44,16 @@ class PerformanceBaselineManager {
         let currentURL = URL(fileURLWithPath: currentDirectory)
         
         // Look for the Data directory in common locations
+        // Priority order: project Data folder first, then fallback to current directory
         let possibleDataPaths = [
+            // Try to find project directory by looking for the executable's source location (highest priority)
+            findProjectFromExecutable()?.appendingPathComponent("Data"),
+            // If running from build directory, try to find project root
+            findProjectRoot(from: currentURL)?.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Data"),
             // If running from project root
             currentURL.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Data"),
             // If running from project root with different structure
-            currentURL.appendingPathComponent("Data"),
-            // If running from build directory, try to find project root
-            findProjectRoot(from: currentURL)?.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Data")
+            currentURL.appendingPathComponent("Data")
         ].compactMap { $0 }
         
         // Use the first valid path, or fall back to current directory
@@ -97,6 +80,39 @@ class PerformanceBaselineManager {
                 return currentURL
             }
             currentURL = currentURL.deletingLastPathComponent()
+        }
+        
+        return nil
+    }
+    
+    /// Attempts to find the project directory by looking at the executable's location
+    private func findProjectFromExecutable() -> URL? {
+        // Get the executable's path
+        guard let executablePath = Bundle.main.executablePath else {
+            return nil
+        }
+        
+        let executableURL = URL(fileURLWithPath: executablePath)
+        let executableDir = executableURL.deletingLastPathComponent()
+        
+        // If we're running from DerivedData, try to find the project by looking for common patterns
+        if executableDir.path.contains("DerivedData") {
+            // Look for the project in common user directories
+            let homeDir = FileManager.default.homeDirectoryForCurrentUser
+            let commonProjectPaths = [
+                "Projects/Xcode/Metal-Performance-Tracker/Metal-Performance-Tracker",
+                "Developer/Metal-Performance-Tracker/Metal-Performance-Tracker",
+                "Documents/Metal-Performance-Tracker/Metal-Performance-Tracker",
+                "Desktop/Metal-Performance-Tracker/Metal-Performance-Tracker"
+            ]
+            
+            for projectPath in commonProjectPaths {
+                let fullPath = homeDir.appendingPathComponent(projectPath)
+                let dataPath = fullPath.appendingPathComponent("Data")
+                if FileManager.default.fileExists(atPath: dataPath.path) {
+                    return fullPath
+                }
+            }
         }
         
         return nil
