@@ -107,16 +107,16 @@ class EnhancedCounterManager {
             self.samplingMode = nil
         }
         
-        print("🔍 Enhanced Counter Manager Initialization:")
-        print("   Device: \(device.name)")
-        print("   Supports counter sampling: \(supportsCounterSampling)")
+        print("Enhanced Counter Manager Initialization:")
+        print("Device: \(device.name)")
+        print("Supports counter sampling: \(supportsCounterSampling)")
         if let mode = samplingMode {
-            print("   Using sampling mode: \(mode)")
+            print("Using sampling mode: \(mode)")
         }
         
         // Initialize counter buffers
         if supportsCounterSampling, let counterSets = device.counterSets {
-            print("   Available counter sets (\(counterSets.count)):")
+            print("Available counter sets (\(counterSets.count)):")
             for counterSet in counterSets {
                 print("     - \(counterSet.name)")
             }
@@ -214,6 +214,24 @@ class EnhancedCounterManager {
         return (gpuTimeMs, stageUtilization, statistics)
     }
     
+    /// Formats a GPU timestamp for better readability
+    /// - Parameter timestamp: Raw GPU timestamp in nanoseconds
+    /// - Returns: Formatted string showing both raw and readable format
+    private func formatTimestamp(_ timestamp: UInt64) -> String {
+        let nanoseconds = timestamp
+        let microseconds = Double(nanoseconds) / 1_000.0
+        let milliseconds = Double(nanoseconds) / 1_000_000.0
+        
+        // Show raw timestamp and converted value for context
+        if milliseconds >= 1.0 {
+            return "\(nanoseconds) ns (\(String(format: "%.3f", milliseconds)) ms)"
+        } else if microseconds >= 1.0 {
+            return "\(nanoseconds) ns (\(String(format: "%.1f", microseconds)) μs)"
+        } else {
+            return "\(nanoseconds) ns"
+        }
+    }
+    
     /// Resolves timestamp counter data
     private func resolveTimestampData(from counterBuffer: MTLCounterSampleBuffer) -> Double {
         do {
@@ -233,8 +251,8 @@ class EnhancedCounterManager {
             let gpuTimeMs = Double(timeDifference) / 1_000_000.0 // Convert to milliseconds
             
             print("Timestamp Metrics:")
-            print("Start: \(startTimestamp)")
-            print("End: \(endTimestamp)")
+            print("Start: \(formatTimestamp(startTimestamp))")
+            print("End: \(formatTimestamp(endTimestamp))")
             print("GPU Time: \(String(format: "%.3f", gpuTimeMs)) ms")
             
             return gpuTimeMs
