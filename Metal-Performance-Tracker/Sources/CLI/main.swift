@@ -26,16 +26,16 @@ func main() -> Int32 {
         CommandLineParser.printUsage()
         return ExitCode.success.rawValue
         
-    case .updateBaseline:
-        return runUpdateBaseline()
+    case .updateBaseline(let testConfig):
+        return runUpdateBaseline(testConfig: testConfig)
         
-    case .runTest(let threshold):
-        return runPerformanceTest(threshold: threshold)
+    case .runTest(let threshold, let testConfig):
+        return runPerformanceTest(threshold: threshold, testConfig: testConfig)
     }
 }
 
 /// Runs the performance test and updates the baseline
-func runUpdateBaseline() -> Int32 {
+func runUpdateBaseline(testConfig: TestConfiguration? = nil) -> Int32 {
     print("Updating performance baseline...")
     
     // Initialize Metal and renderer
@@ -44,7 +44,8 @@ func runUpdateBaseline() -> Int32 {
         return ExitCode.error.rawValue
     }
     
-    guard let renderer = Renderer(device: device) else {
+    let config = testConfig ?? TestPreset.simple.createConfiguration()
+    guard let renderer = Renderer(device: device, testConfig: config) else {
         print("Failed to initialize the Renderer.")
         return ExitCode.error.rawValue
     }
@@ -69,7 +70,7 @@ func runUpdateBaseline() -> Int32 {
 }
 
 /// Runs the performance test and compares against baseline
-func runPerformanceTest(threshold: Double) -> Int32 {
+func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil) -> Int32 {
     print("Running performance test...")
     
     // Check if baseline exists
@@ -85,7 +86,8 @@ func runPerformanceTest(threshold: Double) -> Int32 {
         return ExitCode.error.rawValue
     }
     
-    guard let renderer = Renderer(device: device) else {
+    let config = testConfig ?? TestPreset.simple.createConfiguration()
+    guard let renderer = Renderer(device: device, testConfig: config) else {
         print("Failed to initialize the Renderer.")
         return ExitCode.error.rawValue
     }
