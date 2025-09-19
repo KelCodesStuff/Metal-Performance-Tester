@@ -26,6 +26,9 @@ class Renderer {
     // The offscreen texture we will render to
     let renderTexture: MTLTexture
     
+    // Test configuration
+    let testConfig: TestConfiguration
+    
     // Performance measurement objects
     /// MTLCounterSampleBuffer: A buffer that captures GPU performance counters during rendering.
     /// This allows us to measure precise GPU execution times by sampling timestamp counters
@@ -37,8 +40,14 @@ class Renderer {
 
     // MARK: - Initialization
 
-    init?(device: MTLDevice) {
+    init?(device: MTLDevice, testConfig: TestConfiguration = TestPreset.simple.createConfiguration()) {
         self.device = device
+        self.testConfig = testConfig
+        
+        // Print test configuration
+        print("Test Configuration: \(testConfig.description)")
+        print("Parameters: \(testConfig.parametersDescription)")
+        print("Performance Impact: \(TestConfigurationHelper.estimatePerformanceImpact(testConfig))")
         
         // --- 1. Create a command queue ---
         // The command queue is responsible for managing and executing command buffers.
@@ -50,8 +59,8 @@ class Renderer {
         
         // --- 2. Create the offscreen texture (our render target) ---
         let textureDescriptor = MTLTextureDescriptor()
-        textureDescriptor.width = 1920
-        textureDescriptor.height = 1080
+        textureDescriptor.width = testConfig.effectiveWidth
+        textureDescriptor.height = testConfig.effectiveHeight
         textureDescriptor.pixelFormat = .bgra8Unorm
         textureDescriptor.usage = .renderTarget
         
@@ -62,12 +71,11 @@ class Renderer {
         self.renderTexture = renderTexture
         
         // --- 3. Create the vertex buffer ---
-        // These are the (X, Y, Z) coordinates for our triangle's vertices.
-        let vertices: [Float] = [
-             0.0,  0.5, 0.0, // Top center
-            -0.5, -0.5, 0.0, // Bottom left
-             0.5, -0.5, 0.0  // Bottom right
-        ]
+        // Generate vertices based on test configuration
+        let vertices = TestConfigurationHelper.generateTriangleVertices(
+            count: testConfig.triangleCount, 
+            complexity: testConfig.geometryComplexity
+        )
         
         // Create a Metal buffer and copy our vertex data into it.
         guard let vertexBuffer = device.makeBuffer(bytes: vertices,
@@ -217,7 +225,7 @@ class Renderer {
             renderEncoder.sampleCounters(sampleBuffer: counterBuffer, sampleIndex: 0, barrier: false)
         }
         
-        renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
+        renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: testConfig.triangleCount * 3)
         
         // Sample GPU timestamp at the end of rendering
         if let counterBuffer = counterSampleBuffer, let _ = counterSamplingMode {
@@ -241,13 +249,7 @@ class Renderer {
             print("\nAttempting to resolve GPU performance counters...")
             let gpuTimeMs = resolveCounterData(from: counterBuffer)
             
-            // Create test configuration
-            let testConfig = TestConfiguration(
-                width: renderTexture.width,
-                height: renderTexture.height,
-                pixelFormat: String(describing: renderTexture.pixelFormat),
-                vertexCount: 3
-            )
+            // Use the existing test configuration
             
             // Return performance result
             return PerformanceResult(
@@ -263,6 +265,24 @@ class Renderer {
     }
     
     // MARK: - Performance Measurement
+    
+    /// Formats a GPU timestamp for better readability
+    /// - Parameter timestamp: Raw GPU timestamp in nanoseconds
+    /// - Returns: Formatted string showing both raw and readable format
+    private func formatTimestamp(_ timestamp: UInt64) -> String {
+        let nanoseconds = timestamp
+        let microseconds = Double(nanoseconds) / 1_000.0
+        let milliseconds = Double(nanoseconds) / 1_000_000.0
+        
+        // Show raw timestamp and converted value for context
+        if milliseconds >= 1.0 {
+            return "\(nanoseconds) ns (\(String(format: "%.3f", milliseconds)) ms)"
+        } else if microseconds >= 1.0 {
+            return "\(nanoseconds) ns (\(String(format: "%.1f", microseconds)) μs)"
+        } else {
+            return "\(nanoseconds) ns"
+        }
+    }
     
     /// Resolves counter data from the sample buffer and calculates GPU execution time
     /// - Parameter counterBuffer: The counter sample buffer containing timestamp data
@@ -291,8 +311,8 @@ class Renderer {
             let gpuTimeMs = Double(timeDifference) / 1_000_000.0 // Convert to milliseconds
             
             print("GPU Performance Metrics:")
-            print("Start timestamp: \(startTimestamp)")
-            print("End timestamp: \(endTimestamp)")
+            print("Start timestamp: \(formatTimestamp(startTimestamp))")
+            print("End timestamp: \(formatTimestamp(endTimestamp))")
             print("GPU execution time: \(String(format: "%.3f", gpuTimeMs)) ms")
             
             return gpuTimeMs
