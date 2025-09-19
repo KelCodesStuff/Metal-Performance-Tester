@@ -1,11 +1,16 @@
 {
   "testConfig" : {
-    "width" : 1920,
+    "width" : 2560,
     "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
-    "height" : 1080,
-    "vertexCount" : 3
+    "timestamp" : "2025-09-19T03:02:43Z",
+    "testMode" : "custom",
+    "resolutionScale" : 1,
+    "triangleCount" : 5000,
+    "geometryComplexity" : 10,
+    "height" : 1440,
+    "baselineName" : "Custom Baseline"
   },
-  "timestamp" : "2025-09-18T16:46:29Z",
-  "gpuTimeMs" : 0.07648,
+  "gpuTimeMs" : 11.04208,
+  "timestamp" : "2025-09-19T03:02:43Z",
   "deviceName" : "AMD Radeon Pro 5300M"
 }
