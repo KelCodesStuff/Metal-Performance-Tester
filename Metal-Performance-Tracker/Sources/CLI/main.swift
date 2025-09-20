@@ -44,7 +44,7 @@ func runUpdateBaseline(testConfig: TestConfiguration? = nil) -> Int32 {
         return ExitCode.error.rawValue
     }
     
-    let config = testConfig ?? TestPreset.simple.createConfiguration()
+    let config = testConfig ?? TestPreset.moderate.createConfiguration()
     guard let renderer = Renderer(device: device, testConfig: config) else {
         print("Failed to initialize the Renderer.")
         return ExitCode.error.rawValue
@@ -53,7 +53,7 @@ func runUpdateBaseline(testConfig: TestConfiguration? = nil) -> Int32 {
     // Run the performance test
     guard let result = renderer.draw() else {
         print("Performance measurement not available on this GPU.")
-        print("   Counter sampling is not supported. Cannot establish baseline.")
+        print("Counter sampling is not supported. Cannot establish baseline.")
         return ExitCode.error.rawValue
     }
     
@@ -86,14 +86,14 @@ func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil)
         return ExitCode.error.rawValue
     }
     
-    let config = testConfig ?? TestPreset.simple.createConfiguration()
+    let config = testConfig ?? TestPreset.moderate.createConfiguration()
     guard let renderer = Renderer(device: device, testConfig: config) else {
         print("Failed to initialize the Renderer.")
         return ExitCode.error.rawValue
     }
     
-    // Run the performance test
-    guard let currentResult = renderer.draw() else {
+    // Run the performance test (with detailed analysis for comprehensive metrics)
+    guard let currentResult = renderer.draw(showDetailedAnalysis: true) else {
         print("Performance measurement not available on this GPU.")
         print("Counter sampling is not supported.")
         return ExitCode.error.rawValue
