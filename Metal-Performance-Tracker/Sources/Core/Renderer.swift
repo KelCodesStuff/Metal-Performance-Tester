@@ -43,7 +43,6 @@ class Renderer {
         print("\nTest Configuration: \(testConfig.description)")
         print("Parameters:")
         print(testConfig.parametersDescription)
-        print("Performance Impact: \(TestConfigurationHelper.estimatePerformanceImpact(testConfig))")
         
         // --- 1. Create a command queue ---
         // The command queue is responsible for managing and executing command buffers.

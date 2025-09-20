@@ -86,6 +86,7 @@ struct TestConfiguration: Codable {
         description += "\n- Triangle count: \(triangleCount)"
         description += "\n- Geometry complexity: \(geometryComplexity)/10"
         description += "\n- Resolution scale: \(String(format: "%.1f", resolutionScale))x"
+        description += "\n- Performance Impact: \(TestConfigurationHelper.estimatePerformanceImpact(self))"
         return description
     }
 }
