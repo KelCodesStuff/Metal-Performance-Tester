@@ -21,12 +21,22 @@ struct PerformanceResult: Codable {
     /// Test configuration details
     let testConfig: TestConfiguration
     
+    /// Stage utilization metrics (if available)
+    let stageUtilization: StageUtilizationMetrics?
+    
+    /// General statistics (if available)
+    let statistics: GeneralStatistics?
+    
     /// Creates a new performance result
-    init(gpuTimeMs: Double, deviceName: String, testConfig: TestConfiguration) {
+    init(gpuTimeMs: Double, deviceName: String, testConfig: TestConfiguration, 
+         stageUtilization: StageUtilizationMetrics? = nil, 
+         statistics: GeneralStatistics? = nil) {
         self.gpuTimeMs = gpuTimeMs
         self.timestamp = Date()
         self.deviceName = deviceName
         self.testConfig = testConfig
+        self.stageUtilization = stageUtilization
+        self.statistics = statistics
     }
 }
 
@@ -85,7 +95,7 @@ class PerformanceBaselineManager {
         return nil
     }
     
-    /// Attempts to find the project directory by looking at the executable's location
+    /// Attempts to find the project directory using multiple strategies for maximum robustness
     private func findProjectFromExecutable() -> URL? {
         // Get the executable's path
         guard let executablePath = Bundle.main.executablePath else {
@@ -95,9 +105,39 @@ class PerformanceBaselineManager {
         let executableURL = URL(fileURLWithPath: executablePath)
         let executableDir = executableURL.deletingLastPathComponent()
         
-        // If we're running from DerivedData, try to find the project by looking for common patterns
+        // Strategy 1: Check for custom project path via environment variable
+        if let customPath = ProcessInfo.processInfo.environment["METAL_PERFORMANCE_PROJECT_PATH"] {
+            let projectURL = URL(fileURLWithPath: customPath)
+            let dataPath = projectURL.appendingPathComponent("Data")
+            if FileManager.default.fileExists(atPath: dataPath.path) {
+                print("Found project via environment variable: \(projectURL.path)")
+                return projectURL
+            }
+        }
+        
+        // Strategy 2: Search up directory tree from executable location
+        // This works regardless of where the project is located
+        var searchDir = executableDir
+        while searchDir.path != "/" {
+            let potentialDataPath = searchDir.appendingPathComponent("Data")
+            if FileManager.default.fileExists(atPath: potentialDataPath.path) {
+                // Additional validation: avoid DerivedData directories
+                // Look for project-specific indicators to ensure this is the actual project
+                let projectFile = searchDir.appendingPathComponent("Metal-Performance-Tracker.xcodeproj")
+                let sourcesDir = searchDir.appendingPathComponent("Sources")
+                
+                if FileManager.default.fileExists(atPath: projectFile.path) || 
+                   FileManager.default.fileExists(atPath: sourcesDir.path) {
+                    print("Found project by searching up directory tree: \(searchDir.path)")
+                    return searchDir
+                }
+            }
+            searchDir = searchDir.deletingLastPathComponent()
+        }
+        
+        // Strategy 3: Fallback to hardcoded paths (only if running from DerivedData)
+        // This maintains backward compatibility for common project structures
         if executableDir.path.contains("DerivedData") {
-            // Look for the project in common user directories
             let homeDir = FileManager.default.homeDirectoryForCurrentUser
             let commonProjectPaths = [
                 "Projects/Xcode/Metal-Performance-Tracker/Metal-Performance-Tracker",
@@ -110,11 +150,13 @@ class PerformanceBaselineManager {
                 let fullPath = homeDir.appendingPathComponent(projectPath)
                 let dataPath = fullPath.appendingPathComponent("Data")
                 if FileManager.default.fileExists(atPath: dataPath.path) {
+                    print("Found project via hardcoded fallback path: \(fullPath.path)")
                     return fullPath
                 }
             }
         }
         
+        print("Warning: Could not locate project directory using any strategy")
         return nil
     }
     
