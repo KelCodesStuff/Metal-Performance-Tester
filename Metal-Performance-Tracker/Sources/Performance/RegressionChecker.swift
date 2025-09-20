@@ -55,7 +55,8 @@ class RegressionChecker {
         ================================
         
         Device: \(current.deviceName)
-        Test Configuration: \(current.testConfig.width)x\(current.testConfig.height) @ \(current.testConfig.pixelFormat)
+        Test Configuration: \(current.testConfig.description)
+        Parameters: \(current.testConfig.parametersDescription)
         
         """
         
