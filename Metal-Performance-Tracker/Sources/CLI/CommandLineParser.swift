@@ -84,79 +84,19 @@ class CommandLineParser {
         // Check for preset arguments first
         for arg in arguments {
             switch arg {
-            case "--simple":
-                return TestPreset.simple.createConfiguration()
+            case "--low-res":
+                return TestPreset.lowRes.createConfiguration()
             case "--moderate":
                 return TestPreset.moderate.createConfiguration()
             case "--complex":
                 return TestPreset.complex.createConfiguration()
-            case "--stress":
-                return TestPreset.stress.createConfiguration()
             case "--high-res":
                 return TestPreset.highRes.createConfiguration()
-            case "--low-res":
-                return TestPreset.lowRes.createConfiguration()
-            case "--custom":
-                return TestPreset.custom(triangleCount: 5000, width: 2560, height: 1440, complexity: 10, scale: 1.0).createConfiguration()
+            case "--ultra-high-res":
+                return TestPreset.ultraHighRes.createConfiguration()
             default:
                 continue
             }
-        }
-        
-        // Check for custom parameters
-        var triangleCount: Int?
-        var width: Int?
-        var height: Int?
-        var complexity: Int?
-        var resolutionScale: Double?
-        
-        // Parse --triangles argument
-        if let trianglesIndex = arguments.firstIndex(of: "--triangles"),
-           trianglesIndex + 1 < arguments.count,
-           let triangles = Int(arguments[trianglesIndex + 1]) {
-            triangleCount = triangles
-        }
-        
-        // Parse --resolution argument (e.g., "1920x1080")
-        if let resolutionIndex = arguments.firstIndex(of: "--resolution"),
-           resolutionIndex + 1 < arguments.count {
-            let resolutionString = arguments[resolutionIndex + 1]
-            if let xIndex = resolutionString.firstIndex(of: "x") {
-                let widthString = String(resolutionString[..<xIndex])
-                let heightString = String(resolutionString[resolutionString.index(after: xIndex)...])
-                if let w = Int(widthString), let h = Int(heightString) {
-                    width = w
-                    height = h
-                }
-            }
-        }
-        
-        // Parse --complexity argument
-        if let complexityIndex = arguments.firstIndex(of: "--complexity"),
-           complexityIndex + 1 < arguments.count,
-           let comp = Int(arguments[complexityIndex + 1]),
-           comp >= 1 && comp <= 10 {
-            complexity = comp
-        }
-        
-        // Parse --scale argument
-        if let scaleIndex = arguments.firstIndex(of: "--scale"),
-           scaleIndex + 1 < arguments.count,
-           let scale = Double(arguments[scaleIndex + 1]) {
-            resolutionScale = scale
-        }
-        
-        // If any custom parameters were specified, create custom configuration
-        if triangleCount != nil || width != nil || height != nil || complexity != nil || resolutionScale != nil {
-            return TestConfiguration(
-                width: width ?? 1920,
-                height: height ?? 1080,
-                triangleCount: triangleCount ?? 1,
-                geometryComplexity: complexity ?? 1,
-                resolutionScale: resolutionScale ?? 1.0,
-                testMode: "custom",
-                baselineName: "Custom Baseline"
-            )
         }
         
         // Return nil for default configuration
@@ -182,19 +122,13 @@ class CommandLineParser {
         Show this help message
         
         TEST CONFIGURATION:
-        --low-res         Low resolution (100 triangles, 720p)
-        --simple          Simple test (1 triangle, 1080p)
-        --moderate        Moderate test (100 triangles, 1080p)
-        --complex         Complex test (1K triangles, 1080p)
-        --high-res        High resolution (1K triangles, 4K)
-        --stress          Stress test (10K triangles, 1080p)
-        --custom          Custom test (5K triangles, 2560x1440, complexity 10, scale 1.0x)
+        --low-res         Low resolution (720p, mobile/low-end testing)
+        --moderate        Moderate test (1080p, daily development testing)
+        --complex         Complex test (1080p, feature development)
+        --high-res        High resolution (4K, display scaling testing)
+        --ultra-high-res  Ultra high resolution (8K, ultra-high resolution testing)
         
-        CUSTOM PARAMETERS:
-        --triangles N     Number of triangles to render
-        --resolution WxH  Render resolution (e.g., 1920x1080)
-        --complexity N    Geometry complexity (1-10)
-        --scale N         Resolution scale factor (0.5-4.0)
+        PARAMETERS:
         --threshold N     Performance threshold percentage (0-100)
         
         -----
