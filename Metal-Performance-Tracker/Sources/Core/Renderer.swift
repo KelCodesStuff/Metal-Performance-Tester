@@ -30,23 +30,19 @@ class Renderer {
     let testConfig: TestConfiguration
     
     // Performance measurement objects
-    /// MTLCounterSampleBuffer: A buffer that captures GPU performance counters during rendering.
-    /// This allows us to measure precise GPU execution times by sampling timestamp counters
-    /// at specific points in the rendering pipeline. The buffer stores raw counter data that
-    /// must be resolved after GPU execution completes to extract meaningful performance metrics.
-    let counterSampleBuffer: MTLCounterSampleBuffer?
-    let supportsCounterSampling: Bool
-    let counterSamplingMode: MTLCounterSamplingPoint?
+    /// Enhanced performance metrics manager for comprehensive GPU performance analysis
+    private let performanceMetrics: EnhancedCounterManager
 
     // MARK: - Initialization
 
-    init?(device: MTLDevice, testConfig: TestConfiguration = TestPreset.simple.createConfiguration()) {
+    init?(device: MTLDevice, testConfig: TestConfiguration = TestPreset.moderate.createConfiguration()) {
         self.device = device
         self.testConfig = testConfig
         
         // Print test configuration
-        print("Test Configuration: \(testConfig.description)")
-        print("Parameters: \(testConfig.parametersDescription)")
+        print("\nTest Configuration: \(testConfig.description)")
+        print("Parameters:")
+        print(testConfig.parametersDescription)
         print("Performance Impact: \(TestConfigurationHelper.estimatePerformanceImpact(testConfig))")
         
         // --- 1. Create a command queue ---
@@ -114,91 +110,16 @@ class Renderer {
             return nil
         }
         
-        // --- 5. Check for counter sampling support ---
-        // Query the device to see if it supports performance counter sampling
-        // Try different sampling modes to find one that works
-        let supportsAtStageBoundary = device.supportsCounterSampling(.atStageBoundary)
-        let supportsAtDrawBoundary = device.supportsCounterSampling(.atDrawBoundary)
-        
-        print("Supports counter sampling at stage boundary: \(supportsAtStageBoundary)")
-        print("Supports counter sampling at draw boundary: \(supportsAtDrawBoundary)")
-        
-        self.supportsCounterSampling = supportsAtStageBoundary || supportsAtDrawBoundary
-        
-        // Determine which sampling mode to use
-        if supportsAtStageBoundary {
-            self.counterSamplingMode = .atStageBoundary
-        } else if supportsAtDrawBoundary {
-            self.counterSamplingMode = .atDrawBoundary
-        } else {
-            self.counterSamplingMode = nil
-        }
-        
-        print("\nChecking counter sampling support...")
-        print("Device: \(device.name)")
-        print("Supports counter sampling: \(supportsCounterSampling)")
-        if let mode = counterSamplingMode {
-            print("Using sampling mode: \(mode)")
-        }
-        
-        if let counterSets = device.counterSets {
-            print("\nAvailable counter sets (\(counterSets.count)):")
-            for counterSet in counterSets {
-                print("     - \(counterSet.name)")
-            }
-        } else {
-            print("No counter sets available")
-        }
-        
-        if supportsCounterSampling {
-            print("\nDevice supports counter sampling")
-            
-            // Find the timestamp counter set
-            var timestampCounterSet: MTLCounterSet? = nil
-            if let counterSets = device.counterSets {
-                for counterSet in counterSets {
-                    print("\nChecking counter set: \(counterSet.name)...")
-                    if counterSet.name.lowercased().contains("timestamp") {
-                        timestampCounterSet = counterSet
-                        break
-                    }
-                }
-            }
-            
-            if let counterSet = timestampCounterSet {
-                print("Found timestamp counter set: \(counterSet.name)")
-                
-                // Create counter sample buffer descriptor
-                let counterSampleBufferDescriptor = MTLCounterSampleBufferDescriptor()
-                counterSampleBufferDescriptor.counterSet = counterSet
-                counterSampleBufferDescriptor.sampleCount = 2 // Start and end timestamps
-                counterSampleBufferDescriptor.storageMode = .shared
-                
-                // Create the counter sample buffer
-                do {
-                    self.counterSampleBuffer = try device.makeCounterSampleBuffer(descriptor: counterSampleBufferDescriptor)
-                } catch {
-                    print("Failed to create counter sample buffer: \(error)")
-                    self.counterSampleBuffer = nil
-                }
-                if counterSampleBuffer != nil {
-                    print("Counter sample buffer created successfully")
-                }
-            } else {
-                print("No timestamp counter set found")
-                self.counterSampleBuffer = nil
-            }
-        } else {
-            print("Device does not support counter sampling")
-            self.counterSampleBuffer = nil
-        }
+        // --- 5. Set up enhanced GPU performance counter sampling ---
+        self.performanceMetrics = EnhancedCounterManager(device: device)
     }
     
     // MARK: - Drawing Method
 
     /// Executes the rendering test and returns performance data
+    /// - Parameter showDetailedAnalysis: Whether to display the detailed GPU performance analysis
     /// - Returns: PerformanceResult if measurement was successful, nil if counter sampling is unsupported
-    func draw() -> PerformanceResult? {
+    func draw(showDetailedAnalysis: Bool = true) -> PerformanceResult? {
         // --- Create a render pass descriptor for this frame ---
         // This is the same as before, but we do it here since it's needed for each draw call.
         let renderPassDescriptor = MTLRenderPassDescriptor()
@@ -220,17 +141,13 @@ class Renderer {
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         
-        // Sample GPU timestamp at the start of rendering
-        if let counterBuffer = counterSampleBuffer, let _ = counterSamplingMode {
-            renderEncoder.sampleCounters(sampleBuffer: counterBuffer, sampleIndex: 0, barrier: false)
-        }
+        // Sample all available GPU counters at the start of rendering
+        performanceMetrics.sampleCountersStart(renderEncoder: renderEncoder)
         
         renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: testConfig.triangleCount * 3)
         
-        // Sample GPU timestamp at the end of rendering
-        if let counterBuffer = counterSampleBuffer, let _ = counterSamplingMode {
-            renderEncoder.sampleCounters(sampleBuffer: counterBuffer, sampleIndex: 1, barrier: false)
-        }
+        // Sample all available GPU counters at the end of rendering
+        performanceMetrics.sampleCountersEnd(renderEncoder: renderEncoder)
         
         // We're done encoding, so end it.
         renderEncoder.endEncoding()
@@ -242,16 +159,65 @@ class Renderer {
         // all its work before the program exits.
         commandBuffer.waitUntilCompleted()
         
-        print("GPU has finished rendering the frame")
-        
-        // --- Resolve and read counter data ---
-        if let counterBuffer = counterSampleBuffer {
-            print("\nAttempting to resolve GPU performance counters...")
-            let gpuTimeMs = resolveCounterData(from: counterBuffer)
+        // --- Resolve and read enhanced counter data ---
+        if performanceMetrics.supportsCounterSampling {
+            let (gpuTimeMs, stageUtilization, statistics) = performanceMetrics.resolveAllCounters()
             
-            // Use the existing test configuration
+            // Display enhanced performance metrics only if requested
+            if showDetailedAnalysis {
+                print("\n" + String(repeating: "=", count: 50))
+                print("GPU PERFORMANCE ANALYSIS")
+                print(String(repeating: "=", count: 50))
+                print("GPU Time: \(String(format: "%.3f", gpuTimeMs)) ms")
+                print("Device: \(device.name)")
+                
+                // Display stage utilization metrics
+                if let stageUtil = stageUtilization {
+                    print("\nSTAGE UTILIZATION:")
+                    if let vertexUtil = stageUtil.vertexUtilization {
+                        print("   Vertex Shader: \(String(format: "%.1f", vertexUtil))%")
+                    }
+                    if let fragmentUtil = stageUtil.fragmentUtilization {
+                        print("   Fragment Shader: \(String(format: "%.1f", fragmentUtil))%")
+                    }
+                    if let totalUtil = stageUtil.totalUtilization {
+                        print("   Total Utilization: \(String(format: "%.1f", totalUtil))%")
+                    }
+                }
+                
+                // Display statistics metrics
+                if let stats = statistics {
+                    print("\nPERFORMANCE STATISTICS:")
+                    if let bandwidth = stats.memoryBandwidth {
+                        print("   Memory Bandwidth: \(String(format: "%.1f", bandwidth)) MB/s")
+                    }
+                    if let cacheHits = stats.cacheHits {
+                        print("   Cache Hits: \(String(format: "%.0f", cacheHits))")
+                    }
+                    if let cacheMisses = stats.cacheMisses {
+                        print("   Cache Misses: \(String(format: "%.0f", cacheMisses))")
+                    }
+                    if let hitRate = stats.cacheHitRate {
+                        print("   Cache Hit Rate: \(String(format: "%.1f", hitRate * 100))%")
+                    }
+                    if let instructions = stats.instructionsExecuted {
+                        print("   Instructions Executed: \(String(format: "%.0f", instructions))")
+                    }
+                }
+                
+                print("\n" + String(repeating: "=", count: 50))
+            }
             
-            // Return performance result
+            // Create enhanced performance result with all available metrics (for future use)
+            let _ = MetalPerformanceResult(
+                gpuTimeMs: gpuTimeMs,
+                deviceName: device.name,
+                testConfig: testConfig,
+                stageUtilization: stageUtilization,
+                statistics: statistics
+            )
+            
+            // Convert to legacy PerformanceResult for compatibility
             return PerformanceResult(
                 gpuTimeMs: gpuTimeMs,
                 deviceName: device.name,
@@ -284,41 +250,4 @@ class Renderer {
         }
     }
     
-    /// Resolves counter data from the sample buffer and calculates GPU execution time
-    /// - Parameter counterBuffer: The counter sample buffer containing timestamp data
-    /// - Returns: GPU execution time in milliseconds
-    private func resolveCounterData(from counterBuffer: MTLCounterSampleBuffer) -> Double {
-        do {
-            // Resolve the counter data from the sample buffer
-            // This converts raw GPU counter data into a readable format
-            let resolvedData = try counterBuffer.resolveCounterRange(0..<2)
-            
-            // Extract the raw data as bytes
-            guard let data = resolvedData else {
-                print("No counter data available")
-                return 0.0
-            }
-            
-            let dataPointer = data.withUnsafeBytes { bytes in
-                bytes.bindMemory(to: UInt64.self)
-            }
-            let startTimestamp = dataPointer[0]
-            let endTimestamp = dataPointer[1]
-            
-            // Calculate the time difference
-            // GPU timestamps are typically in nanoseconds
-            let timeDifference = endTimestamp - startTimestamp
-            let gpuTimeMs = Double(timeDifference) / 1_000_000.0 // Convert to milliseconds
-            
-            print("GPU Performance Metrics:")
-            print("Start timestamp: \(formatTimestamp(startTimestamp))")
-            print("End timestamp: \(formatTimestamp(endTimestamp))")
-            print("GPU execution time: \(String(format: "%.3f", gpuTimeMs)) ms")
-            
-            return gpuTimeMs
-        } catch {
-            print("Failed to resolve counter data: \(error)")
-            return 0.0
-        }
-    }
 }
