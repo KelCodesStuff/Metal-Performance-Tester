@@ -86,7 +86,6 @@ struct TestConfiguration: Codable {
         description += "\n- Triangle count: \(triangleCount)"
         description += "\n- Geometry complexity: \(geometryComplexity)/10"
         description += "\n- Resolution scale: \(String(format: "%.1f", resolutionScale))x"
-        description += "\n- Performance Impact: \(TestConfigurationHelper.estimatePerformanceImpact(self))"
         return description
     }
 }
@@ -149,6 +148,29 @@ enum TestPreset {
 /// Helper functions for test configuration management
 struct TestConfigurationHelper {
     
+    /// Constants for performance impact calculation
+    private struct PerformanceImpactConstants {
+        // Reference resolution for normalization (1080p baseline)
+        static let referencePixelCount = 1920 * 1080
+        
+        // Scaling factors for different impact components
+        static let vertexImpactDivisor = 10.0  // Used with square root for vertex impact
+        static let complexityMaxLevel = 10.0   // Maximum geometry complexity level
+        
+        // Weight factors for combining impact components
+        // Based on GPU processing characteristics: vertex processing is most critical
+        static let vertexWeight = 0.5      // Primary factor for geometry processing
+        static let pixelWeight = 0.3       // Secondary factor for fragment processing  
+        static let complexityWeight = 0.2  // Tertiary factor for shader complexity
+        
+        // Impact categorization thresholds
+        // These values were calibrated through testing with different baseline configurations
+        static let lowImpactThreshold = 0.8      // Below this: Low Impact
+        static let mediumImpactThreshold = 1.6   // Below this: Medium Impact  
+        static let highImpactThreshold = 2.5     // Below this: High Impact
+        static let veryHighImpactThreshold = 8.1 // Below this: Very High Impact
+    }
+    
     /// Generates triangle vertices based on complexity level
     static func generateTriangleVertices(count: Int, complexity: Int) -> [Float] {
         var vertices: [Float] = []
@@ -200,27 +222,74 @@ struct TestConfigurationHelper {
                config.resolutionScale > 0.1 && config.resolutionScale <= 4.0
     }
     
-    /// Estimates the relative performance impact of a configuration
+    /// Estimates the relative performance impact based on actual GPU performance results
+    static func calculatePerformanceImpactFromResults(
+        gpuTimeMs: Double,
+        totalUtilization: Double?,
+        memoryBandwidth: Double?,
+        instructionsExecuted: Double?
+    ) -> String {
+        // Calculate impact score based on actual performance metrics
+        var impactScore: Double = 0.0
+        
+        // GPU Time impact (primary factor)
+        let gpuTimeImpact = gpuTimeMs / 10.0  // Normalize to 10ms baseline
+        impactScore += gpuTimeImpact * 0.4    // 40% weight for execution time
+        
+        // Utilization impact (secondary factor)
+        if let utilization = totalUtilization {
+            let utilizationImpact = utilization / 100.0
+            impactScore += utilizationImpact * 0.3  // 30% weight for utilization
+        }
+        
+        // Memory bandwidth impact (tertiary factor)
+        if let bandwidth = memoryBandwidth {
+            let bandwidthImpact = bandwidth / 50.0  // Normalize to 50 MB/s baseline
+            impactScore += bandwidthImpact * 0.2    // 20% weight for memory bandwidth
+        }
+        
+        // Instructions impact (quaternary factor)
+        if let instructions = instructionsExecuted {
+            let instructionImpact = instructions / 1000.0  // Normalize to 1000 instructions baseline
+            impactScore += instructionImpact * 0.1         // 10% weight for instruction count
+        }
+        
+        // Categorize impact level based on actual performance results
+        if impactScore < 0.5 {
+            return "Low Impact"
+        } else if impactScore < 1.0 {
+            return "Medium Impact"
+        } else if impactScore < 2.0 {
+            return "High Impact"
+        } else {
+            return "Very High Impact"
+        }
+    }
+    
+    /// Estimates the relative performance impact of a configuration (legacy method for configuration-based estimation)
     static func estimatePerformanceImpact(_ config: TestConfiguration) -> String {
         let pixelCount = config.effectiveWidth * config.effectiveHeight
         let triangleCount = config.triangleCount
         let complexity = config.geometryComplexity
         
         // Normalize impacts to be more balanced
-        let pixelImpact = Double(pixelCount) / (1920 * 1080)  // 0.44 for 720p, 1.0 for 1080p, 4.0 for 4K
-        let vertexImpact = sqrt(Double(triangleCount)) / 10.0  // 0.1 for 1 triangle, 1.0 for 100 triangles, 3.16 for 1K triangles
-        let complexityImpact = Double(complexity) / 10.0  // 0.1 to 1.0
+        let pixelImpact = Double(pixelCount) / Double(PerformanceImpactConstants.referencePixelCount)
+        let vertexImpact = sqrt(Double(triangleCount)) / PerformanceImpactConstants.vertexImpactDivisor
+        let complexityImpact = Double(complexity) / PerformanceImpactConstants.complexityMaxLevel
         
-        // Weighted combination: triangles are most important for geometry processing, then pixels, then complexity
-        let totalImpact = (vertexImpact * 0.5) + (pixelImpact * 0.3) + (complexityImpact * 0.2)
+        // Weighted combination based on GPU processing characteristics
+        let totalImpact = (vertexImpact * PerformanceImpactConstants.vertexWeight) + 
+                         (pixelImpact * PerformanceImpactConstants.pixelWeight) + 
+                         (complexityImpact * PerformanceImpactConstants.complexityWeight)
         
-        if totalImpact < 0.8 {
+        // Categorize impact level based on calibrated thresholds
+        if totalImpact < PerformanceImpactConstants.lowImpactThreshold {
             return "Low Impact"
-        } else if totalImpact < 1.6 {
+        } else if totalImpact < PerformanceImpactConstants.mediumImpactThreshold {
             return "Medium Impact"
-        } else if totalImpact < 2.5 {
+        } else if totalImpact < PerformanceImpactConstants.highImpactThreshold {
             return "High Impact"
-        } else if totalImpact < 8.1 {
+        } else if totalImpact < PerformanceImpactConstants.veryHighImpactThreshold {
             return "Very High Impact"
         } else {
             return "Extreme Impact"
