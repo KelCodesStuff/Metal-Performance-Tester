@@ -127,9 +127,7 @@ class PerformanceBaselineManager {
         let data = try encoder.encode(result)
         try data.write(to: baselineFilePath)
     
-        print("GPU Time: \(String(format: "%.3f", result.gpuTimeMs)) ms")
-        print("Device: \(result.deviceName)")
-        print("\nBaseline saved to: \(baselineFilePath.path)")
+        print("Baseline saved to: \(baselineFilePath.path)")
     }
     
     /// Loads the current baseline performance result
