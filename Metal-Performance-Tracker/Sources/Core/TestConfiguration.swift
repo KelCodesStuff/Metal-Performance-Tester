@@ -79,74 +79,68 @@ struct TestConfiguration: Codable {
     
     /// Returns the parameters description
     var parametersDescription: String {
+        var description = "- Resolution: \(width)x\(height)"
         if resolutionScale != 1.0 {
-            return "\(width)x\(height) @ \(triangleCount) triangles (complexity: \(geometryComplexity)/10, scale: \(String(format: "%.1f", resolutionScale))x)"
-        } else {
-            return "\(effectiveWidth)x\(effectiveHeight) @ \(triangleCount) triangles (complexity: \(geometryComplexity)/10, scale: \(String(format: "%.1f", resolutionScale))x)"
+            description += " (effective: \(effectiveWidth)x\(effectiveHeight))"
         }
+        description += "\n- Triangle count: \(triangleCount)"
+        description += "\n- Geometry complexity: \(geometryComplexity)/10"
+        description += "\n- Resolution scale: \(String(format: "%.1f", resolutionScale))x"
+        return description
     }
 }
 
 /// Predefined test configurations for common scenarios
 enum TestPreset {
-    case simple           // 1 triangle, 1080p
-    case moderate         // 100 triangles, 1080p
-    case complex          // 1000 triangles, 1080p
-    case stress           // 10000 triangles, 1080p
-    case highRes          // 1000 triangles, 4K
-    case lowRes           // 100 triangles, 720p
-    case custom(triangleCount: Int, width: Int, height: Int, complexity: Int, scale: Double)
+    case lowRes           // 1280×720, Mobile/low-end testing
+    case moderate         // 1920×1080, Daily development testing
+    case complex          // 2560×1440, Feature development
+    case highRes          // 3840×2160, Display scaling testing
+    case ultraHighRes     // 7680×4320, Ultra-high resolution testing
     
     /// Creates a test configuration for this preset
     func createConfiguration() -> TestConfiguration {
         switch self {
-        case .simple:
-            return TestConfiguration(width: 1920, height: 1080, triangleCount: 1, 
-                                   geometryComplexity: 1, resolutionScale: 1.0, testMode: "simple", 
-                                   baselineName: "Simple Baseline")
+        case .lowRes:
+            // Low GPU Load: 1280×720 @ 10 triangles, complexity 1/10
+            return TestConfiguration(width: 1280, height: 720, triangleCount: 10,
+                                   geometryComplexity: 1, resolutionScale: 1.0, testMode: "low-res",
+                                   baselineName: "Low Baseline")
             
         case .moderate:
+            // Medium GPU Load: 1920×1080 @ 100 triangles, complexity 5/10
             return TestConfiguration(width: 1920, height: 1080, triangleCount: 100, 
                                    geometryComplexity: 5, resolutionScale: 1.0, testMode: "moderate",
                                    baselineName: "Moderate Baseline")
             
         case .complex:
-            return TestConfiguration(width: 1920, height: 1080, triangleCount: 1000, 
+            // High GPU Load: 2560x1440 @ 1000 triangles, complexity 8/10
+            return TestConfiguration(width: 2560, height: 1440, triangleCount: 1000,
                                    geometryComplexity: 8, resolutionScale: 1.0, testMode: "complex",
                                    baselineName: "Complex Baseline")
             
-        case .stress:
-            return TestConfiguration(width: 1920, height: 1080, triangleCount: 10000, 
-                                   geometryComplexity: 10, resolutionScale: 1.0, testMode: "stress",
-                                   baselineName: "Stress Baseline")
-            
         case .highRes:
-            return TestConfiguration(width: 3840, height: 2160, triangleCount: 1000, 
+            // Very High GPU Load: 3840×2160 @ 2000 triangles, complexity 8/10
+            return TestConfiguration(width: 3840, height: 2160, triangleCount: 2000,
                                    geometryComplexity: 8, resolutionScale: 1.0, testMode: "high-res",
-                                   baselineName: "High Resolution Baseline")
+                                   baselineName: "High Baseline")
             
-        case .lowRes:
-            return TestConfiguration(width: 1280, height: 720, triangleCount: 100, 
-                                   geometryComplexity: 5, resolutionScale: 1.0, testMode: "low-res",
-                                   baselineName: "Low Resolution Baseline")
-            
-        case .custom(let triangleCount, let width, let height, let complexity, let scale):
-            return TestConfiguration(width: width, height: height, triangleCount: triangleCount, 
-                                   geometryComplexity: complexity, resolutionScale: scale, testMode: "custom",
-                                   baselineName: "Custom Baseline")
+        case .ultraHighRes:
+            // Extreme GPU Load: 7680×4320 @ 4000 triangles, complexity 10/10
+            return TestConfiguration(width: 7680, height: 4320, triangleCount: 4000,
+                                   geometryComplexity: 10, resolutionScale: 1.0, testMode: "ultra-high-res",
+                                   baselineName: "Ultra High Baseline")
         }
     }
     
     /// Human-readable name for the preset
     var name: String {
         switch self {
-        case .simple: return "Simple (1 triangle, 1080p)"
-        case .moderate: return "Moderate (100 triangles, 1080p)"
-        case .complex: return "Complex (1000 triangles, 1080p)"
-        case .stress: return "Stress Test (10K triangles, 1080p)"
-        case .highRes: return "High Resolution (1K triangles, 4K)"
-        case .lowRes: return "Low Resolution (100 triangles, 720p)"
-        case .custom: return "Custom Configuration"
+        case .lowRes: return "Low Resolution (720p, Mobile Testing)"
+        case .moderate: return "Moderate (1080p, Daily Development)"
+        case .complex: return "Complex (1080p, Feature Development)"
+        case .highRes: return "High Resolution (4K, Display Scaling)"
+        case .ultraHighRes: return "Ultra High Resolution (8K, Ultra-High Resolution Testing)"
         }
     }
 }
@@ -219,14 +213,16 @@ struct TestConfigurationHelper {
         // Weighted combination: triangles are most important for geometry processing, then pixels, then complexity
         let totalImpact = (vertexImpact * 0.5) + (pixelImpact * 0.3) + (complexityImpact * 0.2)
         
-        if totalImpact < 0.4 {
+        if totalImpact < 0.8 {
             return "Low Impact"
-        } else if totalImpact < 0.8 {
-            return "Medium Impact"
         } else if totalImpact < 1.6 {
+            return "Medium Impact"
+        } else if totalImpact < 2.5 {
             return "High Impact"
-        } else {
+        } else if totalImpact < 8.1 {
             return "Very High Impact"
+        } else {
+            return "Extreme Impact"
         }
     }
 }
