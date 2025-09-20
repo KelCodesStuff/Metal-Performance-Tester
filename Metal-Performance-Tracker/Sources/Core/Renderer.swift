@@ -110,7 +110,7 @@ class Renderer {
         }
         
         // --- 5. Set up enhanced GPU performance counter sampling ---
-        self.performanceMetrics = EnhancedCounterManager(device: device)
+        self.performanceMetrics = EnhancedCounterManager(device: device, testConfig: testConfig)
     }
     
     // MARK: - Drawing Method
@@ -204,23 +204,25 @@ class Renderer {
                     }
                 }
                 
+                // Calculate and display performance impact based on actual results
+                let performanceImpact = TestConfigurationHelper.calculatePerformanceImpactFromResults(
+                    gpuTimeMs: gpuTimeMs,
+                    totalUtilization: stageUtilization?.totalUtilization,
+                    memoryBandwidth: statistics?.memoryBandwidth,
+                    instructionsExecuted: statistics?.instructionsExecuted
+                )
+                print("\nPERFORMANCE IMPACT: \(performanceImpact)")
+                
                 print("\n" + String(repeating: "=", count: 50))
             }
             
-            // Create enhanced performance result with all available metrics (for future use)
-            let _ = MetalPerformanceResult(
+            // Return PerformanceResult with all available metrics
+            return PerformanceResult(
                 gpuTimeMs: gpuTimeMs,
                 deviceName: device.name,
                 testConfig: testConfig,
                 stageUtilization: stageUtilization,
                 statistics: statistics
-            )
-            
-            // Convert to legacy PerformanceResult for compatibility
-            return PerformanceResult(
-                gpuTimeMs: gpuTimeMs,
-                deviceName: device.name,
-                testConfig: testConfig
             )
         } else {
             print("GPU performance measurement not available (counter sampling unsupported)")
@@ -228,25 +230,4 @@ class Renderer {
             return nil
         }
     }
-    
-    // MARK: - Performance Measurement
-    
-    /// Formats a GPU timestamp for better readability
-    /// - Parameter timestamp: Raw GPU timestamp in nanoseconds
-    /// - Returns: Formatted string showing both raw and readable format
-    private func formatTimestamp(_ timestamp: UInt64) -> String {
-        let nanoseconds = timestamp
-        let microseconds = Double(nanoseconds) / 1_000.0
-        let milliseconds = Double(nanoseconds) / 1_000_000.0
-        
-        // Show raw timestamp and converted value for context
-        if milliseconds >= 1.0 {
-            return "\(nanoseconds) ns (\(String(format: "%.3f", milliseconds)) ms)"
-        } else if microseconds >= 1.0 {
-            return "\(nanoseconds) ns (\(String(format: "%.1f", microseconds)) μs)"
-        } else {
-            return "\(nanoseconds) ns"
-        }
-    }
-    
 }
