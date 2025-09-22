@@ -43,13 +43,6 @@ The easiest way to use the tool is through Xcode's scheme selector:
 4. **Run Test**: Select the corresponding test scheme (e.g., `Test-Ultra-High-Res`) and run it to see analysis results
 5. **View Results**: Compare the baseline and test results in the console output
 
-**Available Schemes:**
-- `Baseline-Low-Res` / `Test-Low-Res` - 720p mobile testing
-- `Baseline-Moderate` / `Test-Moderate` - 1080p daily development
-- `Baseline-Complex` / `Test-Complex` - 1440p feature development
-- `Baseline-High-Res` / `Test-High-Res` - 4K display scaling
-- `Baseline-Ultra-High-Res` / `Test-Ultra-High-Res` - 8K extreme testing
-
 ### Command Line Interface
 
 For CI/CD workflows, use the command-line interface:
@@ -65,33 +58,9 @@ Metal-Performance-Tracker --update-baseline --ultra-high-res
 Metal-Performance-Tracker --run-test --ultra-high-res
 ```
 
-#### Available Test Configurations
-
-```bash
-# Test with specific resolution presets
-Metal-Performance-Tracker --run-test --low-res          # 720p, mobile testing
-Metal-Performance-Tracker --run-test --moderate         # 1080p, daily development  
-Metal-Performance-Tracker --run-test --complex          # 1440p, feature development
-Metal-Performance-Tracker --run-test --high-res         # 4K, display scaling
-Metal-Performance-Tracker --run-test --ultra-high-res   # 8K, ultra-high resolution
-```
-
-#### Command Line Arguments
-
-| Argument | Description | Example |
-|----------|-------------|---------|
-| `--help` | Show help information | `--help` |
-| `--run-test` | Run performance test against baseline | `--run-test` |
-| `--update-baseline` | Create/update performance baseline | `--update-baseline` |
-| `--low-res` | 720p mobile testing preset | `--low-res` |
-| `--moderate` | 1080p daily development preset | `--moderate` |
-| `--complex` | 1440p feature development preset | `--complex` |
-| `--high-res` | 4K display scaling preset | `--high-res` |
-| `--ultra-high-res` | 8K ultra-high resolution preset | `--ultra-high-res` |
-
 For detailed information about baseline output and interpretation, see the [Baseline Output guide](https://github.com/KelCodesStuff/Metal-Performance-Tracker/wiki/Baseline-Output).
 
-## Building
+## Requirements
 
 ### System Requirements
 - **macOS**: 10.15 (Catalina) or later
@@ -126,18 +95,6 @@ The tool includes a sophisticated statistical analysis engine that provides:
 
 For more information see the [Performance Impact Categories guide](https://github.com/KelCodesStuff/Metal-Performance-Tracker/wiki/Performance-Impact-Categories).
 
-## Test Configurations
-
-The tool includes pre-defined test configurations optimized for different use cases:
-
-| Configuration | Resolution | Triangles | Complexity | Use Case |
-|---------------|------------|-----------|------------|----------|
-| **Low Resolution** | 1280×720 | 10 | 1/10 | Mobile testing, quick validation |
-| **Moderate** | 1920×1080 | 100 | 5/10 | Daily development, CI/CD |
-| **Complex** | 2560×1440 | 1,000 | 8/10 | Feature development, stress testing |
-| **High Resolution** | 3840×2160 | 2,000 | 8/10 | 4K testing, display scaling |
-| **Ultra High Resolution** | 7680×4320 | 4,000 | 10/10 | 8K testing, extreme workloads |
-
 ## Supported GPUs
 
 ### Fully Supported
@@ -154,26 +111,9 @@ The tool includes pre-defined test configurations optimized for different use ca
 - **GPUs without Counter Sampling**: Older integrated graphics without performance counter support
 
 ## Troubleshooting
+For troubleshooting see the [Troubleshooting guide](https://github.com/KelCodesStuff/Metal-Performance-Tracker/wiki/Troubleshooting).
 
-### Common Issues
-
-**"Counter sampling not supported"**
-- Your GPU doesn't support Metal's performance counter sampling API
-- Try on a different machine with a supported GPU (Apple Silicon, modern discrete GPUs)
-
-**"Missing baseline"**
-- Run `Metal-Performance-Tracker --update-baseline` first
-- Ensure the `Data/` directory is writable
-
-**"Performance varies between runs"**
-- This is normal behavior - the tool handles variance through statistical analysis
-- Consider thermal throttling, background processes, and system load
-
-**"High-resolution tests fail or crash"**
-- Try lower resolution presets (`--moderate` instead of `--high-res`)
-- Ensure adequate system memory (16GB+ recommended)
-- Use external GPU if testing on MacBook with integrated graphics
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
