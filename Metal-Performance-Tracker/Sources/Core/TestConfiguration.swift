@@ -31,7 +31,7 @@ struct TestConfiguration: Codable {
     /// Timestamp when the test was run
     let timestamp: Date
     
-    /// Human-readable name for this baseline configuration
+    /// Name of the baseline configuration
     let baselineName: String
     
     /// Creates a test configuration with default values
@@ -72,7 +72,7 @@ struct TestConfiguration: Codable {
         return Int(Double(height) * resolutionScale)
     }
     
-    /// Returns a human-readable description of the configuration
+    /// Returns a description of the configuration
     var description: String {
         return baselineName
     }
@@ -133,7 +133,7 @@ enum TestPreset {
         }
     }
     
-    /// Human-readable name for the preset
+    /// Name of the preset
     var name: String {
         switch self {
         case .lowRes: return "Low Resolution (720p, Mobile Testing)"
