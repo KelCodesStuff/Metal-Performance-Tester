@@ -35,14 +35,16 @@ class Renderer {
 
     // MARK: - Initialization
 
-    init?(device: MTLDevice, testConfig: TestConfiguration = TestPreset.moderate.createConfiguration()) {
+    init?(device: MTLDevice, testConfig: TestConfiguration = TestPreset.moderate.createConfiguration(), showConfiguration: Bool = true) {
         self.device = device
         self.testConfig = testConfig
         
-        // Print test configuration
-        print("\nTest Configuration: \(testConfig.description)")
-        print("Parameters:")
-        print(testConfig.parametersDescription)
+        // Print test configuration if requested
+        if showConfiguration {
+            print("\nTest Configuration: \(testConfig.description)")
+            print("Parameters:")
+            print(testConfig.parametersDescription)
+        }
         
         // --- 1. Create a command queue ---
         // The command queue is responsible for managing and executing command buffers.
@@ -115,6 +117,62 @@ class Renderer {
     
     // MARK: - Drawing Method
 
+    /// Runs multiple iterations and returns a performance measurement set
+    /// - Parameters:
+    ///   - iterations: Number of iterations to run (default: 50 for baseline, 100 for tests)
+    ///   - showProgress: Whether to show progress during iterations
+    ///   - showDetailedResults: Whether to display the full baseline results output
+    /// - Returns: PerformanceMeasurementSet if measurement was successful, nil if counter sampling is unsupported
+    func runMultipleIterations(iterations: Int = 50, showProgress: Bool = true, showDetailedResults: Bool = true) -> PerformanceMeasurementSet? {
+        guard performanceMetrics.supportsCounterSampling else {
+            print("GPU performance measurement not available (counter sampling unsupported)")
+            return nil
+        }
+        
+        var results: [PerformanceResult] = []
+        
+        if showProgress {
+            print("\nRunning \(iterations) iterations for statistical analysis...")
+        }
+        
+        for i in 0..<iterations {
+            if let result = draw(showDetailedAnalysis: false) {
+                results.append(result)
+                
+                // Only show progress at completion
+                if showProgress && i == iterations - 1 {
+                    let progress = ((i + 1) * 100) / iterations
+                    print("Progress: \(progress)% (\(i + 1)/\(iterations))")
+                }
+            } else {
+                print("Failed to get performance result for iteration \(i + 1)")
+                return nil
+            }
+        }
+        
+        let measurementSet = PerformanceMeasurementSet(individualResults: results)
+        
+        if showDetailedResults {
+            print("\n" + String(repeating: "=", count: 60))
+            print("PERFORMANCE BASELINE COMPLETE")
+            print(String(repeating: "=", count: 60))
+            print(measurementSet.summary)
+            
+            // Display performance impact based on average results
+            let performanceImpact = TestConfigurationHelper.calculatePerformanceImpactFromResults(
+                gpuTimeMs: measurementSet.averageGpuTimeMs,
+                totalUtilization: measurementSet.individualResults.last?.stageUtilization?.totalUtilization,
+                memoryBandwidth: measurementSet.individualResults.last?.statistics?.memoryBandwidth,
+                instructionsExecuted: measurementSet.individualResults.last?.statistics?.instructionsExecuted
+            )
+            print("\nPerformance Impact: \(performanceImpact)")
+            
+            print("\n" + String(repeating: "=", count: 60))
+        }
+        
+        return measurementSet
+    }
+
     /// Executes the rendering test and returns performance data
     /// - Parameter showDetailedAnalysis: Whether to display the detailed GPU performance analysis
     /// - Returns: PerformanceResult if measurement was successful, nil if counter sampling is unsupported
@@ -172,35 +230,35 @@ class Renderer {
                 
                 // Display stage utilization metrics
                 if let stageUtil = stageUtilization {
-                    print("\nSTAGE UTILIZATION:")
+                    print("\nStage Utilization:")
                     if let vertexUtil = stageUtil.vertexUtilization {
-                        print("   Vertex Shader: \(String(format: "%.1f", vertexUtil))%")
+                        print("  Vertex Shader: \(String(format: "%.1f", vertexUtil))%")
                     }
                     if let fragmentUtil = stageUtil.fragmentUtilization {
-                        print("   Fragment Shader: \(String(format: "%.1f", fragmentUtil))%")
+                        print("  Fragment Shader: \(String(format: "%.1f", fragmentUtil))%")
                     }
                     if let totalUtil = stageUtil.totalUtilization {
-                        print("   Total Utilization: \(String(format: "%.1f", totalUtil))%")
+                        print("  Total Utilization: \(String(format: "%.1f", totalUtil))%")
                     }
                 }
                 
                 // Display statistics metrics
                 if let stats = statistics {
-                    print("\nPERFORMANCE STATISTICS:")
+                    print("\nPerformance Statistics:")
                     if let bandwidth = stats.memoryBandwidth {
-                        print("   Memory Bandwidth: \(String(format: "%.1f", bandwidth)) MB/s")
+                        print("  Memory Bandwidth: \(String(format: "%.1f", bandwidth)) MB/s")
                     }
                     if let cacheHits = stats.cacheHits {
-                        print("   Cache Hits: \(String(format: "%.0f", cacheHits))")
+                        print("  Cache Hits: \(String(format: "%.0f", cacheHits))")
                     }
                     if let cacheMisses = stats.cacheMisses {
-                        print("   Cache Misses: \(String(format: "%.0f", cacheMisses))")
+                        print("  Cache Misses: \(String(format: "%.0f", cacheMisses))")
                     }
                     if let hitRate = stats.cacheHitRate {
-                        print("   Cache Hit Rate: \(String(format: "%.1f", hitRate * 100))%")
+                        print("  Cache Hit Rate: \(String(format: "%.1f", hitRate * 100))%")
                     }
                     if let instructions = stats.instructionsExecuted {
-                        print("   Instructions Executed: \(String(format: "%.0f", instructions))")
+                        print("  Instructions Executed: \(String(format: "%.0f", instructions))")
                     }
                 }
                 
@@ -211,7 +269,7 @@ class Renderer {
                     memoryBandwidth: statistics?.memoryBandwidth,
                     instructionsExecuted: statistics?.instructionsExecuted
                 )
-                print("\nPERFORMANCE IMPACT: \(performanceImpact)")
+                print("\nPerformance Impact: \(performanceImpact)")
                 
                 print("\n" + String(repeating: "=", count: 50))
             }
