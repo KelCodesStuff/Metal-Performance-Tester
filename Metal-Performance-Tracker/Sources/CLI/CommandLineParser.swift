@@ -9,8 +9,8 @@ import Foundation
 
 /// Represents the different modes the performance tracker can run in
 enum TestMode {
-    case runTest(threshold: Double)
-    case updateBaseline
+    case runTest(threshold: Double, testConfig: TestConfiguration?)
+    case updateBaseline(testConfig: TestConfiguration?)
     case help
 }
 
@@ -34,10 +34,12 @@ class CommandLineParser {
         case "--run-test":
             // Parse optional threshold argument
             let threshold = parseThreshold(from: arguments, defaultThreshold: defaultThreshold)
-            return .runTest(threshold: threshold)
+            let testConfig = parseTestConfiguration(from: arguments)
+            return .runTest(threshold: threshold, testConfig: testConfig)
             
         case "--update-baseline":
-            return .updateBaseline
+            let testConfig = parseTestConfiguration(from: arguments)
+            return .updateBaseline(testConfig: testConfig)
             
         case "--help", "-h":
             return .help
@@ -60,14 +62,45 @@ class CommandLineParser {
             let thresholdString = arguments[thresholdIndex + 1]
             
             if let threshold = Double(thresholdString) {
-                // Convert percentage to decimal (e.g., 5.0 -> 0.05)
-                return threshold / 100.0
+                // Validate threshold range (0-100%)
+                if threshold >= 0.0 && threshold <= 100.0 {
+                    // Convert percentage to decimal (e.g., 5.0 -> 0.05)
+                    return threshold / 100.0
+                } else {
+                    print("Invalid threshold value: \(thresholdString)%. Must be between 0 and 100. Using default: \(defaultThreshold * 100)%")
+                }
             } else {
                 print("Invalid threshold value: \(thresholdString). Using default: \(defaultThreshold * 100)%")
             }
         }
         
         return defaultThreshold
+    }
+    
+    /// Parses test configuration from command-line arguments
+    /// - Parameter arguments: All command-line arguments
+    /// - Returns: TestConfiguration if specified, nil for default
+    private static func parseTestConfiguration(from arguments: [String]) -> TestConfiguration? {
+        // Check for preset arguments first
+        for arg in arguments {
+            switch arg {
+            case "--low-res":
+                return TestPreset.lowRes.createConfiguration()
+            case "--moderate":
+                return TestPreset.moderate.createConfiguration()
+            case "--complex":
+                return TestPreset.complex.createConfiguration()
+            case "--high-res":
+                return TestPreset.highRes.createConfiguration()
+            case "--ultra-high-res":
+                return TestPreset.ultraHighRes.createConfiguration()
+            default:
+                continue
+            }
+        }
+        
+        // Return nil for default configuration
+        return nil
     }
     
     /// Prints usage information to the console
@@ -78,7 +111,7 @@ class CommandLineParser {
         USAGE:
         Metal-Performance-Tracker [OPTIONS]
         
-        OPTIONS:
+        BASIC OPTIONS:
         --update-baseline
         Run test and save results as new baseline
         
@@ -87,6 +120,16 @@ class CommandLineParser {
         
         --help, -h
         Show this help message
+        
+        TEST CONFIGURATION:
+        --low-res         Low resolution (720p, mobile/low-end testing)
+        --moderate        Moderate test (1080p, daily development testing)
+        --complex         Complex test (1080p, feature development)
+        --high-res        High resolution (4K, display scaling testing)
+        --ultra-high-res  Ultra high resolution (8K, ultra-high resolution testing)
+        
+        PARAMETERS:
+        --threshold N     Performance threshold percentage (0-100)
         
         -----
         
