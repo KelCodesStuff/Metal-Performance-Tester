@@ -5,7 +5,6 @@
 //  Created by Kelvin Reid on 9/17/25.
 //
 
-// Import the Metal framework
 import Metal
 
 // A class dedicated to handling all Metal rendering logic.
