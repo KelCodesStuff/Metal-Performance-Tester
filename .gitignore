@@ -51,3 +51,5 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+Metal-Performance-Tracker/Data/performance_baseline.json
+Metal-Performance-Tracker/Data/performance_test_results.json
