@@ -51,7 +51,7 @@ func runUpdateBaseline(testConfig: TestConfiguration? = nil) -> Int32 {
     }
     
     // Run multiple iterations for statistical baseline
-    guard let measurementSet = renderer.runMultipleIterations(iterations: 100, showProgress: true) else {
+    guard let measurementSet = renderer.runMultipleIterations(iterations: 100, showProgress: true, showBaselineOutput: true) else {
         print("Performance measurement not available on this GPU.")
         print("Counter sampling is not supported. Cannot establish baseline.")
         return ExitCode.error.rawValue
@@ -72,6 +72,7 @@ func runUpdateBaseline(testConfig: TestConfiguration? = nil) -> Int32 {
 /// Runs the performance test and compares against baseline using statistical analysis
 func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil) -> Int32 {
     print("Running performance test...")
+    print()
     
     // Check if baseline exists
     let baselineManager = PerformanceBaselineManager()
@@ -94,7 +95,7 @@ func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil)
     }
     
     // Run multiple iterations for statistical comparison
-    guard let currentMeasurementSet = renderer.runMultipleIterations(iterations: 100, showProgress: true, showDetailedResults: false) else {
+    guard let currentMeasurementSet = renderer.runMultipleIterations(iterations: 100, showProgress: true, showBaselineOutput: false) else {
         print("\nError: Performance measurement not available on this GPU.")
         print("Counter sampling is not supported.")
         return ExitCode.error.rawValue
@@ -116,14 +117,6 @@ func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil)
             comparison: comparisonResult
         )
         
-        // Save test result to JSON file
-        do {
-            try baselineManager.saveTestResult(testResult)
-        } catch {
-            print("\nWarning: Failed to save test result: \(error)")
-            // Continue execution even if saving fails
-        }
-        
         // Generate and print statistical report
         let report = RegressionChecker.generateStatisticalReport(
             current: currentMeasurementSet,
@@ -131,6 +124,16 @@ func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil)
             result: comparisonResult
         )
         print(report)
+        
+        // Save test result to JSON file
+        do {
+            try baselineManager.saveTestResult(testResult)
+            // Print test result save message only if save was successful
+            print("Test result saved to: \(baselineManager.testResultsFilePath.path)")
+        } catch {
+            print("\nWarning: Failed to save test result: \(error)")
+            // Continue execution even if saving fails
+        }
         
         // Return appropriate exit code based on statistical significance
         if comparisonResult.isRegression {
@@ -146,4 +149,5 @@ func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil)
 }
 
 // Run the main function and exit with the appropriate code
-exit(main())
+let exitCode = main()
+exit(exitCode)

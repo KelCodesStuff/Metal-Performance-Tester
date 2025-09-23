@@ -234,6 +234,11 @@ class PerformanceBaselineManager {
     /// Default filename for the test results JSON file
     static let testResultsFileName = "performance_test_results.json"
     
+    /// Public access to the test results file path
+    var testResultsFilePath: URL {
+        return privateTestResultsFilePath
+    }
+    
     /// Gets the baseline file path in the project's Data directory (cached to avoid multiple project discovery calls)
     private lazy var baselineFilePath: URL = {
         // Try to find the project's Data directory
@@ -267,7 +272,7 @@ class PerformanceBaselineManager {
     }()
     
     /// Gets the test results file path in the project's Data directory (cached to avoid multiple project discovery calls)
-    private lazy var testResultsFilePath: URL = {
+    private lazy var privateTestResultsFilePath: URL = {
         // Try to find the project's Data directory
         let currentDirectory = FileManager.default.currentDirectoryPath
         let currentURL = URL(fileURLWithPath: currentDirectory)
@@ -431,14 +436,18 @@ class PerformanceBaselineManager {
         encoder.outputFormatting = .prettyPrinted
         
         let data = try encoder.encode(testResult)
-        try data.write(to: testResultsFilePath)
-        
-        print("Test result saved to: \(testResultsFilePath.path)")
+        try data.write(to: privateTestResultsFilePath)
+    }
+    
+    /// Saves a performance test result to the test results file and prints the save message
+    func saveTestResultWithMessage(_ testResult: PerformanceTestResult) throws {
+        try saveTestResult(testResult)
+        print("Test result saved to: \(privateTestResultsFilePath.path)")
     }
     
     /// Loads the most recent performance test result
     func loadTestResult() throws -> PerformanceTestResult {
-        let data = try Data(contentsOf: testResultsFilePath)
+        let data = try Data(contentsOf: privateTestResultsFilePath)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         
@@ -447,12 +456,12 @@ class PerformanceBaselineManager {
     
     /// Checks if a test results file exists
     func testResultExists() -> Bool {
-        return FileManager.default.fileExists(atPath: testResultsFilePath.path)
+        return FileManager.default.fileExists(atPath: privateTestResultsFilePath.path)
     }
     
     /// Deletes the test results file
     func deleteTestResult() throws {
-        try FileManager.default.removeItem(at: testResultsFilePath)
+        try FileManager.default.removeItem(at: privateTestResultsFilePath)
         print("Test results file deleted")
     }
 }

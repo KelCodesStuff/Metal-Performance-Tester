@@ -120,9 +120,9 @@ class Renderer {
     /// - Parameters:
     ///   - iterations: Number of iterations to run (default: 50 for baseline, 100 for tests)
     ///   - showProgress: Whether to show progress during iterations
-    ///   - showDetailedResults: Whether to display the full baseline results output
+    ///   - showBaselineOutput: Whether to display the baseline completion output (only for baseline updates)
     /// - Returns: PerformanceMeasurementSet if measurement was successful, nil if counter sampling is unsupported
-    func runMultipleIterations(iterations: Int = 50, showProgress: Bool = true, showDetailedResults: Bool = true) -> PerformanceMeasurementSet? {
+    func runMultipleIterations(iterations: Int = 50, showProgress: Bool = true, showBaselineOutput: Bool = false) -> PerformanceMeasurementSet? {
         guard performanceMetrics.supportsCounterSampling else {
             print("GPU performance measurement not available (counter sampling unsupported)")
             return nil
@@ -138,7 +138,7 @@ class Renderer {
             if let result = draw(showDetailedAnalysis: false) {
                 results.append(result)
                 
-                // Only show progress at completion
+                // Show progress at completion
                 if showProgress && i == iterations - 1 {
                     let progress = ((i + 1) * 100) / iterations
                     print("Progress: \(progress)% (\(i + 1)/\(iterations))")
@@ -151,12 +151,7 @@ class Renderer {
         
         let measurementSet = PerformanceMeasurementSet(individualResults: results)
         
-        if showDetailedResults {
-            print("\n" + String(repeating: "=", count: 60))
-            print("PERFORMANCE BASELINE COMPLETE")
-            print(String(repeating: "=", count: 60))
-            print(measurementSet.summary)
-            
+        if showBaselineOutput {
             // Display performance impact based on average results
             let performanceImpact = TestConfigurationHelper.calculatePerformanceImpactFromResults(
                 gpuTimeMs: measurementSet.averageGpuTimeMs,
@@ -164,9 +159,19 @@ class Renderer {
                 memoryBandwidth: measurementSet.individualResults.last?.statistics?.memoryBandwidth,
                 instructionsExecuted: measurementSet.individualResults.last?.statistics?.instructionsExecuted
             )
-            print("\nPerformance Impact: \(performanceImpact)")
             
-            print("\n" + String(repeating: "=", count: 60))
+            let baselineReport = """
+            
+            ============================================================
+            PERFORMANCE BASELINE COMPLETE
+            
+            \(measurementSet.summary)
+            
+            Performance Impact: \(performanceImpact)
+            
+            """
+            
+            print(baselineReport)
         }
         
         return measurementSet

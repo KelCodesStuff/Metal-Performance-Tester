@@ -60,8 +60,8 @@ class RegressionChecker {
     static func generateStatisticalReport(current: PerformanceMeasurementSet, baseline: PerformanceMeasurementSet, result: StatisticalAnalysis.ComparisonResult) -> String {
         var report = """
 
+        ============================================================
         PERFORMANCE TEST RESULTS
-        ============================
         
         Test Configuration: \(current.testConfig.description)
         Device: \(current.deviceName)
@@ -122,11 +122,11 @@ class RegressionChecker {
         
         // Add result at the bottom
         if result.isRegression {
-            report += "\nResult: PERFORMANCE REGRESSION DETECTED"
+            report += "\nResult: PERFORMANCE REGRESSION DETECTED\n"
         } else if result.isImprovement {
-            report += "\nResult: PERFORMANCE IMPROVEMENT DETECTED"
+            report += "\nResult: PERFORMANCE IMPROVEMENT DETECTED\n"
         } else {
-            report += "\nResult: NO SIGNIFICANT CHANGE DETECTED"
+            report += "\nResult: NO SIGNIFICANT CHANGE DETECTED\n"
         }
         
         return report
