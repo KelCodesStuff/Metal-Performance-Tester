@@ -117,14 +117,6 @@ func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil)
             comparison: comparisonResult
         )
         
-        // Save test result to JSON file
-        do {
-            try baselineManager.saveTestResult(testResult)
-        } catch {
-            print("\nWarning: Failed to save test result: \(error)")
-            // Continue execution even if saving fails
-        }
-        
         // Generate and print statistical report
         let report = RegressionChecker.generateStatisticalReport(
             current: currentMeasurementSet,
@@ -133,8 +125,15 @@ func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil)
         )
         print(report)
         
-        // Print test result save message
-        print("Test result saved to: \(baselineManager.testResultsFilePath.path)")
+        // Save test result to JSON file
+        do {
+            try baselineManager.saveTestResult(testResult)
+            // Print test result save message only if save was successful
+            print("Test result saved to: \(baselineManager.testResultsFilePath.path)")
+        } catch {
+            print("\nWarning: Failed to save test result: \(error)")
+            // Continue execution even if saving fails
+        }
         
         // Return appropriate exit code based on statistical significance
         if comparisonResult.isRegression {
