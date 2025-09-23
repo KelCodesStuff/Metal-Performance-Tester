@@ -1,6 +1,6 @@
 //
 //  StatisticalAnalysis.swift
-//  Metal-Performance-Tracker
+//  Metal-Performance-Tester
 //
 //  Created by Kelvin Reid on 9/20/25.
 //

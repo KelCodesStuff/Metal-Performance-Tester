@@ -20,14 +20,14 @@
 
 /* Begin PBXFileReference section */
 		BA7950B72E7BB5A4007617C8 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		BAC23E5D2E7B29770047C51B /* Metal-Performance-Tracker */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Metal-Performance-Tracker"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAC23E5D2E7B29770047C51B /* Metal-Performance-Tester */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Metal-Performance-Tester"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC23E9A2E7BA8EA0047C51B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		BAC23E5F2E7B29770047C51B /* Metal-Performance-Tracker */ = {
+		BAC23E5F2E7B29770047C51B /* Metal-Performance-Tester */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Metal-Performance-Tracker";
+			path = "Metal-Performance-Tester";
 			sourceTree = "<group>";
 		};
 		BAC23EE92E7BAB0C0047C51B /* Tests */ = {
@@ -56,7 +56,7 @@
 		BAC23E542E7B29770047C51B = {
 			isa = PBXGroup;
 			children = (
-				BAC23E5F2E7B29770047C51B /* Metal-Performance-Tracker */,
+				BAC23E5F2E7B29770047C51B /* Metal-Performance-Tester */,
 				BAC23EEB2E7BAB2A0047C51B /* TestPlans */,
 				BAC23EE92E7BAB0C0047C51B /* Tests */,
 				BAC23E9A2E7BA8EA0047C51B /* README.md */,
@@ -68,7 +68,7 @@
 		BAC23E5E2E7B29770047C51B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BAC23E5D2E7B29770047C51B /* Metal-Performance-Tracker */,
+				BAC23E5D2E7B29770047C51B /* Metal-Performance-Tester */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,9 +76,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BAC23E5C2E7B29770047C51B /* Metal-Performance-Tracker */ = {
+		BAC23E5C2E7B29770047C51B /* Metal-Performance-Tester */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BAC23E642E7B29770047C51B /* Build configuration list for PBXNativeTarget "Metal-Performance-Tracker" */;
+			buildConfigurationList = BAC23E642E7B29770047C51B /* Build configuration list for PBXNativeTarget "Metal-Performance-Tester" */;
 			buildPhases = (
 				BAC23E592E7B29770047C51B /* Sources */,
 				BAC23E5A2E7B29770047C51B /* Frameworks */,
@@ -89,15 +89,15 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				BAC23E5F2E7B29770047C51B /* Metal-Performance-Tracker */,
+				BAC23E5F2E7B29770047C51B /* Metal-Performance-Tester */,
 				BAC23EE92E7BAB0C0047C51B /* Tests */,
 				BAC23EEB2E7BAB2A0047C51B /* TestPlans */,
 			);
-			name = "Metal-Performance-Tracker";
+			name = "Metal-Performance-Tester";
 			packageProductDependencies = (
 			);
 			productName = "Metal-Perform-Tracker";
-			productReference = BAC23E5D2E7B29770047C51B /* Metal-Performance-Tracker */;
+			productReference = BAC23E5D2E7B29770047C51B /* Metal-Performance-Tester */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -115,7 +115,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BAC23E582E7B29770047C51B /* Build configuration list for PBXProject "Metal-Performance-Tracker" */;
+			buildConfigurationList = BAC23E582E7B29770047C51B /* Build configuration list for PBXProject "Metal-Performance-Tester" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -129,7 +129,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BAC23E5C2E7B29770047C51B /* Metal-Performance-Tracker */,
+				BAC23E5C2E7B29770047C51B /* Metal-Performance-Tester */,
 			);
 		};
 /* End PBXProject section */
@@ -296,7 +296,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BAC23E582E7B29770047C51B /* Build configuration list for PBXProject "Metal-Performance-Tracker" */ = {
+		BAC23E582E7B29770047C51B /* Build configuration list for PBXProject "Metal-Performance-Tester" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BAC23E622E7B29770047C51B /* Debug */,
@@ -305,7 +305,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BAC23E642E7B29770047C51B /* Build configuration list for PBXNativeTarget "Metal-Performance-Tracker" */ = {
+		BAC23E642E7B29770047C51B /* Build configuration list for PBXNativeTarget "Metal-Performance-Tester" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BAC23E652E7B29770047C51B /* Debug */,

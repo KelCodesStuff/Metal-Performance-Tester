@@ -1,6 +1,6 @@
 //
 //  CommandLineParser.swift
-//  Metal-Performance-Tracker
+//  Metal-Performance-Tester
 //
 //  Created by Kelvin Reid on 9/17/25.
 //
@@ -106,10 +106,10 @@ class CommandLineParser {
     /// Prints usage information to the console
     static func printUsage() {
         print("""
-        Metal Performance Tracker
+        Metal Performance Tester
         
         USAGE:
-        Metal-Performance-Tracker [OPTIONS]
+        Metal-Performance-Tester [OPTIONS]
         
         BASIC OPTIONS:
         --update-baseline

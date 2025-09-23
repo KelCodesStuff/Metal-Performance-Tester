@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BAC23E5C2E7B29770047C51B"
-               BuildableName = "Metal-Performance-Tracker"
-               BlueprintName = "Metal-Performance-Tracker"
-               ReferencedContainer = "container:Metal-Performance-Tracker.xcodeproj">
+               BuildableName = "Metal-Performance-Tester"
+               BlueprintName = "Metal-Performance-Tester"
+               ReferencedContainer = "container:Metal-Performance-Tester.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BAC23E5C2E7B29770047C51B"
-            BuildableName = "Metal-Performance-Tracker"
-            BlueprintName = "Metal-Performance-Tracker"
-            ReferencedContainer = "container:Metal-Performance-Tracker.xcodeproj">
+            BuildableName = "Metal-Performance-Tester"
+            BlueprintName = "Metal-Performance-Tester"
+            ReferencedContainer = "container:Metal-Performance-Tester.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -57,7 +57,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--moderate"
+            argument = "--complex"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
@@ -73,9 +73,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BAC23E5C2E7B29770047C51B"
-            BuildableName = "Metal-Performance-Tracker"
-            BlueprintName = "Metal-Performance-Tracker"
-            ReferencedContainer = "container:Metal-Performance-Tracker.xcodeproj">
+            BuildableName = "Metal-Performance-Tester"
+            BlueprintName = "Metal-Performance-Tester"
+            ReferencedContainer = "container:Metal-Performance-Tester.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
