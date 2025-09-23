@@ -124,7 +124,7 @@ class CommandLineParser {
         TEST CONFIGURATION:
         --low-res         Low resolution (720p, mobile/low-end testing)
         --moderate        Moderate test (1080p, daily development testing)
-        --complex         Complex test (1080p, feature development)
+        --complex         Complex test (1440p, feature development)
         --high-res        High resolution (4K, display scaling testing)
         --ultra-high-res  Ultra high resolution (8K, ultra-high resolution testing)
         
