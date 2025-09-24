@@ -123,10 +123,22 @@ struct PerformanceMeasurementSet: Codable {
         - Coefficient of Variation: \(String(format: "%.1f", statistics.coefficientOfVariation * 100))%
         - Quality: \(statistics.qualityRating.rawValue)
         
-        \(stageUtilizationStatistics != nil ? "Stage Utilization:" : "")
-        \(stageUtilizationStatistics?.vertexUtilization != nil ? "- Average Vertex Utilization: \(String(format: "%.1f", stageUtilizationStatistics!.vertexUtilization!.mean))%" : "")
-        \(stageUtilizationStatistics?.fragmentUtilization != nil ? "- Average Fragment Utilization: \(String(format: "%.1f", stageUtilizationStatistics!.fragmentUtilization!.mean))%" : "")
-        \(stageUtilizationStatistics?.totalUtilization != nil ? "- Average Total Utilization: \(String(format: "%.1f", stageUtilizationStatistics!.totalUtilization!.mean))%" : "")
+        \({
+            if let stageUtil = stageUtilizationStatistics {
+                var result = "Stage Utilization:\n"
+                if let vertex = stageUtil.vertexUtilization {
+                    result += "- Average Vertex Utilization: \(String(format: "%.1f", vertex.mean))%\n"
+                }
+                if let fragment = stageUtil.fragmentUtilization {
+                    result += "- Average Fragment Utilization: \(String(format: "%.1f", fragment.mean))%\n"
+                }
+                if let total = stageUtil.totalUtilization {
+                    result += "- Average Total Utilization: \(String(format: "%.1f", total.mean))%\n"
+                }
+                return result
+            }
+            return ""
+        }())
         """
         
         // Add performance statistics from the last result
@@ -210,17 +222,45 @@ struct PerformanceTestResult: Codable {
         - Confidence Range: \(String(format: "%.3f", abs(comparisonResult.confidenceInterval.lower))) to \(String(format: "%.3f", abs(comparisonResult.confidenceInterval.upper))) ms (95% confidence)
         - Reliability: \(comparisonResult.isSignificant ? "Statistically significant (real change, not random)" : "Not statistically significant (could be random variation)")
         
-        \(comparisonResult.stageUtilizationComparison != nil ? "Stage Utilization Comparison:" : "")
-        \(comparisonResult.stageUtilizationComparison?.vertexUtilization != nil ? "- Vertex Utilization: \(String(format: "%.1f", comparisonResult.stageUtilizationComparison!.vertexUtilization!.current))%  (\(String(format: "%+.1f", comparisonResult.stageUtilizationComparison!.vertexUtilization!.change))%)" : "")
-        \(comparisonResult.stageUtilizationComparison?.fragmentUtilization != nil ? "- Fragment Utilization: \(String(format: "%.1f", comparisonResult.stageUtilizationComparison!.fragmentUtilization!.current))%  (\(String(format: "%+.1f", comparisonResult.stageUtilizationComparison!.fragmentUtilization!.change))%)" : "")
-        \(comparisonResult.stageUtilizationComparison?.totalUtilization != nil ? "- Total Utilization: \(String(format: "%.1f", comparisonResult.stageUtilizationComparison!.totalUtilization!.current))%  (\(String(format: "%+.1f", comparisonResult.stageUtilizationComparison!.totalUtilization!.change))%)" : "")
+        \({
+            if let stageUtil = comparisonResult.stageUtilizationComparison {
+                var result = "Stage Utilization Comparison:\n"
+                if let vertex = stageUtil.vertexUtilization {
+                    result += "- Vertex Utilization: \(String(format: "%.1f", vertex.current))%  (\(String(format: "%+.1f", vertex.change))%)\n"
+                }
+                if let fragment = stageUtil.fragmentUtilization {
+                    result += "- Fragment Utilization: \(String(format: "%.1f", fragment.current))%  (\(String(format: "%+.1f", fragment.change))%)\n"
+                }
+                if let total = stageUtil.totalUtilization {
+                    result += "- Total Utilization: \(String(format: "%.1f", total.current))%  (\(String(format: "%+.1f", total.change))%)\n"
+                }
+                return result
+            }
+            return ""
+        }())
         
-        \(comparisonResult.performanceStatsComparison != nil ? "Memory Statistics Comparison:" : "")
-        \(comparisonResult.performanceStatsComparison?.cacheHits != nil ? "- Cache Hits: \(String(format: "%.0f", comparisonResult.performanceStatsComparison!.cacheHits!.current))" : "")
-        \(comparisonResult.performanceStatsComparison?.cacheMisses != nil ? "- Cache Misses: \(String(format: "%.0f", comparisonResult.performanceStatsComparison!.cacheMisses!.current))" : "")
-        \(comparisonResult.performanceStatsComparison?.cacheHitRate != nil ? "- Cache Hit Rate: \(String(format: "%.1f", comparisonResult.performanceStatsComparison!.cacheHitRate!.current * 100))%  (\(String(format: "%+.1f", comparisonResult.performanceStatsComparison!.cacheHitRate!.changePercent))%)" : "")
-        \(comparisonResult.performanceStatsComparison?.memoryBandwidth != nil ? "- Memory Bandwidth: \(String(format: "%.1f", comparisonResult.performanceStatsComparison!.memoryBandwidth!.current)) MB/s  (\(String(format: "%+.1f", comparisonResult.performanceStatsComparison!.memoryBandwidth!.changePercent))%)" : "")
-        \(comparisonResult.performanceStatsComparison?.instructionsExecuted != nil ? "- Instructions Executed: \(String(format: "%.0f", comparisonResult.performanceStatsComparison!.instructionsExecuted!.current))  (\(String(format: "%+.1f", comparisonResult.performanceStatsComparison!.instructionsExecuted!.changePercent))%)" : "")
+        \({
+            if let perfStats = comparisonResult.performanceStatsComparison {
+                var result = "Memory Statistics Comparison:\n"
+                if let cacheHits = perfStats.cacheHits {
+                    result += "- Cache Hits: \(String(format: "%.0f", cacheHits.current))\n"
+                }
+                if let cacheMisses = perfStats.cacheMisses {
+                    result += "- Cache Misses: \(String(format: "%.0f", cacheMisses.current))\n"
+                }
+                if let cacheHitRate = perfStats.cacheHitRate {
+                    result += "- Cache Hit Rate: \(String(format: "%.1f", cacheHitRate.current * 100))%  (\(String(format: "%+.1f", cacheHitRate.changePercent))%)\n"
+                }
+                if let memoryBandwidth = perfStats.memoryBandwidth {
+                    result += "- Memory Bandwidth: \(String(format: "%.1f", memoryBandwidth.current)) MB/s  (\(String(format: "%+.1f", memoryBandwidth.changePercent))%)\n"
+                }
+                if let instructionsExecuted = perfStats.instructionsExecuted {
+                    result += "- Instructions Executed: \(String(format: "%.0f", instructionsExecuted.current))  (\(String(format: "%+.1f", instructionsExecuted.changePercent))%)\n"
+                }
+                return result
+            }
+            return ""
+        }())
         
         Result: \(isRegression ? "PERFORMANCE REGRESSION DETECTED" : isImprovement ? "PERFORMANCE IMPROVEMENT DETECTED" : "NO SIGNIFICANT CHANGE DETECTED")
         """

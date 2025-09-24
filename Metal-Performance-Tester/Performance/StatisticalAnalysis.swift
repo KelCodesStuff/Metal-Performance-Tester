@@ -73,7 +73,7 @@ struct StatisticalAnalysis {
         let baselineStats: PerformanceStatistics
         let currentStats: PerformanceStatistics
         let meanDifference: Double
-        /// Percentage difference between current and baseline (already calculated as percentage, e.g., 0.42 for 0.42%)
+        /// Percentage difference between current and baseline (already multiplied by 100, e.g., 0.42 represents 0.42%)
         /// DO NOT multiply by 100 when formatting - this value is already a percentage
         let meanDifferencePercent: Double
         let confidenceInterval: ConfidenceInterval
