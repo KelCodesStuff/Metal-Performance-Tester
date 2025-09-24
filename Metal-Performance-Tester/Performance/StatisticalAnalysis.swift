@@ -117,6 +117,8 @@ struct StatisticalAnalysis {
     /// Performance statistics comparison between baseline and current
     struct PerformanceStatsComparison: Codable {
         let memoryBandwidth: PerformanceStatComparison?
+        let cacheHits: PerformanceStatComparison?
+        let cacheMisses: PerformanceStatComparison?
         let cacheHitRate: PerformanceStatComparison?
         let instructionsExecuted: PerformanceStatComparison?
         
@@ -408,6 +410,16 @@ struct StatisticalAnalysis {
             current: currentStats.cacheHitRate
         )
         
+        let cacheHitsComparison = createPerformanceStatComparison(
+            baseline: baselineStats.cacheHits,
+            current: currentStats.cacheHits
+        )
+        
+        let cacheMissesComparison = createPerformanceStatComparison(
+            baseline: baselineStats.cacheMisses,
+            current: currentStats.cacheMisses
+        )
+        
         let instructionsComparison = createPerformanceStatComparison(
             baseline: baselineStats.instructionsExecuted,
             current: currentStats.instructionsExecuted
@@ -415,22 +427,28 @@ struct StatisticalAnalysis {
         
         return PerformanceStatsComparison(
             memoryBandwidth: memoryBandwidthComparison,
+            cacheHits: cacheHitsComparison,
+            cacheMisses: cacheMissesComparison,
             cacheHitRate: cacheHitRateComparison,
             instructionsExecuted: instructionsComparison
         )
     }
     
     /// Extract performance statistics from individual results
-    private static func extractPerformanceStats(from results: [PerformanceResult]) -> (memoryBandwidth: Double?, cacheHitRate: Double?, instructionsExecuted: Double?) {
+    private static func extractPerformanceStats(from results: [PerformanceResult]) -> (memoryBandwidth: Double?, cacheHits: Double?, cacheMisses: Double?, cacheHitRate: Double?, instructionsExecuted: Double?) {
         let memoryBandwidths = results.compactMap { $0.statistics?.memoryBandwidth }
+        let cacheHits = results.compactMap { $0.statistics?.cacheHits }
+        let cacheMisses = results.compactMap { $0.statistics?.cacheMisses }
         let cacheHitRates = results.compactMap { $0.statistics?.cacheHitRate }
         let instructions = results.compactMap { $0.statistics?.instructionsExecuted }
         
         let avgMemoryBandwidth = memoryBandwidths.isEmpty ? nil : memoryBandwidths.reduce(0, +) / Double(memoryBandwidths.count)
+        let avgCacheHits = cacheHits.isEmpty ? nil : cacheHits.reduce(0, +) / Double(cacheHits.count)
+        let avgCacheMisses = cacheMisses.isEmpty ? nil : cacheMisses.reduce(0, +) / Double(cacheMisses.count)
         let avgCacheHitRate = cacheHitRates.isEmpty ? nil : cacheHitRates.reduce(0, +) / Double(cacheHitRates.count)
         let avgInstructions = instructions.isEmpty ? nil : instructions.reduce(0, +) / Double(instructions.count)
         
-        return (avgMemoryBandwidth, avgCacheHitRate, avgInstructions)
+        return (avgMemoryBandwidth, avgCacheHits, avgCacheMisses, avgCacheHitRate, avgInstructions)
     }
     
     /// Create utilization comparison from baseline and current values
