@@ -58,7 +58,7 @@ class PerformanceTestManager {
         
         // PERFORMANCE TEST OUTPUT: Progress completion and main results header
         print("Progress: (100/100)")
-        print("============================================================")
+        print(String(repeating: "-", count: 60))
         print("PERFORMANCE TEST RESULTS")
         print()
         
