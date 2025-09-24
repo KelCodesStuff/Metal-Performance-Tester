@@ -54,22 +54,18 @@ class BaselineManager {
         print("PERFORMANCE BASELINE RESULTS")
         print()
         
-        // Calculate FPS and range
-        let meanFPS = 1000.0 / measurementSet.averageGpuTimeMs
-        let minFPS = 1000.0 / measurementSet.individualResults.map { $0.gpuTimeMs }.max()!
-        let maxFPS = 1000.0 / measurementSet.individualResults.map { $0.gpuTimeMs }.min()!
+        // Calculate FPS and range using pre-calculated statistics
+        let meanFPS = 1000.0 / measurementSet.statistics.mean
+        let minFPS = 1000.0 / measurementSet.statistics.max  // max time = min FPS
+        let maxFPS = 1000.0 / measurementSet.statistics.min  // min time = max FPS
         
-        // Calculate time statistics
-        let gpuTimes = measurementSet.individualResults.map { $0.gpuTimeMs }
-        let minTime = gpuTimes.min()!
-        let maxTime = gpuTimes.max()!
-        let sortedTimes = gpuTimes.sorted()
-        let medianTime = sortedTimes.count % 2 == 0 ? 
-            (sortedTimes[sortedTimes.count/2 - 1] + sortedTimes[sortedTimes.count/2]) / 2 :
-            sortedTimes[sortedTimes.count/2]
+        // Use pre-calculated time statistics (safer and more efficient)
+        let minTime = measurementSet.statistics.min
+        let maxTime = measurementSet.statistics.max
+        let medianTime = measurementSet.statistics.median
         
-        // Calculate quality rating
-        let coefficientOfVariation = (measurementSet.statistics.standardDeviation / measurementSet.averageGpuTimeMs) * 100
+        // Calculate quality rating using pre-calculated coefficient of variation
+        let coefficientOfVariation = measurementSet.statistics.coefficientOfVariation * 100
         let qualityRating = coefficientOfVariation < 1.0 ? "Excellent" : 
                            coefficientOfVariation < 2.0 ? "Good" : 
                            coefficientOfVariation < 5.0 ? "Fair" : "Poor"
