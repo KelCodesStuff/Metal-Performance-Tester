@@ -40,17 +40,6 @@ struct StatisticalAnalysis {
             }
         }
         
-        /// Summary of the performance statistics
-        var summary: String {
-            return """
-            - Average: \(String(format: "%.3f", mean)) ms
-            - Standard Deviation: \(String(format: "%.3f", standardDeviation)) ms
-            - Range: \(String(format: "%.3f", min)) - \(String(format: "%.3f", max)) ms
-            - Median: \(String(format: "%.3f", median)) ms
-            - Coefficient of Variation: \(String(format: "%.1f", coefficientOfVariation * 100))%
-            - Quality: \(qualityRating.rawValue)
-            """
-        }
     }
     
     /// Statistical analysis for stage utilization metrics
@@ -60,24 +49,6 @@ struct StatisticalAnalysis {
         let totalUtilization: UtilizationStatistic?
         let sampleCount: Int
         
-        /// Summary of stage utilization statistics
-        var summary: String {
-            var result = "Stage Utilization:\n"
-            
-            if let vertex = vertexUtilization {
-                result += "- Average Vertex Utilization: \(String(format: "%.1f", vertex.mean))%\n"
-            }
-            
-            if let fragment = fragmentUtilization {
-                result += "- Average Fragment Utilization: \(String(format: "%.1f", fragment.mean))%\n"
-            }
-            
-            if let total = totalUtilization {
-                result += "- Average Total Utilization: \(String(format: "%.1f", total.mean))%\n"
-            }
-            
-            return result.trimmingCharacters(in: .whitespacesAndNewlines)
-        }
     }
     
     /// Individual utilization statistic
@@ -102,10 +73,18 @@ struct StatisticalAnalysis {
         let baselineStats: PerformanceStatistics
         let currentStats: PerformanceStatistics
         let meanDifference: Double
+        /// Percentage difference between current and baseline (already calculated as percentage, e.g., 0.42 for 0.42%)
+        /// DO NOT multiply by 100 when formatting - this value is already a percentage
         let meanDifferencePercent: Double
         let confidenceInterval: ConfidenceInterval
         let isSignificant: Bool
         let significanceLevel: Double
+        
+        /// Stage utilization comparison (if available)
+        let stageUtilizationComparison: StageUtilizationComparison?
+        
+        /// Performance statistics comparison (if available)
+        let performanceStatsComparison: PerformanceStatsComparison?
         
         /// Determines if there's a performance regression
         var isRegression: Bool {
@@ -117,18 +96,38 @@ struct StatisticalAnalysis {
             return isSignificant && meanDifference < 0
         }
         
-        /// Summary of the statistical comparison
-        var summary: String {
-            let direction = meanDifference > 0 ? "regression" : "improvement"
-            let significance = isSignificant ? "significant" : "not significant"
-            
-            return """
-            Mean Difference: \(String(format: "%+.3f", meanDifference)) ms (\(String(format: "%+.1f", meanDifferencePercent))%)
-            Confidence Interval: [\(String(format: "%.3f", confidenceInterval.lower)), \(String(format: "%.3f", confidenceInterval.upper))]
-            Statistical Significance: \(significance)
-            Result: \(isSignificant ? direction : "no significant change")
-            """
-        }
+    }
+    
+    /// Stage utilization comparison between baseline and current
+    struct StageUtilizationComparison: Codable {
+        let vertexUtilization: UtilizationComparison?
+        let fragmentUtilization: UtilizationComparison?
+        let totalUtilization: UtilizationComparison?
+        
+    }
+    
+    /// Individual utilization comparison
+    struct UtilizationComparison: Codable {
+        let baseline: Double
+        let current: Double
+        let change: Double  // current - baseline
+        let changePercent: Double  // (change / baseline) * 100
+    }
+    
+    /// Performance statistics comparison between baseline and current
+    struct PerformanceStatsComparison: Codable {
+        let memoryBandwidth: PerformanceStatComparison?
+        let cacheHitRate: PerformanceStatComparison?
+        let instructionsExecuted: PerformanceStatComparison?
+        
+    }
+    
+    /// Individual performance statistic comparison
+    struct PerformanceStatComparison: Codable {
+        let baseline: Double
+        let current: Double
+        let change: Double  // current - baseline
+        let changePercent: Double  // (change / baseline) * 100
     }
     
     /// Calculate statistical summary from a collection of performance measurements
@@ -218,6 +217,8 @@ struct StatisticalAnalysis {
         let currentStats = calculateStatistics(current)
         
         let meanDifference = currentStats.mean - baselineStats.mean
+        // Calculate percentage difference (already multiplied by 100 to get percentage value)
+        // This value is ready for display as a percentage (e.g., 0.42 represents 0.42%)
         let meanDifferencePercent = (meanDifference / baselineStats.mean) * 100
         
         // Two-sample t-test for unequal variances (Welch's t-test)
@@ -239,7 +240,53 @@ struct StatisticalAnalysis {
             meanDifferencePercent: meanDifferencePercent,
             confidenceInterval: ConfidenceInterval(lower: confidenceInterval.0, upper: confidenceInterval.1),
             isSignificant: isSignificant,
-            significanceLevel: significanceLevel
+            significanceLevel: significanceLevel,
+            stageUtilizationComparison: nil,
+            performanceStatsComparison: nil
+        )
+    }
+    
+    /// Compare two performance measurement sets with comprehensive analysis
+    static func compare(baseline: PerformanceMeasurementSet, current: PerformanceMeasurementSet, significanceLevel: Double = 0.05) -> ComparisonResult {
+        let baselineTimes = baseline.individualResults.map { $0.gpuTimeMs }
+        let currentTimes = current.individualResults.map { $0.gpuTimeMs }
+        
+        let baselineStats = calculateStatistics(baselineTimes)
+        let currentStats = calculateStatistics(currentTimes)
+        
+        let meanDifference = currentStats.mean - baselineStats.mean
+        // Calculate percentage difference (already multiplied by 100 to get percentage value)
+        // This value is ready for display as a percentage (e.g., 0.42 represents 0.42%)
+        let meanDifferencePercent = (meanDifference / baselineStats.mean) * 100
+        
+        // Two-sample t-test for unequal variances (Welch's t-test)
+        let isSignificant = performWelchTTest(baseline: baselineTimes, current: currentTimes, significanceLevel: significanceLevel)
+        
+        // Confidence interval for the difference
+        let pooledStdError = sqrt(
+            (baselineStats.standardDeviation * baselineStats.standardDeviation / Double(baselineTimes.count)) +
+            (currentStats.standardDeviation * currentStats.standardDeviation / Double(currentTimes.count))
+        )
+        let tValue = tDistributionValue(degreesOfFreedom: min(baselineTimes.count, currentTimes.count) - 1, confidenceLevel: 1 - significanceLevel)
+        let marginOfError = tValue * pooledStdError
+        let confidenceInterval = (meanDifference - marginOfError, meanDifference + marginOfError)
+        
+        // Calculate stage utilization comparison
+        let stageUtilizationComparison = calculateStageUtilizationComparison(baseline: baseline, current: current)
+        
+        // Calculate performance statistics comparison
+        let performanceStatsComparison = calculatePerformanceStatsComparison(baseline: baseline, current: current)
+        
+        return ComparisonResult(
+            baselineStats: baselineStats,
+            currentStats: currentStats,
+            meanDifference: meanDifference,
+            meanDifferencePercent: meanDifferencePercent,
+            confidenceInterval: ConfidenceInterval(lower: confidenceInterval.0, upper: confidenceInterval.1),
+            isSignificant: isSignificant,
+            significanceLevel: significanceLevel,
+            stageUtilizationComparison: stageUtilizationComparison,
+            performanceStatsComparison: performanceStatsComparison
         )
     }
     
@@ -314,5 +361,105 @@ struct StatisticalAnalysis {
         let criticalValue = tDistributionValue(degreesOfFreedom: Int(df), confidenceLevel: 1 - significanceLevel)
         
         return abs(tStatistic) > criticalValue
+    }
+    
+    /// Calculate stage utilization comparison between baseline and current
+    private static func calculateStageUtilizationComparison(baseline: PerformanceMeasurementSet, current: PerformanceMeasurementSet) -> StageUtilizationComparison? {
+        guard let baselineUtilization = baseline.stageUtilizationStatistics,
+              let currentUtilization = current.stageUtilizationStatistics else {
+            return nil
+        }
+        
+        let vertexComparison = createUtilizationComparison(
+            baseline: baselineUtilization.vertexUtilization?.mean,
+            current: currentUtilization.vertexUtilization?.mean
+        )
+        
+        let fragmentComparison = createUtilizationComparison(
+            baseline: baselineUtilization.fragmentUtilization?.mean,
+            current: currentUtilization.fragmentUtilization?.mean
+        )
+        
+        let totalComparison = createUtilizationComparison(
+            baseline: baselineUtilization.totalUtilization?.mean,
+            current: currentUtilization.totalUtilization?.mean
+        )
+        
+        return StageUtilizationComparison(
+            vertexUtilization: vertexComparison,
+            fragmentUtilization: fragmentComparison,
+            totalUtilization: totalComparison
+        )
+    }
+    
+    /// Calculate performance statistics comparison between baseline and current
+    private static func calculatePerformanceStatsComparison(baseline: PerformanceMeasurementSet, current: PerformanceMeasurementSet) -> PerformanceStatsComparison? {
+        // Extract performance statistics from individual results
+        let baselineStats = extractPerformanceStats(from: baseline.individualResults)
+        let currentStats = extractPerformanceStats(from: current.individualResults)
+        
+        let memoryBandwidthComparison = createPerformanceStatComparison(
+            baseline: baselineStats.memoryBandwidth,
+            current: currentStats.memoryBandwidth
+        )
+        
+        let cacheHitRateComparison = createPerformanceStatComparison(
+            baseline: baselineStats.cacheHitRate,
+            current: currentStats.cacheHitRate
+        )
+        
+        let instructionsComparison = createPerformanceStatComparison(
+            baseline: baselineStats.instructionsExecuted,
+            current: currentStats.instructionsExecuted
+        )
+        
+        return PerformanceStatsComparison(
+            memoryBandwidth: memoryBandwidthComparison,
+            cacheHitRate: cacheHitRateComparison,
+            instructionsExecuted: instructionsComparison
+        )
+    }
+    
+    /// Extract performance statistics from individual results
+    private static func extractPerformanceStats(from results: [PerformanceResult]) -> (memoryBandwidth: Double?, cacheHitRate: Double?, instructionsExecuted: Double?) {
+        let memoryBandwidths = results.compactMap { $0.statistics?.memoryBandwidth }
+        let cacheHitRates = results.compactMap { $0.statistics?.cacheHitRate }
+        let instructions = results.compactMap { $0.statistics?.instructionsExecuted }
+        
+        let avgMemoryBandwidth = memoryBandwidths.isEmpty ? nil : memoryBandwidths.reduce(0, +) / Double(memoryBandwidths.count)
+        let avgCacheHitRate = cacheHitRates.isEmpty ? nil : cacheHitRates.reduce(0, +) / Double(cacheHitRates.count)
+        let avgInstructions = instructions.isEmpty ? nil : instructions.reduce(0, +) / Double(instructions.count)
+        
+        return (avgMemoryBandwidth, avgCacheHitRate, avgInstructions)
+    }
+    
+    /// Create utilization comparison from baseline and current values
+    private static func createUtilizationComparison(baseline: Double?, current: Double?) -> UtilizationComparison? {
+        guard let baseline = baseline, let current = current else { return nil }
+        
+        let change = current - baseline
+        let changePercent = baseline != 0 ? (change / baseline) * 100 : 0
+        
+        return UtilizationComparison(
+            baseline: baseline,
+            current: current,
+            change: change,
+            changePercent: changePercent
+        )
+    }
+    
+    /// Create performance statistic comparison from baseline and current values
+    private static func createPerformanceStatComparison(baseline: Double?, current: Double?) -> PerformanceStatComparison? {
+        guard let baseline = baseline, let current = current else { return nil }
+        
+        let change = current - baseline
+        let changePercent = baseline != 0 ? (change / baseline) * 100 : 0
+        
+        return PerformanceStatComparison(
+            baseline: baseline,
+            current: current,
+            change: change,
+            changePercent: changePercent
+        )
     }
 }
