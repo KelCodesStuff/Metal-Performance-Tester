@@ -1,0 +1,5805 @@
+{
+  "baselineMeasurementSet" : {
+    "deviceName" : "AMD Radeon Pro 5300M",
+    "testConfig" : {
+      "timestamp" : "2025-09-24T18:12:18Z",
+      "resolutionScale" : 1,
+      "height" : 4320,
+      "testMode" : "ultra-high-res",
+      "width" : 7680,
+      "baselineName" : "Ultra High Baseline",
+      "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+      "triangleCount" : 10000,
+      "geometryComplexity" : 10
+    },
+    "stageUtilizationStatistics" : {
+      "fragmentUtilization" : {
+        "standardDeviation" : 32.88348798132859,
+        "max" : 100,
+        "min" : 3.6,
+        "median" : 90.9,
+        "coefficientOfVariation" : 0.452417147946296,
+        "mean" : 72.68400000000003
+      },
+      "sampleCount" : 100,
+      "totalUtilization" : {
+        "standardDeviation" : 29.455370220818526,
+        "max" : 100,
+        "min" : 13.793103448275861,
+        "median" : 75.94310344827586,
+        "coefficientOfVariation" : 0.43755249693363757,
+        "mean" : 67.31848275862072
+      },
+      "vertexUtilization" : {
+        "standardDeviation" : 34.25872151730125,
+        "max" : 100,
+        "min" : 0,
+        "median" : 75,
+        "coefficientOfVariation" : 0.5154788070614091,
+        "mean" : 66.46
+      }
+    },
+    "individualResults" : [
+      {
+        "timestamp" : "2025-09-24T18:12:18Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "testMode" : "ultra-high-res"
+        },
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 9,
+          "totalUtilization" : 87.44827586206897
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 2.16,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.70664,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "timestamp" : "2025-09-24T18:12:18Z",
+        "testConfig" : {
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "stageUtilization" : {
+          "totalUtilization" : 88.93793103448276,
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 19.8
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 10802.16
+        },
+        "gpuTimeMs" : 67.20676,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "timestamp" : "2025-09-24T18:12:18Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "resolutionScale" : 1
+        },
+        "stageUtilization" : {
+          "vertexUtilization" : 33,
+          "totalUtilization" : 32.66896551724138,
+          "fragmentUtilization" : 30.6
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "memoryBandwidth" : 21602.159999999996,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 67.11668,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "timestamp" : "2025-09-24T18:12:18Z",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "testMode" : "ultra-high-res"
+        },
+        "stageUtilization" : {
+          "fragmentUtilization" : 43.2,
+          "totalUtilization" : 20.182758620689658,
+          "vertexUtilization" : 16.5
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 8809.199999999999,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 67.1886,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "timestamp" : "2025-09-24T18:12:19Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "stageUtilization" : {
+          "totalUtilization" : 93.40689655172415,
+          "fragmentUtilization" : 52.2,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 19609.2,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.69724,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "timestamp" : "2025-09-24T18:12:19Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline"
+        },
+        "stageUtilization" : {
+          "vertexUtilization" : 90,
+          "fragmentUtilization" : 61.2,
+          "totalUtilization" : 86.02758620689656
+        },
+        "statistics" : {
+          "memoryBandwidth" : 6816.24,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.67976,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "timestamp" : "2025-09-24T18:12:19Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10
+        },
+        "stageUtilization" : {
+          "totalUtilization" : 51.310344827586206,
+          "fragmentUtilization" : 72,
+          "vertexUtilization" : 48
+        },
+        "statistics" : {
+          "memoryBandwidth" : 17616.239999999998,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.4766,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "timestamp" : "2025-09-24T18:12:19Z",
+        "testConfig" : {
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000
+        },
+        "stageUtilization" : {
+          "vertexUtilization" : 6,
+          "fragmentUtilization" : 81,
+          "totalUtilization" : 16.344827586206897
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 4823.28,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.73576,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "timestamp" : "2025-09-24T18:12:19Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "width" : 7680,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000
+        },
+        "stageUtilization" : {
+          "vertexUtilization" : 7.5,
+          "fragmentUtilization" : 90,
+          "totalUtilization" : 18.879310344827587
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 15623.28
+        },
+        "gpuTimeMs" : 66.73952,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "timestamp" : "2025-09-24T18:12:19Z",
+        "testConfig" : {
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "stageUtilization" : {
+          "totalUtilization" : 99.86206896551724,
+          "fragmentUtilization" : 99,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 2830.32,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.70712,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "timestamp" : "2025-09-24T18:12:19Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline"
+        },
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "statistics" : {
+          "memoryBandwidth" : 13630.32,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.66456,
+        "deviceName" : "AMD Radeon Pro 5300M"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.60976,
+        "stageUtilization" : {
+          "vertexUtilization" : 19.5,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 30.603448275862068
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 837.36,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "timestamp" : "2025-09-24T18:12:19Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.52452,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "totalUtilization" : 100,
+          "fragmentUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 11637.36,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:19Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.58868,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 70.6896551724138,
+          "vertexUtilization" : 66
+        },
+        "statistics" : {
+          "memoryBandwidth" : 22437.36,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:19Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.51092,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 9644.4,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:19Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.47188,
+        "stageUtilization" : {
+          "vertexUtilization" : 48,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 55.172413793103445
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 20444.399999999998,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:19Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.46832,
+        "stageUtilization" : {
+          "vertexUtilization" : 70.5,
+          "totalUtilization" : 74.56896551724138,
+          "fragmentUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 7651.44,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:19Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.49784,
+        "stageUtilization" : {
+          "vertexUtilization" : 37.5,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 46.12068965517241
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 18451.44,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:19Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "gpuTimeMs" : 66.75696,
+        "stageUtilization" : {
+          "totalUtilization" : 22.844827586206897,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 10.5
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 5658.4800000000005,
+          "cacheMisses" : 1,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:19Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.60672,
+        "stageUtilization" : {
+          "fragmentUtilization" : 7.2,
+          "totalUtilization" : 87.2,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 16458.48
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680
+        },
+        "gpuTimeMs" : 66.78736,
+        "stageUtilization" : {
+          "fragmentUtilization" : 18,
+          "vertexUtilization" : 16.5,
+          "totalUtilization" : 16.70689655172414
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 3665.5199999999995,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.62216,
+        "stageUtilization" : {
+          "fragmentUtilization" : 27,
+          "vertexUtilization" : 72,
+          "totalUtilization" : 65.79310344827586
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 14465.52
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "gpuTimeMs" : 66.52004,
+        "stageUtilization" : {
+          "fragmentUtilization" : 36,
+          "vertexUtilization" : 91.5,
+          "totalUtilization" : 83.8448275862069
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 1672.56,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.5722,
+        "stageUtilization" : {
+          "fragmentUtilization" : 43.2,
+          "totalUtilization" : 65.44137931034483,
+          "vertexUtilization" : 69
+        },
+        "statistics" : {
+          "memoryBandwidth" : 12472.56,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.503,
+        "stageUtilization" : {
+          "totalUtilization" : 48.57931034482759,
+          "vertexUtilization" : 48,
+          "fragmentUtilization" : 52.2
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 23272.56,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.56988,
+        "stageUtilization" : {
+          "fragmentUtilization" : 59.4,
+          "totalUtilization" : 76.72758620689656,
+          "vertexUtilization" : 79.5
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 10479.6,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res"
+        },
+        "gpuTimeMs" : 66.63456,
+        "stageUtilization" : {
+          "fragmentUtilization" : 68.4,
+          "vertexUtilization" : 19.5,
+          "totalUtilization" : 26.244827586206895
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 21279.600000000002,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "width" : 7680,
+          "testMode" : "ultra-high-res"
+        },
+        "gpuTimeMs" : 66.46608,
+        "stageUtilization" : {
+          "totalUtilization" : 14.555172413793105,
+          "fragmentUtilization" : 77.4,
+          "vertexUtilization" : 4.5
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 8486.64
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.6948,
+        "stageUtilization" : {
+          "fragmentUtilization" : 86.4,
+          "totalUtilization" : 98.12413793103448,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 19286.64
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.70228,
+        "stageUtilization" : {
+          "totalUtilization" : 90.99310344827586,
+          "fragmentUtilization" : 97.2,
+          "vertexUtilization" : 90
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 6493.68,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1
+        },
+        "gpuTimeMs" : 66.67148,
+        "stageUtilization" : {
+          "totalUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 17293.68,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.53432,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "memoryBandwidth" : 4500.72,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "resolutionScale" : 1
+        },
+        "gpuTimeMs" : 66.71224,
+        "stageUtilization" : {
+          "totalUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "memoryBandwidth" : 15300.72,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "timestamp" : "2025-09-24T18:12:20Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.60816,
+        "stageUtilization" : {
+          "totalUtilization" : 66.8103448275862,
+          "vertexUtilization" : 61.5,
+          "fragmentUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 2507.7599999999998
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "width" : 7680,
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.4922,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 86.20689655172414,
+          "vertexUtilization" : 84
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 13307.76,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.6928,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 18.96551724137931,
+          "vertexUtilization" : 6
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 514.8000000000001,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "testMode" : "ultra-high-res"
+        },
+        "gpuTimeMs" : 66.63648,
+        "stageUtilization" : {
+          "vertexUtilization" : 42,
+          "totalUtilization" : 50,
+          "fragmentUtilization" : 100
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 11314.800000000001,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "width" : 7680
+        },
+        "gpuTimeMs" : 66.46684,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 22114.8,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.41324,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 54,
+          "totalUtilization" : 60.344827586206904
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 9321.84,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.61604,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 3.6,
+          "totalUtilization" : 86.70344827586207
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 20121.840000000004,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.77212,
+        "stageUtilization" : {
+          "vertexUtilization" : 97.5,
+          "totalUtilization" : 86.03793103448277,
+          "fragmentUtilization" : 14.4
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 7328.88,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "geometryComplexity" : 10
+        },
+        "gpuTimeMs" : 66.52612,
+        "stageUtilization" : {
+          "fragmentUtilization" : 21.6,
+          "totalUtilization" : 89.18620689655172,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 18128.88,
+          "cacheMisses" : 1,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "gpuTimeMs" : 66.6154,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "totalUtilization" : 90.42758620689656,
+          "fragmentUtilization" : 30.6
+        },
+        "statistics" : {
+          "memoryBandwidth" : 5335.92,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.522,
+        "stageUtilization" : {
+          "vertexUtilization" : 51,
+          "totalUtilization" : 49.42758620689656,
+          "fragmentUtilization" : 39.6
+        },
+        "statistics" : {
+          "memoryBandwidth" : 16135.920000000002,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680
+        },
+        "gpuTimeMs" : 66.79132,
+        "stageUtilization" : {
+          "vertexUtilization" : 42,
+          "fragmentUtilization" : 48.6,
+          "totalUtilization" : 42.910344827586215
+        },
+        "statistics" : {
+          "memoryBandwidth" : 3342.96,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.58468,
+        "stageUtilization" : {
+          "fragmentUtilization" : 59.4,
+          "totalUtilization" : 94.4,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 14142.960000000001,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1
+        },
+        "gpuTimeMs" : 66.58924,
+        "stageUtilization" : {
+          "vertexUtilization" : 76.5,
+          "totalUtilization" : 75.63103448275862,
+          "fragmentUtilization" : 70.2
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 1350,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320,
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10
+        },
+        "gpuTimeMs" : 66.59988,
+        "stageUtilization" : {
+          "totalUtilization" : 97.37931034482759,
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 81
+        },
+        "statistics" : {
+          "cacheHits" : 10,
+          "memoryBandwidth" : 12150,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "timestamp" : "2025-09-24T18:12:21Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "width" : 7680,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "gpuTimeMs" : 66.59868,
+        "stageUtilization" : {
+          "totalUtilization" : 98.62068965517241,
+          "fragmentUtilization" : 90,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 22950,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.672,
+        "stageUtilization" : {
+          "vertexUtilization" : 4.5,
+          "totalUtilization" : 17.286206896551725,
+          "fragmentUtilization" : 97.2
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 10157.039999999999
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res"
+        },
+        "gpuTimeMs" : 66.64828,
+        "stageUtilization" : {
+          "totalUtilization" : 97.8448275862069,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 97.5
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 20957.04,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.716,
+        "stageUtilization" : {
+          "totalUtilization" : 100,
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 8164.08,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.6968,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 99,
+          "totalUtilization" : 99.13793103448276
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 18964.079999999998,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.72624,
+        "stageUtilization" : {
+          "totalUtilization" : 51.29310344827586,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 43.5
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 6171.12,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10
+        },
+        "gpuTimeMs" : 66.49816,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 22.5,
+          "totalUtilization" : 33.189655172413794
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 16971.12
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.62512,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 4178.16
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680
+        },
+        "gpuTimeMs" : 66.40976,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 18,
+          "totalUtilization" : 29.310344827586206
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 14978.16,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.6596,
+        "stageUtilization" : {
+          "totalUtilization" : 82.32758620689656,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 79.5
+        },
+        "statistics" : {
+          "cacheHits" : 10.4,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9122807017543859,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 2185.2000000000003
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "testMode" : "ultra-high-res"
+        },
+        "gpuTimeMs" : 66.60908,
+        "stageUtilization" : {
+          "vertexUtilization" : 52.5,
+          "totalUtilization" : 59.05172413793103,
+          "fragmentUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9122807017543859,
+          "memoryBandwidth" : 12985.199999999999,
+          "cacheMisses" : 1,
+          "cacheHits" : 10.4,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.50368,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 5.4,
+          "totalUtilization" : 86.95172413793104
+        },
+        "statistics" : {
+          "memoryBandwidth" : 192.24,
+          "cacheMisses" : 1,
+          "cacheHits" : 10.8,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9152542372881356
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "gpuTimeMs" : 66.56632,
+        "stageUtilization" : {
+          "fragmentUtilization" : 14.4,
+          "totalUtilization" : 87.33103448275862,
+          "vertexUtilization" : 99
+        },
+        "statistics" : {
+          "memoryBandwidth" : 10992.24,
+          "cacheHits" : 10.8,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9152542372881356,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.5802,
+        "stageUtilization" : {
+          "fragmentUtilization" : 23.400000000000002,
+          "totalUtilization" : 25.210344827586212,
+          "vertexUtilization" : 25.5
+        },
+        "statistics" : {
+          "memoryBandwidth" : 21792.24,
+          "cacheHitRate" : 0.9152542372881356,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10.8,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:22Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "gpuTimeMs" : 66.67876,
+        "stageUtilization" : {
+          "totalUtilization" : 53.60689655172414,
+          "vertexUtilization" : 57,
+          "fragmentUtilization" : 32.4
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9180327868852459,
+          "cacheHits" : 11.2,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 8999.279999999999,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "gpuTimeMs" : 66.53708,
+        "stageUtilization" : {
+          "fragmentUtilization" : 41.4,
+          "vertexUtilization" : 51,
+          "totalUtilization" : 49.67586206896552
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 19799.28,
+          "cacheHits" : 11.2,
+          "cacheHitRate" : 0.9180327868852459,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10
+        },
+        "gpuTimeMs" : 66.576,
+        "stageUtilization" : {
+          "fragmentUtilization" : 50.4,
+          "totalUtilization" : 93.15862068965518,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 7006.32,
+          "cacheHitRate" : 0.9206349206349206,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 11.6
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.54504,
+        "stageUtilization" : {
+          "fragmentUtilization" : 57.6,
+          "vertexUtilization" : 18,
+          "totalUtilization" : 23.46206896551724
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9206349206349206,
+          "memoryBandwidth" : 17806.32,
+          "cacheHits" : 11.6,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.63908,
+        "stageUtilization" : {
+          "vertexUtilization" : 25.5,
+          "fragmentUtilization" : 66.60000000000001,
+          "totalUtilization" : 31.168965517241382
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 5013.36,
+          "cacheMisses" : 1,
+          "cacheHits" : 12,
+          "cacheHitRate" : 0.9230769230769231
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10
+        },
+        "gpuTimeMs" : 66.5246,
+        "stageUtilization" : {
+          "vertexUtilization" : 66,
+          "fragmentUtilization" : 75.60000000000001,
+          "totalUtilization" : 67.32413793103449
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9230769230769231,
+          "memoryBandwidth" : 15813.36,
+          "cacheHits" : 12,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.69596,
+        "stageUtilization" : {
+          "totalUtilization" : 41.16206896551724,
+          "fragmentUtilization" : 82.8,
+          "vertexUtilization" : 34.5
+        },
+        "statistics" : {
+          "cacheHits" : 12.4,
+          "cacheHitRate" : 0.9253731343283582,
+          "memoryBandwidth" : 3020.4,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res"
+        },
+        "gpuTimeMs" : 66.67996,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 93.60000000000001,
+          "totalUtilization" : 99.11724137931034
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 12.4,
+          "memoryBandwidth" : 13820.4,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9253731343283582
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.66008,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 1027.44,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.927536231884058,
+          "cacheHits" : 12.8
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.70992,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.927536231884058,
+          "cacheHits" : 12.8,
+          "memoryBandwidth" : 11827.44,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.617,
+        "stageUtilization" : {
+          "totalUtilization" : 81.03448275862068,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 78
+        },
+        "statistics" : {
+          "memoryBandwidth" : 22627.44,
+          "cacheHits" : 12.8,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.927536231884058,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680
+        },
+        "gpuTimeMs" : 66.62636,
+        "stageUtilization" : {
+          "totalUtilization" : 44.827586206896555,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 36
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 9834.48,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9295774647887324,
+          "cacheHits" : 13.2
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "width" : 7680,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1
+        },
+        "gpuTimeMs" : 66.70128,
+        "stageUtilization" : {
+          "vertexUtilization" : 0,
+          "totalUtilization" : 13.793103448275861,
+          "fragmentUtilization" : 100
+        },
+        "statistics" : {
+          "memoryBandwidth" : 20634.48,
+          "cacheHitRate" : 0.9295774647887324,
+          "cacheMisses" : 1,
+          "cacheHits" : 13.2,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "gpuTimeMs" : 66.64816,
+        "stageUtilization" : {
+          "totalUtilization" : 96.55172413793103,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 96
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 7841.5199999999995,
+          "cacheHits" : 13.6,
+          "cacheHitRate" : 0.9315068493150684,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "triangleCount" : 10000,
+          "resolutionScale" : 1
+        },
+        "gpuTimeMs" : 66.55756,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHits" : 13.6,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 18641.52,
+          "cacheHitRate" : 0.9315068493150684,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:23Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "resolutionScale" : 1
+        },
+        "gpuTimeMs" : 66.72884,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 28.5,
+          "totalUtilization" : 38.36206896551724
+        },
+        "statistics" : {
+          "memoryBandwidth" : 5848.56,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9333333333333333,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 14
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.70528,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 74.56896551724138,
+          "vertexUtilization" : 70.5
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHits" : 14,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9333333333333333,
+          "memoryBandwidth" : 16648.559999999998
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.67184,
+        "stageUtilization" : {
+          "totalUtilization" : 86.95172413793104,
+          "fragmentUtilization" : 5.4,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 3855.6,
+          "cacheHitRate" : 0.935064935064935,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 14.4
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.63792,
+        "stageUtilization" : {
+          "vertexUtilization" : 70.5,
+          "fragmentUtilization" : 12.6,
+          "totalUtilization" : 62.51379310344828
+        },
+        "statistics" : {
+          "memoryBandwidth" : 14655.6,
+          "cacheHitRate" : 0.935064935064935,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 14.4
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.56808,
+        "stageUtilization" : {
+          "vertexUtilization" : 13.5,
+          "fragmentUtilization" : 21.6,
+          "totalUtilization" : 14.617241379310347
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9367088607594937,
+          "memoryBandwidth" : 1862.64,
+          "cacheMisses" : 1,
+          "cacheHits" : 14.8,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.7174,
+        "stageUtilization" : {
+          "totalUtilization" : 81.80689655172415,
+          "vertexUtilization" : 90,
+          "fragmentUtilization" : 30.6
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 12662.64,
+          "cacheHits" : 14.8,
+          "cacheHitRate" : 0.9367088607594937
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "resolutionScale" : 1
+        },
+        "gpuTimeMs" : 66.66628,
+        "stageUtilization" : {
+          "vertexUtilization" : 76.5,
+          "fragmentUtilization" : 39.6,
+          "totalUtilization" : 71.41034482758621
+        },
+        "statistics" : {
+          "cacheHits" : 14.8,
+          "cacheHitRate" : 0.9367088607594937,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 23462.64,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680
+        },
+        "gpuTimeMs" : 66.65776,
+        "stageUtilization" : {
+          "totalUtilization" : 24.80689655172414,
+          "vertexUtilization" : 21,
+          "fragmentUtilization" : 48.6
+        },
+        "statistics" : {
+          "memoryBandwidth" : 10669.68,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9382716049382716,
+          "cacheHits" : 15.2
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "gpuTimeMs" : 66.42564,
+        "stageUtilization" : {
+          "fragmentUtilization" : 59.4,
+          "totalUtilization" : 94.4,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "memoryBandwidth" : 21469.68,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9382716049382716,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 15.2
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.48648,
+        "stageUtilization" : {
+          "totalUtilization" : 41.265517241379314,
+          "vertexUtilization" : 37.5,
+          "fragmentUtilization" : 64.8
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9397590361445782,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 8676.720000000001,
+          "cacheHits" : 15.6,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "height" : 4320
+        },
+        "gpuTimeMs" : 66.61068,
+        "stageUtilization" : {
+          "vertexUtilization" : 7.5,
+          "fragmentUtilization" : 75.60000000000001,
+          "totalUtilization" : 16.893103448275863
+        },
+        "statistics" : {
+          "cacheHits" : 15.6,
+          "memoryBandwidth" : 19476.72,
+          "cacheHitRate" : 0.9397590361445782,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.47436,
+        "stageUtilization" : {
+          "vertexUtilization" : 27,
+          "fragmentUtilization" : 84.60000000000001,
+          "totalUtilization" : 34.9448275862069
+        },
+        "statistics" : {
+          "memoryBandwidth" : 6683.76,
+          "cacheHits" : 16,
+          "cacheHitRate" : 0.9411764705882353,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res"
+        },
+        "gpuTimeMs" : 66.49848,
+        "stageUtilization" : {
+          "totalUtilization" : 76.02413793103449,
+          "fragmentUtilization" : 91.8,
+          "vertexUtilization" : 73.5
+        },
+        "statistics" : {
+          "memoryBandwidth" : 17483.760000000002,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9411764705882353,
+          "cacheHits" : 16
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "geometryComplexity" : 10
+        },
+        "gpuTimeMs" : 66.53384,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 31.5,
+          "totalUtilization" : 40.94827586206897
+        },
+        "statistics" : {
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 4690.8,
+          "cacheHits" : 16.4,
+          "cacheHitRate" : 0.9425287356321839,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:24Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "width" : 7680
+        },
+        "gpuTimeMs" : 66.60456,
+        "stageUtilization" : {
+          "totalUtilization" : 82.32758620689656,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 79.5
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9425287356321839,
+          "cacheHits" : 16.4,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 15490.800000000001,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:25Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.51488,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.9438202247191011,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 2697.84,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 16.8
+        },
+        "timestamp" : "2025-09-24T18:12:25Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.65636,
+        "stageUtilization" : {
+          "totalUtilization" : 77.15517241379311,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 73.5
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9438202247191011,
+          "cacheHits" : 16.8,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 13497.84
+        },
+        "timestamp" : "2025-09-24T18:12:25Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "width" : 7680,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000
+        },
+        "gpuTimeMs" : 66.6092,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.945054945054945,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 704.8799999999999,
+          "cacheHits" : 17.2,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:25Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.47156,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 12,
+          "totalUtilization" : 24.137931034482758
+        },
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.945054945054945,
+          "cacheHits" : 17.2,
+          "memoryBandwidth" : 11504.88,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:25Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline"
+        },
+        "gpuTimeMs" : 66.74592,
+        "stageUtilization" : {
+          "vertexUtilization" : 72,
+          "totalUtilization" : 75.86206896551724,
+          "fragmentUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.945054945054945,
+          "cacheHits" : 17.2,
+          "memoryBandwidth" : 22304.88,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:25Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        },
+        "gpuTimeMs" : 66.64396,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "statistics" : {
+          "memoryBandwidth" : 9511.920000000002,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.946236559139785,
+          "cacheHits" : 17.6,
+          "instructionsExecuted" : 1000
+        },
+        "timestamp" : "2025-09-24T18:12:25Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:12:18Z"
+        },
+        "gpuTimeMs" : 66.57144,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHitRate" : 0.946236559139785,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 20311.920000000002,
+          "cacheHits" : 17.6
+        },
+        "timestamp" : "2025-09-24T18:12:25Z"
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "testConfig" : {
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:12:18Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "resolutionScale" : 1
+        },
+        "gpuTimeMs" : 66.66192,
+        "stageUtilization" : {
+          "fragmentUtilization" : 3.6,
+          "totalUtilization" : 86.70344827586207,
+          "vertexUtilization" : 100
+        },
+        "statistics" : {
+          "cacheHits" : 18,
+          "memoryBandwidth" : 7518.960000000001,
+          "cacheHitRate" : 0.9473684210526315,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "timestamp" : "2025-09-24T18:12:25Z"
+      }
+    ],
+    "timestamp" : "2025-09-24T18:12:25Z",
+    "statistics" : {
+      "confidenceInterval95" : {
+        "lower" : 66.6005912702744,
+        "upper" : 66.6522327297256
+      },
+      "standardDeviation" : 0.1317384169673008,
+      "max" : 67.20676,
+      "min" : 66.40976,
+      "median" : 66.61652000000001,
+      "sampleCount" : 100,
+      "coefficientOfVariation" : 0.0019772701697834305,
+      "mean" : 66.626412
+    }
+  },
+  "comparisonResult" : {
+    "performanceStatsComparison" : {
+      "cacheMisses" : {
+        "change" : 0,
+        "changePercent" : 0,
+        "baseline" : 1,
+        "current" : 1
+      },
+      "memoryBandwidth" : {
+        "change" : -287.87039999999615,
+        "changePercent" : -2.4432722321762177,
+        "baseline" : 11782.166399999995,
+        "current" : 11494.295999999998
+      },
+      "cacheHitRate" : {
+        "change" : -0.008282010431630904,
+        "changePercent" : -0.9011925926611125,
+        "baseline" : 0.9190056042488244,
+        "current" : 0.9107235938171935
+      },
+      "cacheHits" : {
+        "change" : -1.5239999999999991,
+        "changePercent" : -12.963593058863554,
+        "baseline" : 11.755999999999997,
+        "current" : 10.231999999999998
+      },
+      "instructionsExecuted" : {
+        "change" : 0,
+        "changePercent" : 0,
+        "baseline" : 1000,
+        "current" : 1000
+      }
+    },
+    "isSignificant" : false,
+    "meanDifference" : 0.10380160000001126,
+    "currentStats" : {
+      "sampleCount" : 100,
+      "confidenceInterval95" : {
+        "lower" : 66.44828955279554,
+        "upper" : 67.01213764720448
+      },
+      "mean" : 66.73021360000001,
+      "min" : 66.20144,
+      "coefficientOfVariation" : 0.021555273366323992,
+      "max" : 75.5068,
+      "standardDeviation" : 1.4383879959411914,
+      "median" : 66.41586000000001
+    },
+    "baselineStats" : {
+      "median" : 66.61652000000001,
+      "coefficientOfVariation" : 0.0019772701697834305,
+      "confidenceInterval95" : {
+        "lower" : 66.6005912702744,
+        "upper" : 66.6522327297256
+      },
+      "sampleCount" : 100,
+      "min" : 66.40976,
+      "standardDeviation" : 0.1317384169673008,
+      "mean" : 66.626412,
+      "max" : 67.20676
+    },
+    "meanDifferencePercent" : 0.15579647302635966,
+    "confidenceInterval" : {
+      "upper" : 0.38690560646355854,
+      "lower" : -0.179302406463536
+    },
+    "significanceLevel" : 0.05,
+    "stageUtilizationComparison" : {
+      "totalUtilization" : {
+        "change" : -1.8080344827586856,
+        "baseline" : 67.31848275862072,
+        "current" : 65.51044827586203,
+        "changePercent" : -2.6857920866125746
+      },
+      "vertexUtilization" : {
+        "change" : -2.0249999999999915,
+        "baseline" : 66.46,
+        "current" : 64.435,
+        "changePercent" : -3.046945531146542
+      },
+      "fragmentUtilization" : {
+        "change" : -0.4520000000000408,
+        "baseline" : 72.68400000000003,
+        "current" : 72.23199999999999,
+        "changePercent" : -0.6218700126575872
+      }
+    }
+  },
+  "timestamp" : "2025-09-24T18:21:03Z",
+  "currentMeasurementSet" : {
+    "statistics" : {
+      "mean" : 66.73021360000001,
+      "confidenceInterval95" : {
+        "lower" : 66.44828955279554,
+        "upper" : 67.01213764720448
+      },
+      "max" : 75.5068,
+      "standardDeviation" : 1.4383879959411914,
+      "median" : 66.41586000000001,
+      "min" : 66.20144,
+      "coefficientOfVariation" : 0.021555273366323992,
+      "sampleCount" : 100
+    },
+    "individualResults" : [
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 107.64000000000001,
+          "cacheHits" : 10,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.45808,
+        "stageUtilization" : {
+          "vertexUtilization" : 46.5,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 53.87931034482759
+        },
+        "timestamp" : "2025-09-24T18:20:56Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 10907.64,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.9882,
+        "stageUtilization" : {
+          "totalUtilization" : 100,
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:56Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 21707.64,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.98444,
+        "stageUtilization" : {
+          "totalUtilization" : 93.96551724137932,
+          "vertexUtilization" : 93,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 8914.68,
+          "cacheMisses" : 1,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.99788,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 0,
+          "totalUtilization" : 86.20689655172414
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 19714.68,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.2924,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 9,
+          "totalUtilization" : 87.44827586206897
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 6921.72,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.92468,
+        "stageUtilization" : {
+          "totalUtilization" : 61.71724137931035,
+          "vertexUtilization" : 69,
+          "fragmentUtilization" : 16.2
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "testMode" : "ultra-high-res"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "memoryBandwidth" : 17721.72,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.76476,
+        "stageUtilization" : {
+          "fragmentUtilization" : 25.2,
+          "vertexUtilization" : 100,
+          "totalUtilization" : 89.68275862068965
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 4928.76,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.42012,
+        "stageUtilization" : {
+          "vertexUtilization" : 51,
+          "fragmentUtilization" : 32.4,
+          "totalUtilization" : 48.434482758620696
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 15728.76,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.35748,
+        "stageUtilization" : {
+          "vertexUtilization" : 15,
+          "fragmentUtilization" : 39.6,
+          "totalUtilization" : 18.393103448275863
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 2935.7999999999997,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.43424,
+        "stageUtilization" : {
+          "vertexUtilization" : 25.5,
+          "fragmentUtilization" : 46.800000000000004,
+          "totalUtilization" : 28.437931034482762
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 13735.800000000001,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.39852,
+        "stageUtilization" : {
+          "totalUtilization" : 20.379310344827587,
+          "vertexUtilization" : 15,
+          "fragmentUtilization" : 54
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 942.84,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.4866,
+        "stageUtilization" : {
+          "vertexUtilization" : 42,
+          "fragmentUtilization" : 61.2,
+          "totalUtilization" : 44.64827586206897
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 11742.84,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.49804,
+        "stageUtilization" : {
+          "fragmentUtilization" : 70.2,
+          "totalUtilization" : 84.68275862068965,
+          "vertexUtilization" : 87
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 22542.840000000004
+        },
+        "gpuTimeMs" : 66.31844,
+        "stageUtilization" : {
+          "totalUtilization" : 90.84827586206897,
+          "fragmentUtilization" : 77.4,
+          "vertexUtilization" : 93
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 9749.88,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.63888,
+        "stageUtilization" : {
+          "vertexUtilization" : 19.5,
+          "totalUtilization" : 28.47931034482759,
+          "fragmentUtilization" : 84.60000000000001
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 20549.88,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.50304,
+        "stageUtilization" : {
+          "totalUtilization" : 98.86896551724138,
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 91.8
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 7756.92,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.53804,
+        "stageUtilization" : {
+          "vertexUtilization" : 81,
+          "fragmentUtilization" : 99,
+          "totalUtilization" : 83.48275862068965
+        },
+        "timestamp" : "2025-09-24T18:20:57Z",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 18556.920000000002,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.46092,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "totalUtilization" : 100,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 5763.960000000001,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.36168,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 88.79310344827586,
+          "vertexUtilization" : 87
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 16563.96,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.514,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 22.5,
+          "totalUtilization" : 33.189655172413794
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 3771,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.3114,
+        "stageUtilization" : {
+          "totalUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 14571,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.45832,
+        "stageUtilization" : {
+          "vertexUtilization" : 69,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 73.27586206896552
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 1778.04,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.37744,
+        "stageUtilization" : {
+          "totalUtilization" : 55.172413793103445,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 48
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 12578.039999999999,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.38296,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 23378.04,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.5236,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "totalUtilization" : 100,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 10585.079999999998,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.46952,
+        "stageUtilization" : {
+          "totalUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 21385.079999999998,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.53624,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 0,
+          "totalUtilization" : 86.20689655172414
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 8592.119999999999,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.37288,
+        "stageUtilization" : {
+          "totalUtilization" : 38.49310344827586,
+          "vertexUtilization" : 43.5,
+          "fragmentUtilization" : 7.2
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 19392.12
+        },
+        "gpuTimeMs" : 66.55324,
+        "stageUtilization" : {
+          "totalUtilization" : 79.82068965517242,
+          "vertexUtilization" : 90,
+          "fragmentUtilization" : 16.2
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 6599.16,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.53628,
+        "stageUtilization" : {
+          "fragmentUtilization" : 25.2,
+          "totalUtilization" : 73.30344827586207,
+          "vertexUtilization" : 81
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "memoryBandwidth" : 17399.16,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.38972,
+        "stageUtilization" : {
+          "totalUtilization" : 90.67586206896553,
+          "fragmentUtilization" : 32.4,
+          "vertexUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 4606.2,
+          "cacheMisses" : 1,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.43168,
+        "stageUtilization" : {
+          "totalUtilization" : 57.43448275862069,
+          "vertexUtilization" : 60,
+          "fragmentUtilization" : 41.4
+        },
+        "timestamp" : "2025-09-24T18:20:58Z",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 15406.199999999999,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.44436,
+        "stageUtilization" : {
+          "vertexUtilization" : 63,
+          "totalUtilization" : 61.01379310344828,
+          "fragmentUtilization" : 48.6
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 2613.2400000000002,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.46688,
+        "stageUtilization" : {
+          "fragmentUtilization" : 55.800000000000004,
+          "vertexUtilization" : 73.5,
+          "totalUtilization" : 71.05862068965517
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 13413.24,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.35444,
+        "stageUtilization" : {
+          "fragmentUtilization" : 66.60000000000001,
+          "vertexUtilization" : 13.5,
+          "totalUtilization" : 20.824137931034485
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 620.28
+        },
+        "gpuTimeMs" : 66.51924,
+        "stageUtilization" : {
+          "fragmentUtilization" : 75.60000000000001,
+          "totalUtilization" : 55.686206896551724,
+          "vertexUtilization" : 52.5
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 11420.28,
+          "cacheMisses" : 1,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.22844,
+        "stageUtilization" : {
+          "fragmentUtilization" : 86.4,
+          "totalUtilization" : 30.02068965517242,
+          "vertexUtilization" : 21
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "height" : 4320,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 22220.28,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.41888,
+        "stageUtilization" : {
+          "fragmentUtilization" : 93.60000000000001,
+          "totalUtilization" : 32.30689655172414,
+          "vertexUtilization" : 22.5
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "triangleCount" : 10000,
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 9427.32,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.28092,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100,
+          "vertexUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 20227.32
+        },
+        "gpuTimeMs" : 66.47144,
+        "stageUtilization" : {
+          "totalUtilization" : 53.87931034482759,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 46.5
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 7434.36,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.52996,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 7.5,
+          "totalUtilization" : 20.25862068965517
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 18234.36,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.3954,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "totalUtilization" : 100,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 5441.400000000001,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.26548,
+        "stageUtilization" : {
+          "totalUtilization" : 81.03448275862068,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 78
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 16241.4,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.31572,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 3448.44,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.36628,
+        "stageUtilization" : {
+          "totalUtilization" : 61.63793103448276,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 55.5
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 14248.44,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.41324,
+        "stageUtilization" : {
+          "totalUtilization" : 31.896551724137932,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 21
+        },
+        "timestamp" : "2025-09-24T18:20:59Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 1455.48,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.25076,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 100,
+          "vertexUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 12255.48,
+          "cacheMisses" : 1,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.49004,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 43.5,
+          "totalUtilization" : 51.29310344827586
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 23055.48
+        },
+        "gpuTimeMs" : 66.27872,
+        "stageUtilization" : {
+          "fragmentUtilization" : 1.8,
+          "vertexUtilization" : 66,
+          "totalUtilization" : 57.1448275862069
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 10262.52
+        },
+        "gpuTimeMs" : 66.33552,
+        "stageUtilization" : {
+          "vertexUtilization" : 7.5,
+          "fragmentUtilization" : 7.2,
+          "totalUtilization" : 7.458620689655173
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 21062.52,
+          "cacheHits" : 10,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.28224,
+        "stageUtilization" : {
+          "fragmentUtilization" : 16.2,
+          "vertexUtilization" : 52.5,
+          "totalUtilization" : 47.49310344827586
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 8269.56,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.3406,
+        "stageUtilization" : {
+          "fragmentUtilization" : 21.6,
+          "totalUtilization" : 62.46206896551725,
+          "vertexUtilization" : 69
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 19069.56
+        },
+        "gpuTimeMs" : 66.47312,
+        "stageUtilization" : {
+          "totalUtilization" : 66.04137931034482,
+          "fragmentUtilization" : 28.8,
+          "vertexUtilization" : 72
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 6276.599999999999
+        },
+        "gpuTimeMs" : 66.39792,
+        "stageUtilization" : {
+          "totalUtilization" : 90.31034482758622,
+          "vertexUtilization" : 99,
+          "fragmentUtilization" : 36
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 17076.600000000002,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.408,
+        "stageUtilization" : {
+          "totalUtilization" : 92.41379310344828,
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 45
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680,
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 4283.639999999999,
+          "cacheHits" : 10,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.45008,
+        "stageUtilization" : {
+          "fragmentUtilization" : 52.2,
+          "vertexUtilization" : 45,
+          "totalUtilization" : 45.99310344827587
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 15083.64,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.31628,
+        "stageUtilization" : {
+          "vertexUtilization" : 9,
+          "fragmentUtilization" : 61.2,
+          "totalUtilization" : 16.200000000000003
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 2290.6800000000003,
+          "cacheHits" : 10.4,
+          "cacheHitRate" : 0.9122807017543859,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.46404,
+        "stageUtilization" : {
+          "vertexUtilization" : 99,
+          "fragmentUtilization" : 72,
+          "totalUtilization" : 95.27586206896552
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9122807017543859,
+          "memoryBandwidth" : 13090.68,
+          "cacheMisses" : 1,
+          "cacheHits" : 10.4,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.3524,
+        "stageUtilization" : {
+          "fragmentUtilization" : 79.2,
+          "vertexUtilization" : 100,
+          "totalUtilization" : 97.13103448275862
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9152542372881356,
+          "cacheHits" : 10.8,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 297.71999999999997
+        },
+        "gpuTimeMs" : 66.32492,
+        "stageUtilization" : {
+          "vertexUtilization" : 48,
+          "fragmentUtilization" : 88.2,
+          "totalUtilization" : 53.5448275862069
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "height" : 4320,
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9152542372881356,
+          "cacheMisses" : 1,
+          "cacheHits" : 10.8,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 11097.72
+        },
+        "gpuTimeMs" : 66.41196,
+        "stageUtilization" : {
+          "fragmentUtilization" : 95.4,
+          "vertexUtilization" : 70.5,
+          "totalUtilization" : 73.9344827586207
+        },
+        "timestamp" : "2025-09-24T18:21:00Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10.8,
+          "memoryBandwidth" : 21897.72,
+          "cacheHitRate" : 0.9152542372881356,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.35064,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 77.15517241379311,
+          "vertexUtilization" : 73.5
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9180327868852459,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 9104.76,
+          "cacheHits" : 11.2
+        },
+        "gpuTimeMs" : 66.38732,
+        "stageUtilization" : {
+          "vertexUtilization" : 84,
+          "totalUtilization" : 86.20689655172414,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9180327868852459,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 11.2,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 19904.76
+        },
+        "gpuTimeMs" : 66.47956,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "totalUtilization" : 100,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 11.6,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 7111.8,
+          "cacheHitRate" : 0.9206349206349206
+        },
+        "gpuTimeMs" : 66.33024,
+        "stageUtilization" : {
+          "vertexUtilization" : 64.5,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 69.39655172413794
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 11.6,
+          "memoryBandwidth" : 17911.8,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9206349206349206,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.415,
+        "stageUtilization" : {
+          "totalUtilization" : 48.70689655172414,
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 40.5
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 5118.84,
+          "cacheHits" : 12,
+          "cacheHitRate" : 0.9230769230769231
+        },
+        "gpuTimeMs" : 66.34284,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 37.5,
+          "totalUtilization" : 46.12068965517241
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "resolutionScale" : 1,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 15918.84,
+          "cacheHits" : 12,
+          "cacheHitRate" : 0.9230769230769231,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.37896,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 37.5,
+          "totalUtilization" : 46.12068965517241
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "triangleCount" : 10000
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9253731343283582,
+          "cacheHits" : 12.4,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 3125.88,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.43952,
+        "stageUtilization" : {
+          "totalUtilization" : 69.39655172413794,
+          "vertexUtilization" : 64.5,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 13925.88,
+          "cacheHitRate" : 0.9253731343283582,
+          "cacheHits" : 12.4,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.411,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 10.5,
+          "totalUtilization" : 22.844827586206897
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 1132.92,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.927536231884058,
+          "cacheHits" : 12.8
+        },
+        "gpuTimeMs" : 66.49016,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 12.8,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 11932.920000000002,
+          "cacheHitRate" : 0.927536231884058,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.37268,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 5.4,
+          "totalUtilization" : 86.95172413793104
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 1.08,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 73.43352,
+        "stageUtilization" : {
+          "fragmentUtilization" : 72,
+          "totalUtilization" : 62.94827586206897,
+          "vertexUtilization" : 61.5
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 10801.079999999998,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 67.06532,
+        "stageUtilization" : {
+          "vertexUtilization" : 19.5,
+          "totalUtilization" : 30.46551724137931,
+          "fragmentUtilization" : 99
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 21601.079999999998,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.41612,
+        "stageUtilization" : {
+          "vertexUtilization" : 27,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 37.06896551724138
+        },
+        "timestamp" : "2025-09-24T18:21:01Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "geometryComplexity" : 10,
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "memoryBandwidth" : 8808.119999999999,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 75.5068,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 76.5,
+          "totalUtilization" : 79.74137931034483
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 19608.12,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.74088,
+        "stageUtilization" : {
+          "vertexUtilization" : 73.5,
+          "totalUtilization" : 66.5896551724138,
+          "fragmentUtilization" : 23.400000000000002
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 6815.16,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.33336,
+        "stageUtilization" : {
+          "vertexUtilization" : 1.5,
+          "totalUtilization" : 5.513793103448276,
+          "fragmentUtilization" : 30.6
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 17615.16,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.26968,
+        "stageUtilization" : {
+          "totalUtilization" : 60.817241379310346,
+          "fragmentUtilization" : 37.800000000000004,
+          "vertexUtilization" : 64.5
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680,
+          "testMode" : "ultra-high-res"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 4822.2,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.4156,
+        "stageUtilization" : {
+          "vertexUtilization" : 27,
+          "totalUtilization" : 29.731034482758623,
+          "fragmentUtilization" : 46.800000000000004
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 15622.199999999999,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.44956,
+        "stageUtilization" : {
+          "vertexUtilization" : 16.5,
+          "totalUtilization" : 21.920689655172417,
+          "fragmentUtilization" : 55.800000000000004
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 2829.2400000000002,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.30424,
+        "stageUtilization" : {
+          "vertexUtilization" : 21,
+          "totalUtilization" : 27.04137931034483,
+          "fragmentUtilization" : 64.8
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 13629.24,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.45564,
+        "stageUtilization" : {
+          "totalUtilization" : 96.13793103448276,
+          "fragmentUtilization" : 72,
+          "vertexUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "height" : 4320,
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 836.28,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.27508,
+        "stageUtilization" : {
+          "fragmentUtilization" : 81,
+          "totalUtilization" : 73.24137931034483,
+          "vertexUtilization" : 72
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 11636.28,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.31968,
+        "stageUtilization" : {
+          "totalUtilization" : 83.28620689655172,
+          "fragmentUtilization" : 88.2,
+          "vertexUtilization" : 82.5
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "testMode" : "ultra-high-res",
+          "height" : 4320,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680,
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 22436.28,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.2874,
+        "stageUtilization" : {
+          "fragmentUtilization" : 97.2,
+          "vertexUtilization" : 100,
+          "totalUtilization" : 99.61379310344827
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "baselineName" : "Ultra High Baseline",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "geometryComplexity" : 10,
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 55.800000000000004,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 71.04316,
+        "stageUtilization" : {
+          "totalUtilization" : 37.88275862068966,
+          "vertexUtilization" : 33,
+          "fragmentUtilization" : 68.4
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "baselineName" : "Ultra High Baseline",
+          "triangleCount" : 10000
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "memoryBandwidth" : 10855.800000000001,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 67.23892,
+        "stageUtilization" : {
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 90,
+          "totalUtilization" : 98.62068965517241
+        },
+        "timestamp" : "2025-09-24T18:21:02Z",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "height" : 4320,
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 21655.8,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.20144,
+        "stageUtilization" : {
+          "vertexUtilization" : 78,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 81.03448275862068
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "resolutionScale" : 1,
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "geometryComplexity" : 10
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 8862.84,
+          "cacheHits" : 10,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.57032,
+        "stageUtilization" : {
+          "vertexUtilization" : 57,
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 62.93103448275862
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "testMode" : "ultra-high-res",
+          "resolutionScale" : 1
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 19662.840000000004,
+          "cacheHits" : 10,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.32132,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 6869.88,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.42612,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 78,
+          "totalUtilization" : 81.03448275862068
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 17669.88,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000
+        },
+        "gpuTimeMs" : 66.27952,
+        "stageUtilization" : {
+          "vertexUtilization" : 28.5,
+          "totalUtilization" : 38.36206896551724,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "baselineName" : "Ultra High Baseline",
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "geometryComplexity" : 10,
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "memoryBandwidth" : 4876.92
+        },
+        "gpuTimeMs" : 66.23552,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "totalUtilization" : 88.79310344827586,
+          "vertexUtilization" : 87
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "height" : 4320,
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "resolutionScale" : 1,
+          "geometryComplexity" : 10,
+          "triangleCount" : 10000,
+          "baselineName" : "Ultra High Baseline"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 15676.920000000002,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1
+        },
+        "gpuTimeMs" : 66.35044,
+        "stageUtilization" : {
+          "fragmentUtilization" : 100,
+          "vertexUtilization" : 100,
+          "totalUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "width" : 7680,
+          "triangleCount" : 10000,
+          "testMode" : "ultra-high-res",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "height" : 4320
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "memoryBandwidth" : 2883.96,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.46964,
+        "stageUtilization" : {
+          "totalUtilization" : 100,
+          "vertexUtilization" : 100,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "triangleCount" : 10000,
+          "width" : 7680,
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheMisses" : 1,
+          "memoryBandwidth" : 13683.960000000001
+        },
+        "gpuTimeMs" : 66.28404,
+        "stageUtilization" : {
+          "vertexUtilization" : 16.5,
+          "totalUtilization" : 28.017241379310345,
+          "fragmentUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "geometryComplexity" : 10,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "triangleCount" : 10000,
+          "height" : 4320,
+          "baselineName" : "Ultra High Baseline",
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "cacheHits" : 10,
+          "cacheHitRate" : 0.9090909090909091,
+          "cacheMisses" : 1,
+          "instructionsExecuted" : 1000,
+          "memoryBandwidth" : 891
+        },
+        "gpuTimeMs" : 74.03408,
+        "stageUtilization" : {
+          "fragmentUtilization" : 19.8,
+          "totalUtilization" : 22.127586206896552,
+          "vertexUtilization" : 22.5
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "height" : 4320,
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "triangleCount" : 10000,
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "width" : 7680
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 11691,
+          "cacheMisses" : 1,
+          "cacheHitRate" : 0.9090909090909091,
+          "instructionsExecuted" : 1000,
+          "cacheHits" : 10
+        },
+        "gpuTimeMs" : 66.67824,
+        "stageUtilization" : {
+          "totalUtilization" : 93.15862068965518,
+          "fragmentUtilization" : 50.4,
+          "vertexUtilization" : 100
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "height" : 4320,
+          "resolutionScale" : 1,
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline",
+          "testMode" : "ultra-high-res",
+          "width" : 7680,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)"
+        }
+      },
+      {
+        "deviceName" : "AMD Radeon Pro 5300M",
+        "statistics" : {
+          "memoryBandwidth" : 22491,
+          "cacheMisses" : 1,
+          "cacheHits" : 10,
+          "instructionsExecuted" : 1000,
+          "cacheHitRate" : 0.9090909090909091
+        },
+        "gpuTimeMs" : 66.4868,
+        "stageUtilization" : {
+          "vertexUtilization" : 13.5,
+          "totalUtilization" : 19.83103448275862,
+          "fragmentUtilization" : 59.4
+        },
+        "timestamp" : "2025-09-24T18:21:03Z",
+        "testConfig" : {
+          "resolutionScale" : 1,
+          "testMode" : "ultra-high-res",
+          "triangleCount" : 10000,
+          "geometryComplexity" : 10,
+          "height" : 4320,
+          "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+          "width" : 7680,
+          "timestamp" : "2025-09-24T18:20:56Z",
+          "baselineName" : "Ultra High Baseline"
+        }
+      }
+    ],
+    "stageUtilizationStatistics" : {
+      "vertexUtilization" : {
+        "mean" : 64.435,
+        "median" : 69.75,
+        "min" : 1.5,
+        "coefficientOfVariation" : 0.4988895285653211,
+        "standardDeviation" : 32.145946773106466,
+        "max" : 100
+      },
+      "fragmentUtilization" : {
+        "mean" : 72.23199999999999,
+        "median" : 89.1,
+        "min" : 0,
+        "coefficientOfVariation" : 0.4571650827427903,
+        "standardDeviation" : 33.02194825667722,
+        "max" : 100
+      },
+      "totalUtilization" : {
+        "mean" : 65.51044827586203,
+        "median" : 69.39655172413794,
+        "min" : 5.513793103448276,
+        "coefficientOfVariation" : 0.43210784769884475,
+        "standardDeviation" : 28.307578806269238,
+        "max" : 100
+      },
+      "sampleCount" : 100
+    },
+    "deviceName" : "AMD Radeon Pro 5300M",
+    "timestamp" : "2025-09-24T18:21:03Z",
+    "testConfig" : {
+      "width" : 7680,
+      "pixelFormat" : "MTLPixelFormat(rawValue: 80)",
+      "height" : 4320,
+      "triangleCount" : 10000,
+      "timestamp" : "2025-09-24T18:20:56Z",
+      "geometryComplexity" : 10,
+      "testMode" : "ultra-high-res",
+      "baselineName" : "Ultra High Baseline",
+      "resolutionScale" : 1
+    }
+  }
+}
