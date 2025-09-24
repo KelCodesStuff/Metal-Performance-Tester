@@ -11,6 +11,7 @@ import Foundation
 enum TestMode {
     case runTest(threshold: Double, testConfig: TestConfiguration?)
     case updateBaseline(testConfig: TestConfiguration?)
+    case testGPU
     case help
 }
 
@@ -40,6 +41,9 @@ class CommandLineParser {
         case "--update-baseline":
             let testConfig = parseTestConfiguration(from: arguments)
             return .updateBaseline(testConfig: testConfig)
+            
+        case "--test-gpu":
+            return .testGPU
             
         case "--help", "-h":
             return .help
@@ -117,6 +121,9 @@ class CommandLineParser {
         
         --run-test
         Run performance test and compare against baseline
+        
+        --test-gpu
+        Test GPU detection system and show hardware information
         
         --help, -h
         Show this help message
