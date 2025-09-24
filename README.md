@@ -36,6 +36,15 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 
 Currently, the tool uses fixed test configurations that may not be optimal for all GPU performance levels. A test configuration that works well for an M1 base might be too trivial for an M4 Ultra, while a configuration suitable for M4 Ultra might be too demanding for an M1 base. Dynamic Workload Scaling solves this by automatically detecting the GPU's performance tier and generating test configurations that provide meaningful, comparable results across the entire M Series lineup.
 
+## Use Cases
+
+For detailed examples of how to use the Metal Performance Tester in practical development scenarios, see [USE_CASES.md](USE_CASES.md). This document includes use cases for:
+
+- **Game Development** - Adding visual effects and performance validation
+- **Graphics Programming** - Shader optimization and pipeline analysis  
+- **QA Engineering** - Release validation and automated testing
+- **Metal Framework Development** - API performance validation
+
 ## Usage
 
 The Metal Performance Tester provides both Xcode and command-line interfaces for different workflows.
