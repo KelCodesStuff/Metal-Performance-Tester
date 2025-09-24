@@ -70,14 +70,10 @@ Metal-Performance-Tester --run-test --ultra-high-res
 
 ### Fully Supported
 - **Apple Silicon:** M1, M2, M3, M4 series (all variants)
-- **Apple Discrete GPUs:** Radeon Pro 5000/6000/7000 series (in Mac Pro, iMac Pro, and some MacBook Pro models)
-- **Recent Integrated GPUs:** Intel Iris Xe (Intel-based Macs), Apple integrated graphics
-
-### Limited Support
-- **Older Discrete GPUs:** Performance may vary
-- **Legacy Integrated GPUs:** May not support all counter types
 
 ### Not Supported
+- **Apple Discrete GPUs:** Radeon Pro 5000/6000/7000 series (in Mac Pro, iMac Pro, and some MacBook Pro models)
+- **Recent Integrated GPUs:** Intel Iris Xe (Intel-based Macs), Apple integrated graphics
 - **Pre-Metal GPUs:** GPUs without Metal support
 - **GPUs without Counter Sampling:** Older integrated graphics without performance counter support
 
