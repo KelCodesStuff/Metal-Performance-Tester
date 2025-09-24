@@ -12,8 +12,6 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 
 > For informationon on the [Metal](https://developer.apple.com/documentation/metal) API see the official documentation.
 
-> For detailed information on performance impact see the [Performance Impact Categories guide](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Performance-Impact-Categories).
-
 ### Statistical Analysis & Regression Detection
 - **Robust Statistical Analysis:** Implements [Welch's t-test](https://en.wikipedia.org/wiki/Welch%27s_t-test) for proper statistical analysis of samples with unequal variances, with configurable significance levels.
 - **Confidence Intervals:** Calculates 95% confidence intervals for performance differences to quantify the margin of error.
