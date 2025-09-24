@@ -88,8 +88,6 @@ class PerformanceTestManager {
             // Save test result to JSON file
             do {
                 try baselineManager.saveTestResult(testResult)
-                // Print test result save message only if save was successful
-                print("Test result saved to: \(baselineManager.testResultsFilePath.path)")
             } catch {
                 print("\nWarning: Failed to save test result: \(error)")
                 // Continue execution even if saving fails
