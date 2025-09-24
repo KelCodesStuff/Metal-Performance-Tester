@@ -102,32 +102,32 @@ enum TestPreset {
     func createConfiguration() -> TestConfiguration {
         switch self {
         case .lowRes:
-            // Low GPU Load: 1280×720 @ 10 triangles, complexity 1/10
-            return TestConfiguration(width: 1280, height: 720, triangleCount: 10,
-                                   geometryComplexity: 1, resolutionScale: 1.0, testMode: "low-res",
+            // Low GPU Load: 1280×720 @ 1000 triangles, complexity 6/10
+            return TestConfiguration(width: 1280, height: 720, triangleCount: 4000,
+                                   geometryComplexity: 6, resolutionScale: 1.0, testMode: "low-res",
                                    baselineName: "Low Baseline")
             
         case .moderate:
-            // Medium GPU Load: 1920×1080 @ 100 triangles, complexity 5/10
-            return TestConfiguration(width: 1920, height: 1080, triangleCount: 100, 
-                                   geometryComplexity: 5, resolutionScale: 1.0, testMode: "moderate",
+            // Medium GPU Load: 1920×1080 @ 2000 triangles, complexity 7/10
+            return TestConfiguration(width: 1920, height: 1080, triangleCount: 4000, 
+                                   geometryComplexity: 7, resolutionScale: 1.0, testMode: "moderate",
                                    baselineName: "Moderate Baseline")
             
         case .complex:
-            // High GPU Load: 2560x1440 @ 1000 triangles, complexity 8/10
-            return TestConfiguration(width: 2560, height: 1440, triangleCount: 1000,
-                                   geometryComplexity: 8, resolutionScale: 1.0, testMode: "complex",
+            // High GPU Load: 2560x1440 @ 5000 triangles, complexity 9/10
+            return TestConfiguration(width: 2560, height: 1440, triangleCount: 5000,
+                                   geometryComplexity: 9, resolutionScale: 1.0, testMode: "complex",
                                    baselineName: "Complex Baseline")
             
         case .highRes:
-            // Very High GPU Load: 3840×2160 @ 2000 triangles, complexity 8/10
-            return TestConfiguration(width: 3840, height: 2160, triangleCount: 2000,
-                                   geometryComplexity: 8, resolutionScale: 1.0, testMode: "high-res",
+            // Very High GPU Load: 3840×2160 @ 8000 triangles, complexity 9/10
+            return TestConfiguration(width: 3840, height: 2160, triangleCount: 8000,
+                                   geometryComplexity: 9, resolutionScale: 1.0, testMode: "high-res",
                                    baselineName: "High Baseline")
             
         case .ultraHighRes:
-            // Extreme GPU Load: 7680×4320 @ 4000 triangles, complexity 10/10
-            return TestConfiguration(width: 7680, height: 4320, triangleCount: 4000,
+            // Extreme GPU Load: 7680×4320 @ 15000 triangles, complexity 10/10
+            return TestConfiguration(width: 7680, height: 4320, triangleCount: 10000,
                                    geometryComplexity: 10, resolutionScale: 1.0, testMode: "ultra-high-res",
                                    baselineName: "Ultra High Baseline")
         }
