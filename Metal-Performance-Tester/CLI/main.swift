@@ -23,14 +23,22 @@ func main() -> Int32 {
     
     switch testMode {
     case .help:
+        // Display usage information and available commands
         CommandLineParser.printUsage()
         return ExitCode.success.rawValue
         
     case .updateBaseline(let testConfig):
+        // Create or update performance baseline with specified configuration
         return runUpdateBaseline(testConfig: testConfig)
         
     case .runTest(let threshold, let testConfig):
+        // Run performance test and compare against baseline
         return runPerformanceTest(threshold: threshold, testConfig: testConfig)
+        
+    case .testGPU:
+        // Test GPU detection system and display hardware information
+        runGPUDetectionTests()
+        return ExitCode.success.rawValue
     }
 }
 
