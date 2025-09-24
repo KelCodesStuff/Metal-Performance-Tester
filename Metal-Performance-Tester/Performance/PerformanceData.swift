@@ -116,9 +116,29 @@ struct PerformanceMeasurementSet: Codable {
         - Configuration: \(testConfig.description)
         
         Statistical Analysis:
-        \(statistics.summary)
+        - Average: \(String(format: "%.3f", statistics.mean)) ms
+        - Standard Deviation: \(String(format: "%.3f", statistics.standardDeviation)) ms
+        - Range: \(String(format: "%.3f", statistics.min)) - \(String(format: "%.3f", statistics.max)) ms
+        - Median: \(String(format: "%.3f", statistics.median)) ms
+        - Coefficient of Variation: \(String(format: "%.1f", statistics.coefficientOfVariation * 100))%
+        - Quality: \(statistics.qualityRating.rawValue)
         
-        \(stageUtilizationStatistics?.summary ?? "")
+        \({
+            if let stageUtil = stageUtilizationStatistics {
+                var result = "Stage Utilization:\n"
+                if let vertex = stageUtil.vertexUtilization {
+                    result += "- Average Vertex Utilization: \(String(format: "%.1f", vertex.mean))%\n"
+                }
+                if let fragment = stageUtil.fragmentUtilization {
+                    result += "- Average Fragment Utilization: \(String(format: "%.1f", fragment.mean))%\n"
+                }
+                if let total = stageUtil.totalUtilization {
+                    result += "- Average Total Utilization: \(String(format: "%.1f", total.mean))%\n"
+                }
+                return result
+            }
+            return ""
+        }())
         """
         
         // Add performance statistics from the last result
@@ -194,11 +214,53 @@ struct PerformanceTestResult: Codable {
         
         Baseline Comparison:
         - Baseline GPU Time: \(String(format: "%.3f", baselineMeasurementSet.statistics.mean)) ms
-        - Performance Change: \(String(format: "%+.3f", comparisonResult.meanDifference)) ms (\(String(format: "%+.1f", comparisonResult.meanDifferencePercent * 100))%)
+        // Note: meanDifferencePercent is already a percentage value (e.g., 0.42 for 0.42%)
+        // DO NOT multiply by 100 - it's already calculated as a percentage
+        - Performance Change: \(String(format: "%+.3f", comparisonResult.meanDifference)) ms (\(String(format: "%+.1f", comparisonResult.meanDifferencePercent))%)
         
         Statistical Analysis:
-        - Confidence Interval: [\(String(format: "%.3f", comparisonResult.confidenceInterval.lower)), \(String(format: "%.3f", comparisonResult.confidenceInterval.upper))]
-        - Statistical Significance: \(comparisonResult.isSignificant ? "significant" : "not significant")
+        - Confidence Range: \(String(format: "%.3f", abs(comparisonResult.confidenceInterval.lower))) to \(String(format: "%.3f", abs(comparisonResult.confidenceInterval.upper))) ms (95% confidence)
+        - Reliability: \(comparisonResult.isSignificant ? "Statistically significant (real change, not random)" : "Not statistically significant (could be random variation)")
+        
+        \({
+            if let stageUtil = comparisonResult.stageUtilizationComparison {
+                var result = "Stage Utilization Comparison:\n"
+                if let vertex = stageUtil.vertexUtilization {
+                    result += "- Vertex Utilization: \(String(format: "%.1f", vertex.current))%  (\(String(format: "%+.1f", vertex.change))%)\n"
+                }
+                if let fragment = stageUtil.fragmentUtilization {
+                    result += "- Fragment Utilization: \(String(format: "%.1f", fragment.current))%  (\(String(format: "%+.1f", fragment.change))%)\n"
+                }
+                if let total = stageUtil.totalUtilization {
+                    result += "- Total Utilization: \(String(format: "%.1f", total.current))%  (\(String(format: "%+.1f", total.change))%)\n"
+                }
+                return result
+            }
+            return ""
+        }())
+        
+        \({
+            if let perfStats = comparisonResult.performanceStatsComparison {
+                var result = "Memory Statistics Comparison:\n"
+                if let cacheHits = perfStats.cacheHits {
+                    result += "- Cache Hits: \(String(format: "%.0f", cacheHits.current))\n"
+                }
+                if let cacheMisses = perfStats.cacheMisses {
+                    result += "- Cache Misses: \(String(format: "%.0f", cacheMisses.current))\n"
+                }
+                if let cacheHitRate = perfStats.cacheHitRate {
+                    result += "- Cache Hit Rate: \(String(format: "%.1f", cacheHitRate.current * 100))%  (\(String(format: "%+.1f", cacheHitRate.changePercent))%)\n"
+                }
+                if let memoryBandwidth = perfStats.memoryBandwidth {
+                    result += "- Memory Bandwidth: \(String(format: "%.1f", memoryBandwidth.current)) MB/s  (\(String(format: "%+.1f", memoryBandwidth.changePercent))%)\n"
+                }
+                if let instructionsExecuted = perfStats.instructionsExecuted {
+                    result += "- Instructions Executed: \(String(format: "%.0f", instructionsExecuted.current))  (\(String(format: "%+.1f", instructionsExecuted.changePercent))%)\n"
+                }
+                return result
+            }
+            return ""
+        }())
         
         Result: \(isRegression ? "PERFORMANCE REGRESSION DETECTED" : isImprovement ? "PERFORMANCE IMPROVEMENT DETECTED" : "NO SIGNIFICANT CHANGE DETECTED")
         """
@@ -255,7 +317,7 @@ class PerformanceBaselineManager {
             // If running from project root
             currentURL.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root with different structure (current actual structure)
-            currentURL.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
+            currentURL.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root with different structure
             currentURL.appendingPathComponent("Data")
         ].compactMap { $0 }
@@ -289,7 +351,7 @@ class PerformanceBaselineManager {
             // If running from project root
             currentURL.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root with different structure (current actual structure)
-            currentURL.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
+            currentURL.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root with different structure
             currentURL.appendingPathComponent("Data")
         ].compactMap { $0 }
@@ -393,10 +455,22 @@ class PerformanceBaselineManager {
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
         
+        // Create a unique filename based on the test configuration
+        let config = measurementSet.testConfig
+        let safeBaselineName = config.baselineName.replacingOccurrences(of: " ", with: "_").lowercased()
+        let filename = "baseline_\(safeBaselineName).json"
+        
+        // Create the baselines directory if it doesn't exist
+        let baselinesDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("baselines")
+        try FileManager.default.createDirectory(at: baselinesDirectory, withIntermediateDirectories: true, attributes: nil)
+        
+        // Create the specific baseline file path in the baselines folder
+        let specificBaselinePath = baselinesDirectory.appendingPathComponent(filename)
+        
         let data = try encoder.encode(measurementSet)
-        try data.write(to: baselineFilePath)
+        try data.write(to: specificBaselinePath)
     
-        print("Baseline saved to: \(baselineFilePath.path)")
+        print("Baseline saved to: \(specificBaselinePath.path)")
     }
     
     /// Saves a single performance result as the new baseline (backward compatibility)
@@ -407,7 +481,26 @@ class PerformanceBaselineManager {
     
     /// Loads the current baseline performance measurement set
     func loadBaseline() throws -> PerformanceMeasurementSet {
-        let data = try Data(contentsOf: baselineFilePath)
+        // First try to load from the old location for backward compatibility
+        if FileManager.default.fileExists(atPath: baselineFilePath.path) {
+            let data = try Data(contentsOf: baselineFilePath)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            return try decoder.decode(PerformanceMeasurementSet.self, from: data)
+        }
+        
+        // If not found, look in the baselines folder
+        let baselinesDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("baselines")
+        let files = try FileManager.default.contentsOfDirectory(at: baselinesDirectory, includingPropertiesForKeys: nil)
+        let baselineFiles = files.filter { $0.pathExtension == "json" && $0.lastPathComponent.hasPrefix("baseline_") }
+        
+        if baselineFiles.isEmpty {
+            throw NSError(domain: "PerformanceBaselineManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "No baseline files found in baselines directory"])
+        }
+        
+        // For now, load the first available baseline (in the future, we could make this configurable)
+        let baselineFile = baselineFiles.first!
+        let data = try Data(contentsOf: baselineFile)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         
@@ -422,13 +515,50 @@ class PerformanceBaselineManager {
     
     /// Checks if a baseline file exists
     func baselineExists() -> Bool {
-        return FileManager.default.fileExists(atPath: baselineFilePath.path)
+        // Check old location first
+        if FileManager.default.fileExists(atPath: baselineFilePath.path) {
+            return true
+        }
+        
+        // Check baselines folder
+        let baselinesDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("baselines")
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: baselinesDirectory, includingPropertiesForKeys: nil)
+            let baselineFiles = files.filter { $0.pathExtension == "json" && $0.lastPathComponent.hasPrefix("baseline_") }
+            return !baselineFiles.isEmpty
+        } catch {
+            return false
+        }
     }
     
     /// Deletes the baseline file
     func deleteBaseline() throws {
         try FileManager.default.removeItem(at: baselineFilePath)
         print("Baseline file deleted")
+    }
+    
+    /// Lists all available baseline files
+    func listBaselines() -> [URL] {
+        let baselinesDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("baselines")
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: baselinesDirectory, includingPropertiesForKeys: nil)
+            return files.filter { $0.pathExtension == "json" && $0.lastPathComponent.hasPrefix("baseline_") }
+        } catch {
+            print("Error listing baselines: \(error)")
+            return []
+        }
+    }
+    
+    /// Loads a specific baseline by filename
+    func loadSpecificBaseline(filename: String) throws -> PerformanceMeasurementSet {
+        let baselinesDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("baselines")
+        let specificPath = baselinesDirectory.appendingPathComponent(filename)
+        
+        let data = try Data(contentsOf: specificPath)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        return try decoder.decode(PerformanceMeasurementSet.self, from: data)
     }
     
     // MARK: - Test Results Management
@@ -439,8 +569,22 @@ class PerformanceBaselineManager {
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
         
+        // Create a unique filename based on the test configuration
+        let config = testResult.testConfig
+        let safeTestName = config.baselineName.replacingOccurrences(of: " ", with: "_").lowercased()
+        let filename = "test_result_\(safeTestName).json"
+        
+        // Create the results directory if it doesn't exist
+        let resultsDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("results")
+        try FileManager.default.createDirectory(at: resultsDirectory, withIntermediateDirectories: true, attributes: nil)
+        
+        // Create the specific test result file path in the results folder
+        let specificTestResultPath = resultsDirectory.appendingPathComponent(filename)
+        
         let data = try encoder.encode(testResult)
-        try data.write(to: privateTestResultsFilePath)
+        try data.write(to: specificTestResultPath)
+        
+        print("Test result saved to: \(specificTestResultPath.path)")
     }
     
     /// Saves a performance test result to the test results file and prints the save message
@@ -466,6 +610,30 @@ class PerformanceBaselineManager {
     /// Deletes the test results file
     func deleteTestResult() throws {
         try FileManager.default.removeItem(at: privateTestResultsFilePath)
-        print("Test results file deleted")
+        print("Test result file deleted")
+    }
+    
+    /// Lists all available test result files
+    func listTestResults() -> [URL] {
+        let resultsDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("results")
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: resultsDirectory, includingPropertiesForKeys: nil)
+            return files.filter { $0.pathExtension == "json" && $0.lastPathComponent.hasPrefix("test_result_") }
+        } catch {
+            print("Error listing test results: \(error)")
+            return []
+        }
+    }
+    
+    /// Loads a specific test result by filename
+    func loadSpecificTestResult(filename: String) throws -> PerformanceTestResult {
+        let resultsDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("results")
+        let specificPath = resultsDirectory.appendingPathComponent(filename)
+        
+        let data = try Data(contentsOf: specificPath)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        return try decoder.decode(PerformanceTestResult.self, from: data)
     }
 }

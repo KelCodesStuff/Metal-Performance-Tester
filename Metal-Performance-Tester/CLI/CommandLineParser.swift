@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Represents the different modes the performance tracker can run in
+/// Represents the different modes the performance tester can run in
 enum TestMode {
     case runTest(threshold: Double, testConfig: TestConfiguration?)
     case updateBaseline(testConfig: TestConfiguration?)

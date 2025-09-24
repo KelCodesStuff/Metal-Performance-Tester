@@ -96,7 +96,7 @@
 			name = "Metal-Performance-Tester";
 			packageProductDependencies = (
 			);
-			productName = "Metal-Perform-Tracker";
+			productName = "Metal-Perform-Tester";
 			productReference = BAC23E5D2E7B29770047C51B /* Metal-Performance-Tester */;
 			productType = "com.apple.product-type.tool";
 		};

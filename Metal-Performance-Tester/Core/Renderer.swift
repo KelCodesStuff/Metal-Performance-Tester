@@ -34,16 +34,9 @@ class Renderer {
 
     // MARK: - Initialization
 
-    init?(device: MTLDevice, testConfig: TestConfiguration = TestPreset.moderate.createConfiguration(), showConfiguration: Bool = true) {
+    init?(device: MTLDevice, testConfig: TestConfiguration = TestPreset.moderate.createConfiguration()) {
         self.device = device
         self.testConfig = testConfig
-        
-        // Print test configuration if requested
-        if showConfiguration {
-            print("\nTest Configuration: \(testConfig.description)")
-            print("Parameters:")
-            print(testConfig.parametersDescription)
-        }
         
         // --- 1. Create a command queue ---
         // The command queue is responsible for managing and executing command buffers.
@@ -119,68 +112,29 @@ class Renderer {
     /// Runs multiple iterations and returns a performance measurement set
     /// - Parameters:
     ///   - iterations: Number of iterations to run (default: 50 for baseline, 100 for tests)
-    ///   - showProgress: Whether to show progress during iterations
-    ///   - showBaselineOutput: Whether to display the baseline completion output (only for baseline updates)
     /// - Returns: PerformanceMeasurementSet if measurement was successful, nil if counter sampling is unsupported
-    func runMultipleIterations(iterations: Int = 50, showProgress: Bool = true, showBaselineOutput: Bool = false) -> PerformanceMeasurementSet? {
+    func runMultipleIterations(iterations: Int = 50) -> PerformanceMeasurementSet? {
         guard performanceMetrics.supportsCounterSampling else {
-            print("GPU performance measurement not available (counter sampling unsupported)")
             return nil
         }
         
         var results: [PerformanceResult] = []
         
-        if showProgress {
-            print("\nRunning \(iterations) iterations for statistical analysis...")
-        }
-        
-        for i in 0..<iterations {
-            if let result = draw(showDetailedAnalysis: false) {
+        for _ in 0..<iterations {
+            if let result = draw() {
                 results.append(result)
-                
-                // Show progress at completion
-                if showProgress && i == iterations - 1 {
-                    let progress = ((i + 1) * 100) / iterations
-                    print("Progress: \(progress)% (\(i + 1)/\(iterations))")
-                }
             } else {
-                print("Failed to get performance result for iteration \(i + 1)")
                 return nil
             }
         }
         
         let measurementSet = PerformanceMeasurementSet(individualResults: results)
-        
-        if showBaselineOutput {
-            // Display performance impact based on average results
-            let performanceImpact = TestConfigurationHelper.calculatePerformanceImpactFromResults(
-                gpuTimeMs: measurementSet.averageGpuTimeMs,
-                totalUtilization: measurementSet.individualResults.last?.stageUtilization?.totalUtilization,
-                memoryBandwidth: measurementSet.individualResults.last?.statistics?.memoryBandwidth,
-                instructionsExecuted: measurementSet.individualResults.last?.statistics?.instructionsExecuted
-            )
-            
-            let baselineReport = """
-            
-            ============================================================
-            PERFORMANCE BASELINE COMPLETE
-            
-            \(measurementSet.summary)
-            
-            Performance Impact: \(performanceImpact)
-            
-            """
-            
-            print(baselineReport)
-        }
-        
         return measurementSet
     }
 
     /// Executes the rendering test and returns performance data
-    /// - Parameter showDetailedAnalysis: Whether to display the detailed GPU performance analysis
     /// - Returns: PerformanceResult if measurement was successful, nil if counter sampling is unsupported
-    func draw(showDetailedAnalysis: Bool = true) -> PerformanceResult? {
+    func draw() -> PerformanceResult? {
         // --- Create a render pass descriptor for this frame ---
         // This is the same as before, but we do it here since it's needed for each draw call.
         let renderPassDescriptor = MTLRenderPassDescriptor()
@@ -224,60 +178,6 @@ class Renderer {
         if performanceMetrics.supportsCounterSampling {
             let (gpuTimeMs, stageUtilization, statistics) = performanceMetrics.resolveAllCounters()
             
-            // Display enhanced performance metrics only if requested
-            if showDetailedAnalysis {
-                print("\n" + String(repeating: "=", count: 50))
-                print("GPU PERFORMANCE ANALYSIS")
-                print(String(repeating: "=", count: 50))
-                print("GPU Time: \(String(format: "%.3f", gpuTimeMs)) ms")
-                print("Device: \(device.name)")
-                
-                // Display stage utilization metrics
-                if let stageUtil = stageUtilization {
-                    print("\nStage Utilization:")
-                    if let vertexUtil = stageUtil.vertexUtilization {
-                        print("  Vertex Shader: \(String(format: "%.1f", vertexUtil))%")
-                    }
-                    if let fragmentUtil = stageUtil.fragmentUtilization {
-                        print("  Fragment Shader: \(String(format: "%.1f", fragmentUtil))%")
-                    }
-                    if let totalUtil = stageUtil.totalUtilization {
-                        print("  Total Utilization: \(String(format: "%.1f", totalUtil))%")
-                    }
-                }
-                
-                // Display statistics metrics
-                if let stats = statistics {
-                    print("\nPerformance Statistics:")
-                    if let bandwidth = stats.memoryBandwidth {
-                        print("  Memory Bandwidth: \(String(format: "%.1f", bandwidth)) MB/s")
-                    }
-                    if let cacheHits = stats.cacheHits {
-                        print("  Cache Hits: \(String(format: "%.0f", cacheHits))")
-                    }
-                    if let cacheMisses = stats.cacheMisses {
-                        print("  Cache Misses: \(String(format: "%.0f", cacheMisses))")
-                    }
-                    if let hitRate = stats.cacheHitRate {
-                        print("  Cache Hit Rate: \(String(format: "%.1f", hitRate * 100))%")
-                    }
-                    if let instructions = stats.instructionsExecuted {
-                        print("  Instructions Executed: \(String(format: "%.0f", instructions))")
-                    }
-                }
-                
-                // Calculate and display performance impact based on actual results
-                let performanceImpact = TestConfigurationHelper.calculatePerformanceImpactFromResults(
-                    gpuTimeMs: gpuTimeMs,
-                    totalUtilization: stageUtilization?.totalUtilization,
-                    memoryBandwidth: statistics?.memoryBandwidth,
-                    instructionsExecuted: statistics?.instructionsExecuted
-                )
-                print("\nPerformance Impact: \(performanceImpact)")
-                
-                print("\n" + String(repeating: "=", count: 50))
-            }
-            
             // Return PerformanceResult with all available metrics
             return PerformanceResult(
                 gpuTimeMs: gpuTimeMs,
@@ -287,8 +187,6 @@ class Renderer {
                 statistics: statistics
             )
         } else {
-            print("GPU performance measurement not available (counter sampling unsupported)")
-            print("This is common on older GPUs. The rendering completed successfully.")
             return nil
         }
     }
