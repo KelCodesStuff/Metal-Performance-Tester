@@ -415,10 +415,22 @@ class PerformanceBaselineManager {
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
         
+        // Create a unique filename based on the test configuration
+        let config = measurementSet.testConfig
+        let safeBaselineName = config.baselineName.replacingOccurrences(of: " ", with: "_").lowercased()
+        let filename = "baseline_\(safeBaselineName).json"
+        
+        // Create the baselines directory if it doesn't exist
+        let baselinesDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("baselines")
+        try FileManager.default.createDirectory(at: baselinesDirectory, withIntermediateDirectories: true, attributes: nil)
+        
+        // Create the specific baseline file path in the baselines folder
+        let specificBaselinePath = baselinesDirectory.appendingPathComponent(filename)
+        
         let data = try encoder.encode(measurementSet)
-        try data.write(to: baselineFilePath)
+        try data.write(to: specificBaselinePath)
     
-        print("Baseline saved to: \(baselineFilePath.path)")
+        print("Baseline saved to: \(specificBaselinePath.path)")
     }
     
     /// Saves a single performance result as the new baseline (backward compatibility)
@@ -429,7 +441,26 @@ class PerformanceBaselineManager {
     
     /// Loads the current baseline performance measurement set
     func loadBaseline() throws -> PerformanceMeasurementSet {
-        let data = try Data(contentsOf: baselineFilePath)
+        // First try to load from the old location for backward compatibility
+        if FileManager.default.fileExists(atPath: baselineFilePath.path) {
+            let data = try Data(contentsOf: baselineFilePath)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            return try decoder.decode(PerformanceMeasurementSet.self, from: data)
+        }
+        
+        // If not found, look in the baselines folder
+        let baselinesDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("baselines")
+        let files = try FileManager.default.contentsOfDirectory(at: baselinesDirectory, includingPropertiesForKeys: nil)
+        let baselineFiles = files.filter { $0.pathExtension == "json" && $0.lastPathComponent.hasPrefix("baseline_") }
+        
+        if baselineFiles.isEmpty {
+            throw NSError(domain: "PerformanceBaselineManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "No baseline files found in baselines directory"])
+        }
+        
+        // For now, load the first available baseline (in the future, we could make this configurable)
+        let baselineFile = baselineFiles.first!
+        let data = try Data(contentsOf: baselineFile)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         
@@ -444,13 +475,50 @@ class PerformanceBaselineManager {
     
     /// Checks if a baseline file exists
     func baselineExists() -> Bool {
-        return FileManager.default.fileExists(atPath: baselineFilePath.path)
+        // Check old location first
+        if FileManager.default.fileExists(atPath: baselineFilePath.path) {
+            return true
+        }
+        
+        // Check baselines folder
+        let baselinesDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("baselines")
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: baselinesDirectory, includingPropertiesForKeys: nil)
+            let baselineFiles = files.filter { $0.pathExtension == "json" && $0.lastPathComponent.hasPrefix("baseline_") }
+            return !baselineFiles.isEmpty
+        } catch {
+            return false
+        }
     }
     
     /// Deletes the baseline file
     func deleteBaseline() throws {
         try FileManager.default.removeItem(at: baselineFilePath)
         print("Baseline file deleted")
+    }
+    
+    /// Lists all available baseline files
+    func listBaselines() -> [URL] {
+        let baselinesDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("baselines")
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: baselinesDirectory, includingPropertiesForKeys: nil)
+            return files.filter { $0.pathExtension == "json" && $0.lastPathComponent.hasPrefix("baseline_") }
+        } catch {
+            print("Error listing baselines: \(error)")
+            return []
+        }
+    }
+    
+    /// Loads a specific baseline by filename
+    func loadSpecificBaseline(filename: String) throws -> PerformanceMeasurementSet {
+        let baselinesDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("baselines")
+        let specificPath = baselinesDirectory.appendingPathComponent(filename)
+        
+        let data = try Data(contentsOf: specificPath)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        return try decoder.decode(PerformanceMeasurementSet.self, from: data)
     }
     
     // MARK: - Test Results Management
@@ -461,8 +529,22 @@ class PerformanceBaselineManager {
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
         
+        // Create a unique filename based on the test configuration
+        let config = testResult.testConfig
+        let safeTestName = config.baselineName.replacingOccurrences(of: " ", with: "_").lowercased()
+        let filename = "test_result_\(safeTestName).json"
+        
+        // Create the results directory if it doesn't exist
+        let resultsDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("results")
+        try FileManager.default.createDirectory(at: resultsDirectory, withIntermediateDirectories: true, attributes: nil)
+        
+        // Create the specific test result file path in the results folder
+        let specificTestResultPath = resultsDirectory.appendingPathComponent(filename)
+        
         let data = try encoder.encode(testResult)
-        try data.write(to: privateTestResultsFilePath)
+        try data.write(to: specificTestResultPath)
+        
+        print("Test result saved to: \(specificTestResultPath.path)")
     }
     
     /// Saves a performance test result to the test results file and prints the save message
@@ -488,6 +570,30 @@ class PerformanceBaselineManager {
     /// Deletes the test results file
     func deleteTestResult() throws {
         try FileManager.default.removeItem(at: privateTestResultsFilePath)
-        print("Test results file deleted")
+        print("Test result file deleted")
+    }
+    
+    /// Lists all available test result files
+    func listTestResults() -> [URL] {
+        let resultsDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("results")
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: resultsDirectory, includingPropertiesForKeys: nil)
+            return files.filter { $0.pathExtension == "json" && $0.lastPathComponent.hasPrefix("test_result_") }
+        } catch {
+            print("Error listing test results: \(error)")
+            return []
+        }
+    }
+    
+    /// Loads a specific test result by filename
+    func loadSpecificTestResult(filename: String) throws -> PerformanceTestResult {
+        let resultsDirectory = baselineFilePath.deletingLastPathComponent().appendingPathComponent("results")
+        let specificPath = resultsDirectory.appendingPathComponent(filename)
+        
+        let data = try Data(contentsOf: specificPath)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        return try decoder.decode(PerformanceTestResult.self, from: data)
     }
 }
