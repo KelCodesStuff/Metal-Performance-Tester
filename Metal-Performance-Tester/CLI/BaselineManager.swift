@@ -50,7 +50,7 @@ class BaselineManager {
         
         // PERFORMANCE BASELINE RESULTS OUTPUT
         print("Progress: (100/100)")
-        print("============================================================")
+        print(String(repeating: "-", count: 60))
         print("PERFORMANCE BASELINE RESULTS")
         print()
         
