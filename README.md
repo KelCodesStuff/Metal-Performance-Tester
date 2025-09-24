@@ -1,6 +1,6 @@
-# Metal Performance Tracker
+# Metal Performance Tester
 
-A comprehensive tool for tracking GPU performance regressions in Metal applications. This tool provides precise GPU performance measurement, statistical analysis, and automated regression detection for Metal-based applications.
+A comprehensive tool for testing GPU performance regressions in Metal applications. This tool provides precise GPU performance measurement, statistical analysis, and automated regression detection for Metal-based applications.
 
 ## Features
 
@@ -28,7 +28,7 @@ A comprehensive tool for tracking GPU performance regressions in Metal applicati
 
 ## Usage
 
-The Metal Performance Tracker provides both Xcode and command-line interfaces for different workflows.
+The Metal Performance Tester provides both Xcode and command-line interfaces for different workflows.
 
 ### Xcode Interface (Recommended)
 
@@ -46,13 +46,13 @@ For CI/CD workflows, use the command-line interface:
 
 ```bash
 # Show help and usage information
-Metal-Performance-Tracker --help
+Metal-Performance-Tester --help
 
 # Update performance baseline (ultra-high-res configuration)
-Metal-Performance-Tracker --update-baseline --ultra-high-res
+Metal-Performance-Tester --update-baseline --ultra-high-res
 
 # Run performance test against the baseline (ultra-high-res configuration)
-Metal-Performance-Tracker --run-test --ultra-high-res
+Metal-Performance-Tester --run-test --ultra-high-res
 ```
 
 > For detailed information about baseline output and interpretation, see the [Baseline Output guide](https://github.com/KelCodesStuff/Metal-Performance-Tracker/wiki/Baseline-Output).

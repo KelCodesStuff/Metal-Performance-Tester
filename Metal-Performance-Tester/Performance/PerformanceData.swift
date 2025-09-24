@@ -1,6 +1,6 @@
 //
 //  PerformanceData.swift
-//  Metal-Performance-Tracker
+//  Metal-Performance-Tester
 //
 //  Created by Kelvin Reid on 9/17/25.
 //
@@ -251,9 +251,11 @@ class PerformanceBaselineManager {
             // Try to find project directory by looking for the executable's source location (highest priority)
             findProjectFromExecutable()?.appendingPathComponent("Data"),
             // If running from build directory, try to find project root
-            findProjectRoot(from: currentURL)?.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Data"),
+            findProjectRoot(from: currentURL)?.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root
-            currentURL.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Data"),
+            currentURL.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
+            // If running from project root with different structure (current actual structure)
+            currentURL.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root with different structure
             currentURL.appendingPathComponent("Data")
         ].compactMap { $0 }
@@ -283,9 +285,11 @@ class PerformanceBaselineManager {
             // Try to find project directory by looking for the executable's source location (highest priority)
             findProjectFromExecutable()?.appendingPathComponent("Data"),
             // If running from build directory, try to find project root
-            findProjectRoot(from: currentURL)?.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Data"),
+            findProjectRoot(from: currentURL)?.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root
-            currentURL.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Data"),
+            currentURL.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
+            // If running from project root with different structure (current actual structure)
+            currentURL.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root with different structure
             currentURL.appendingPathComponent("Data")
         ].compactMap { $0 }
@@ -309,7 +313,7 @@ class PerformanceBaselineManager {
         
         // Walk up the directory tree looking for project indicators
         while currentURL.path != "/" {
-            let xcodeProject = currentURL.appendingPathComponent("Metal-Performance-Tracker.xcodeproj")
+            let xcodeProject = currentURL.appendingPathComponent("Metal-Performance-Tester.xcodeproj")
             if FileManager.default.fileExists(atPath: xcodeProject.path) {
                 return currentURL
             }
@@ -347,7 +351,7 @@ class PerformanceBaselineManager {
             if FileManager.default.fileExists(atPath: potentialDataPath.path) {
                 // Additional validation: avoid DerivedData directories
                 // Look for project-specific indicators to ensure this is the actual project
-                let projectFile = searchDir.appendingPathComponent("Metal-Performance-Tracker.xcodeproj")
+                let projectFile = searchDir.appendingPathComponent("Metal-Performance-Tester.xcodeproj")
                 let sourcesDir = searchDir.appendingPathComponent("Sources")
                 
                 if FileManager.default.fileExists(atPath: projectFile.path) || 
@@ -364,10 +368,10 @@ class PerformanceBaselineManager {
         if executableDir.path.contains("DerivedData") {
             let homeDir = FileManager.default.homeDirectoryForCurrentUser
             let commonProjectPaths = [
-                "Projects/Xcode/Metal-Performance-Tracker/Metal-Performance-Tracker",
-                "Developer/Metal-Performance-Tracker/Metal-Performance-Tracker",
-                "Documents/Metal-Performance-Tracker/Metal-Performance-Tracker",
-                "Desktop/Metal-Performance-Tracker/Metal-Performance-Tracker"
+                "Projects/Xcode/Metal-Performance-Tester/Metal-Performance-Tester",
+                "Developer/Metal-Performance-Tester/Metal-Performance-Tester",
+                "Documents/Metal-Performance-Tester/Metal-Performance-Tester",
+                "Desktop/Metal-Performance-Tester/Metal-Performance-Tester"
             ]
             
             for projectPath in commonProjectPaths {

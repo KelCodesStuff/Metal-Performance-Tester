@@ -1,6 +1,6 @@
 //
 //  RegressionChecker.swift
-//  Metal-Performance-Tracker
+//  Metal-Performance-Tester
 //
 //  Created by Kelvin Reid on 9/17/25.
 //
