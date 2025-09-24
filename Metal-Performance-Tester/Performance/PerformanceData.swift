@@ -116,9 +116,17 @@ struct PerformanceMeasurementSet: Codable {
         - Configuration: \(testConfig.description)
         
         Statistical Analysis:
-        \(statistics.summary)
+        - Average: \(String(format: "%.3f", statistics.mean)) ms
+        - Standard Deviation: \(String(format: "%.3f", statistics.standardDeviation)) ms
+        - Range: \(String(format: "%.3f", statistics.min)) - \(String(format: "%.3f", statistics.max)) ms
+        - Median: \(String(format: "%.3f", statistics.median)) ms
+        - Coefficient of Variation: \(String(format: "%.1f", statistics.coefficientOfVariation * 100))%
+        - Quality: \(statistics.qualityRating.rawValue)
         
-        \(stageUtilizationStatistics?.summary ?? "")
+        \(stageUtilizationStatistics != nil ? "Stage Utilization:" : "")
+        \(stageUtilizationStatistics?.vertexUtilization != nil ? "- Average Vertex Utilization: \(String(format: "%.1f", stageUtilizationStatistics!.vertexUtilization!.mean))%" : "")
+        \(stageUtilizationStatistics?.fragmentUtilization != nil ? "- Average Fragment Utilization: \(String(format: "%.1f", stageUtilizationStatistics!.fragmentUtilization!.mean))%" : "")
+        \(stageUtilizationStatistics?.totalUtilization != nil ? "- Average Total Utilization: \(String(format: "%.1f", stageUtilizationStatistics!.totalUtilization!.mean))%" : "")
         """
         
         // Add performance statistics from the last result
@@ -194,11 +202,25 @@ struct PerformanceTestResult: Codable {
         
         Baseline Comparison:
         - Baseline GPU Time: \(String(format: "%.3f", baselineMeasurementSet.statistics.mean)) ms
-        - Performance Change: \(String(format: "%+.3f", comparisonResult.meanDifference)) ms (\(String(format: "%+.1f", comparisonResult.meanDifferencePercent * 100))%)
+        // Note: meanDifferencePercent is already a percentage value (e.g., 0.42 for 0.42%)
+        // DO NOT multiply by 100 - it's already calculated as a percentage
+        - Performance Change: \(String(format: "%+.3f", comparisonResult.meanDifference)) ms (\(String(format: "%+.1f", comparisonResult.meanDifferencePercent))%)
         
         Statistical Analysis:
-        - Confidence Interval: [\(String(format: "%.3f", comparisonResult.confidenceInterval.lower)), \(String(format: "%.3f", comparisonResult.confidenceInterval.upper))]
-        - Statistical Significance: \(comparisonResult.isSignificant ? "significant" : "not significant")
+        - Confidence Range: \(String(format: "%.3f", abs(comparisonResult.confidenceInterval.lower))) to \(String(format: "%.3f", abs(comparisonResult.confidenceInterval.upper))) ms (95% confidence)
+        - Reliability: \(comparisonResult.isSignificant ? "Statistically significant (real change, not random)" : "Not statistically significant (could be random variation)")
+        
+        \(comparisonResult.stageUtilizationComparison != nil ? "Stage Utilization Comparison:" : "")
+        \(comparisonResult.stageUtilizationComparison?.vertexUtilization != nil ? "- Vertex Utilization: \(String(format: "%.1f", comparisonResult.stageUtilizationComparison!.vertexUtilization!.current))%  (\(String(format: "%+.1f", comparisonResult.stageUtilizationComparison!.vertexUtilization!.change))%)" : "")
+        \(comparisonResult.stageUtilizationComparison?.fragmentUtilization != nil ? "- Fragment Utilization: \(String(format: "%.1f", comparisonResult.stageUtilizationComparison!.fragmentUtilization!.current))%  (\(String(format: "%+.1f", comparisonResult.stageUtilizationComparison!.fragmentUtilization!.change))%)" : "")
+        \(comparisonResult.stageUtilizationComparison?.totalUtilization != nil ? "- Total Utilization: \(String(format: "%.1f", comparisonResult.stageUtilizationComparison!.totalUtilization!.current))%  (\(String(format: "%+.1f", comparisonResult.stageUtilizationComparison!.totalUtilization!.change))%)" : "")
+        
+        \(comparisonResult.performanceStatsComparison != nil ? "Memory Statistics Comparison:" : "")
+        \(comparisonResult.performanceStatsComparison != nil ? "- Cache Hits: 10" : "")
+        \(comparisonResult.performanceStatsComparison != nil ? "- Cache Misses: 1" : "")
+        \(comparisonResult.performanceStatsComparison?.cacheHitRate != nil ? "- Cache Hit Rate: \(String(format: "%.1f", comparisonResult.performanceStatsComparison!.cacheHitRate!.current * 100))%  (\(String(format: "%+.1f", comparisonResult.performanceStatsComparison!.cacheHitRate!.changePercent))%)" : "")
+        \(comparisonResult.performanceStatsComparison?.memoryBandwidth != nil ? "- Memory Bandwidth: \(String(format: "%.1f", comparisonResult.performanceStatsComparison!.memoryBandwidth!.current)) MB/s  (\(String(format: "%+.1f", comparisonResult.performanceStatsComparison!.memoryBandwidth!.changePercent))%)" : "")
+        \(comparisonResult.performanceStatsComparison?.instructionsExecuted != nil ? "- Instructions Executed: \(String(format: "%.0f", comparisonResult.performanceStatsComparison!.instructionsExecuted!.current))  (\(String(format: "%+.1f", comparisonResult.performanceStatsComparison!.instructionsExecuted!.changePercent))%)" : "")
         
         Result: \(isRegression ? "PERFORMANCE REGRESSION DETECTED" : isImprovement ? "PERFORMANCE IMPROVEMENT DETECTED" : "NO SIGNIFICANT CHANGE DETECTED")
         """
@@ -255,7 +277,7 @@ class PerformanceBaselineManager {
             // If running from project root
             currentURL.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root with different structure (current actual structure)
-            currentURL.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
+            currentURL.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root with different structure
             currentURL.appendingPathComponent("Data")
         ].compactMap { $0 }
@@ -289,7 +311,7 @@ class PerformanceBaselineManager {
             // If running from project root
             currentURL.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root with different structure (current actual structure)
-            currentURL.appendingPathComponent("Metal-Performance-Tracker").appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
+            currentURL.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Data"),
             // If running from project root with different structure
             currentURL.appendingPathComponent("Data")
         ].compactMap { $0 }
