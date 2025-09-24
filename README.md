@@ -43,7 +43,6 @@ For detailed examples of how to use the Metal Performance Tester in practical de
 - **Game Development** - Adding visual effects and performance validation
 - **Graphics Programming** - Shader optimization and pipeline analysis  
 - **QA Engineering** - Release validation and automated testing
-- **Metal Framework Development** - API performance validation
 
 ## Usage
 
