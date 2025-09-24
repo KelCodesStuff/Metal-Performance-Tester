@@ -24,6 +24,17 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 - **Detailed Reporting:** Generates in-depth reports with statistical summaries and actionable performance insights.
 - **Configuration Validation:** Performs built-in validation for test parameters and GPU compatibility to prevent erroneous test runs.
 
+## Upcoming Features
+
+### Dynamic Workload Scaling
+- **Automatic GPU Detection:** Intelligently detects M Series GPU performance tiers (M1/M2/M3/M4 base, Pro, Max, Ultra) and adjusts test complexity accordingly.
+- **Adaptive Test Configuration:** Automatically scales triangle count, geometry complexity, and resolution based on detected GPU capabilities.
+- **Cross-Platform Compatibility:** Ensures meaningful performance measurements across different M Series variants without manual configuration.
+- **Smart Workload Optimization:** Prevents trivial workloads on powerful GPUs and overly complex workloads on lower-end GPUs.
+
+**Why This Feature is Needed:**
+Currently, the tool uses fixed test configurations that may not be optimal for all GPU performance levels. A test configuration that works well for an M1 base might be too trivial for an M4 Ultra, while a configuration suitable for M4 Ultra might be too demanding for an M1 base. Dynamic Workload Scaling solves this by automatically detecting the GPU's performance tier and generating test configurations that provide meaningful, comparable results across the entire M Series lineup.
+
 ## Usage
 
 The Metal Performance Tester provides both Xcode and command-line interfaces for different workflows.
