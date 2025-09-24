@@ -38,7 +38,7 @@ Currently, the tool uses fixed test configurations that may not be optimal for a
 
 ## Use Cases
 
-For detailed examples of how to use the Metal Performance Tester in practical development scenarios, see [USE_CASES.md](USE_CASES.md). This document includes use cases for:
+For detailed examples of how to use the Metal Performance Tester in practical development scenarios, see [USE_CASES.md](USE-CASES.md). This document includes use cases for:
 
 - **Game Development** - Adding visual effects and performance validation
 - **Graphics Programming** - Shader optimization and pipeline analysis  
