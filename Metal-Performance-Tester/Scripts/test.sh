@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Metal Performance Regression Tracker - Test Script
-# This script runs comprehensive tests of the performance tracker
+# Metal Performance Regression Tester - Test Script
+# This script runs comprehensive tests of the performance tester
 
 set -e  # Exit on any error
 
-echo "Running Metal Performance Tracker Tests..."
+echo "Running Metal Performance Tester Tests..."
 
 # Get the executable path
-EXECUTABLE_PATH=$(xcodebuild -project Metal-Performance-Tracker.xcodeproj \
-                            -scheme Metal-Performance-Tracker \
+EXECUTABLE_PATH=$(xcodebuild -project Metal-Performance-Tester.xcodeproj \
+                            -scheme Metal-Performance-Tester \
                             -configuration Debug \
                             -showBuildSettings | grep -E "BUILT_PRODUCTS_DIR|EXECUTABLE_NAME" | head -2 | awk '{print $3}' | tr '\n' '/' | sed 's|/$||')
 
@@ -60,4 +60,4 @@ else
     exit 1
 fi
 
-echo "All tests passed! Performance tracker is working correctly."
+echo "All tests passed! Performance tester is working correctly."

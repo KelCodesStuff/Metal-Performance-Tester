@@ -12,7 +12,7 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 
 > For informationon on the [Metal](https://developer.apple.com/documentation/metal) API see the official documentation.
 
-> For detailed information on performance impact see the [Performance Impact Categories guide](https://github.com/KelCodesStuff/Metal-Performance-Tracker/wiki/Performance-Impact-Categories).
+> For detailed information on performance impact see the [Performance Impact Categories guide](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Performance-Impact-Categories).
 
 ### Statistical Analysis & Regression Detection
 - **Robust Statistical Analysis:** Implements [Welch's t-test](https://en.wikipedia.org/wiki/Welch%27s_t-test) for proper statistical analysis of samples with unequal variances, with configurable significance levels.
@@ -34,7 +34,7 @@ The Metal Performance Tester provides both Xcode and command-line interfaces for
 
 The easiest way to use the tool is through Xcode's scheme selector:
 
-1. **Open Project:** Open `Metal-Performance-Tracker.xcodeproj` in Xcode
+1. **Open Project:** Open `Metal-Performance-Tester.xcodeproj` in Xcode
 2. **Select Device:** Choose your target device (My Mac)
 3. **Run Baseline:** Select a baseline scheme (e.g., `Baseline-Ultra-High-Res`) and run it to establish performance baseline
 4. **Run Test:** Select the corresponding test scheme (e.g., `Test-Ultra-High-Res`) and run it to see analysis results
@@ -55,7 +55,7 @@ Metal-Performance-Tester --update-baseline --ultra-high-res
 Metal-Performance-Tester --run-test --ultra-high-res
 ```
 
-> For detailed information about baseline output and interpretation, see the [Baseline Output guide](https://github.com/KelCodesStuff/Metal-Performance-Tracker/wiki/Baseline-Output).
+> For detailed information about baseline output and interpretation, see the [Baseline Output guide](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Baseline-Output).
 
 ## Requirements
 
@@ -82,7 +82,7 @@ Metal-Performance-Tester --run-test --ultra-high-res
 - **GPUs without Counter Sampling:** Older integrated graphics without performance counter support
 
 ## Troubleshooting
-For troubleshooting see the [Troubleshooting guide](https://github.com/KelCodesStuff/Metal-Performance-Tracker/wiki/Troubleshooting).
+For troubleshooting see the [Troubleshooting guide](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Troubleshooting).
 
 
 ## License

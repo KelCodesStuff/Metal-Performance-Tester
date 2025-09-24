@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Metal Performance Tracker - Build Script
+# Metal Performance Tester - Build Script
 # This script builds the project and runs basic tests
 
 set -e  # Exit on any error
 
-echo "Building Metal Performance Tracker..."
+echo "Building Metal Performance Tester..."
 
 # Build the project
 echo "Building project..."
-xcodebuild -project Metal-Performance-Tracker.xcodeproj \
-           -scheme Metal-Performance-Tracker \
+xcodebuild -project Metal-Performance-Tester.xcodeproj \
+           -scheme Metal-Performance-Tester \
            -configuration Debug \
            build
 
@@ -22,8 +22,8 @@ else
 fi
 
 # Get the executable path
-EXECUTABLE_PATH=$(xcodebuild -project Metal-Performance-Tracker.xcodeproj \
-                            -scheme Metal-Performance-Tracker \
+EXECUTABLE_PATH=$(xcodebuild -project Metal-Performance-Tester.xcodeproj \
+                            -scheme Metal-Performance-Tester \
                             -configuration Debug \
                             -showBuildSettings | grep -E "BUILT_PRODUCTS_DIR|EXECUTABLE_NAME" | head -2 | awk '{print $3}' | tr '\n' '/' | sed 's|/$||')
 
