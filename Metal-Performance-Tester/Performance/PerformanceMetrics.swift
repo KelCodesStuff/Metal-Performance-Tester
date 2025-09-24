@@ -260,6 +260,7 @@ class EnhancedCounterManager {
                     fragmentUtilization: fragmentUtilization
                 )
                 
+                
                 return StageUtilizationMetrics(
                     vertexUtilization: vertexUtilization,
                     fragmentUtilization: fragmentUtilization,
@@ -362,8 +363,8 @@ class EnhancedCounterManager {
         // Weighted average based on actual workload
         let weightedUtilization = (vertexUtilization * vertexWeight) + (fragmentUtilization * fragmentWeight)
         
-        // Ensure result is within reasonable bounds
-        return min(max(weightedUtilization, 0.0), 95.0)
+        // Ensure result is within reasonable bounds and cap at 100%
+        return min(max(weightedUtilization, 0.0), 100.0)
     }
     
     /// Calculates workload-aware vertex shader utilization based on test configuration
@@ -379,7 +380,8 @@ class EnhancedCounterManager {
         let workloadMultiplier = min(1.0 + (sqrt(triangleCount) / 100.0) + (complexity / 20.0), 1.5)
         let scaledUtilization = baseUtilization * workloadMultiplier
         
-        return min(scaledUtilization, 95.0) // Cap at 95% for realism
+        // Cap at 100% to prevent impossible utilization values
+        return min(max(scaledUtilization, 0.0), 100.0)
     }
     
     /// Calculates workload-aware fragment shader utilization based on test configuration
@@ -396,7 +398,8 @@ class EnhancedCounterManager {
         let workloadMultiplier = min(1.0 + (pixelImpact / 2.0) + (complexity / 15.0), 1.8)
         let scaledUtilization = baseUtilization * workloadMultiplier
         
-        return min(scaledUtilization, 95.0) // Cap at 95% for realism
+        // Cap at 100% to prevent impossible utilization values
+        return min(max(scaledUtilization, 0.0), 100.0)
     }
     
     /// Calculates workload-aware memory bandwidth based on test configuration
