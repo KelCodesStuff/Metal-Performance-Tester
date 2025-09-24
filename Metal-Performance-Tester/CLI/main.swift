@@ -34,118 +34,16 @@ func main() -> Int32 {
     }
 }
 
-/// Runs the performance test and updates the baseline with multiple iterations
+// MARK: Baseline Update Operations
 func runUpdateBaseline(testConfig: TestConfiguration? = nil) -> Int32 {
-    print("Updating performance baseline...")
-    
-    // Initialize Metal and renderer
-    guard let device = MTLCreateSystemDefaultDevice() else {
-        print("Metal is not supported on this device.")
-        return ExitCode.error.rawValue
-    }
-    
-    let config = testConfig ?? TestPreset.moderate.createConfiguration()
-    guard let renderer = Renderer(device: device, testConfig: config) else {
-        print("Failed to initialize the Renderer.")
-        return ExitCode.error.rawValue
-    }
-    
-    // Run multiple iterations for statistical baseline
-    guard let measurementSet = renderer.runMultipleIterations(iterations: 100, showProgress: true, showBaselineOutput: true) else {
-        print("Performance measurement not available on this GPU.")
-        print("Counter sampling is not supported. Cannot establish baseline.")
-        return ExitCode.error.rawValue
-    }
-    
-    // Save as new baseline
-    let baselineManager = PerformanceBaselineManager()
-    do {
-        try baselineManager.saveBaseline(measurementSet)
-        print("Baseline updated successfully!")
-        return ExitCode.success.rawValue
-    } catch {
-        print("Failed to save baseline: \(error)")
-        return ExitCode.error.rawValue
-    }
+    let baselineManager = BaselineManager()
+    return baselineManager.runUpdateBaseline(testConfig: testConfig)
 }
 
-/// Runs the performance test and compares against baseline using statistical analysis
+// MARK: Performance Test Operations
 func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil) -> Int32 {
-    print("Running performance test...")
-    print()
-    
-    // Check if baseline exists
-    let baselineManager = PerformanceBaselineManager()
-    guard baselineManager.baselineExists() else {
-        print("\nError: No baseline found.")
-        print("Run with --update-baseline first to establish a performance baseline.")
-        return ExitCode.error.rawValue
-    }
-    
-    // Initialize Metal and renderer
-    guard let device = MTLCreateSystemDefaultDevice() else {
-        print("\nError: Metal is not supported on this device.")
-        return ExitCode.error.rawValue
-    }
-    
-    let config = testConfig ?? TestPreset.moderate.createConfiguration()
-    guard let renderer = Renderer(device: device, testConfig: config, showConfiguration: false) else {
-        print("\nError: Failed to initialize the Renderer.")
-        return ExitCode.error.rawValue
-    }
-    
-    // Run multiple iterations for statistical comparison
-    guard let currentMeasurementSet = renderer.runMultipleIterations(iterations: 100, showProgress: true, showBaselineOutput: false) else {
-        print("\nError: Performance measurement not available on this GPU.")
-        print("Counter sampling is not supported.")
-        return ExitCode.error.rawValue
-    }
-    
-    // Load baseline and compare statistically
-    do {
-        let baselineMeasurementSet = try baselineManager.loadBaseline()
-        let comparisonResult = RegressionChecker.compareStatistical(
-            current: currentMeasurementSet,
-            baseline: baselineMeasurementSet,
-            significanceLevel: 0.05
-        )
-        
-        // Create and save test result
-        let testResult = PerformanceTestResult(
-            current: currentMeasurementSet,
-            baseline: baselineMeasurementSet,
-            comparison: comparisonResult
-        )
-        
-        // Generate and print statistical report
-        let report = RegressionChecker.generateStatisticalReport(
-            current: currentMeasurementSet,
-            baseline: baselineMeasurementSet,
-            result: comparisonResult
-        )
-        print(report)
-        
-        // Save test result to JSON file
-        do {
-            try baselineManager.saveTestResult(testResult)
-            // Print test result save message only if save was successful
-            print("Test result saved to: \(baselineManager.testResultsFilePath.path)")
-        } catch {
-            print("\nWarning: Failed to save test result: \(error)")
-            // Continue execution even if saving fails
-        }
-        
-        // Return appropriate exit code based on statistical significance
-        if comparisonResult.isRegression {
-            return ExitCode.failure.rawValue
-        } else {
-            return ExitCode.success.rawValue
-        }
-        
-    } catch {
-        print("\nError: Failed to load baseline: \(error)")
-        return ExitCode.error.rawValue
-    }
+    let performanceTestManager = PerformanceTestManager()
+    return performanceTestManager.runPerformanceTest(threshold: threshold, testConfig: testConfig)
 }
 
 // Run the main function and exit with the appropriate code
