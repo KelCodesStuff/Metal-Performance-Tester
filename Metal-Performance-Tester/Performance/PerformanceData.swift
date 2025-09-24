@@ -216,8 +216,8 @@ struct PerformanceTestResult: Codable {
         \(comparisonResult.stageUtilizationComparison?.totalUtilization != nil ? "- Total Utilization: \(String(format: "%.1f", comparisonResult.stageUtilizationComparison!.totalUtilization!.current))%  (\(String(format: "%+.1f", comparisonResult.stageUtilizationComparison!.totalUtilization!.change))%)" : "")
         
         \(comparisonResult.performanceStatsComparison != nil ? "Memory Statistics Comparison:" : "")
-        \(comparisonResult.performanceStatsComparison != nil ? "- Cache Hits: 10" : "")
-        \(comparisonResult.performanceStatsComparison != nil ? "- Cache Misses: 1" : "")
+        \(comparisonResult.performanceStatsComparison?.cacheHits != nil ? "- Cache Hits: \(String(format: "%.0f", comparisonResult.performanceStatsComparison!.cacheHits!.current))" : "")
+        \(comparisonResult.performanceStatsComparison?.cacheMisses != nil ? "- Cache Misses: \(String(format: "%.0f", comparisonResult.performanceStatsComparison!.cacheMisses!.current))" : "")
         \(comparisonResult.performanceStatsComparison?.cacheHitRate != nil ? "- Cache Hit Rate: \(String(format: "%.1f", comparisonResult.performanceStatsComparison!.cacheHitRate!.current * 100))%  (\(String(format: "%+.1f", comparisonResult.performanceStatsComparison!.cacheHitRate!.changePercent))%)" : "")
         \(comparisonResult.performanceStatsComparison?.memoryBandwidth != nil ? "- Memory Bandwidth: \(String(format: "%.1f", comparisonResult.performanceStatsComparison!.memoryBandwidth!.current)) MB/s  (\(String(format: "%+.1f", comparisonResult.performanceStatsComparison!.memoryBandwidth!.changePercent))%)" : "")
         \(comparisonResult.performanceStatsComparison?.instructionsExecuted != nil ? "- Instructions Executed: \(String(format: "%.0f", comparisonResult.performanceStatsComparison!.instructionsExecuted!.current))  (\(String(format: "%+.1f", comparisonResult.performanceStatsComparison!.instructionsExecuted!.changePercent))%)" : "")
