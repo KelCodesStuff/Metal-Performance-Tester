@@ -10,7 +10,7 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 - **Workload-Aware Analysis:** Intelligently scales and assesses performance impact based on triangle count, resolution, and geometry complexity.
 - **Multiple Test Configurations:** Provides pre-defined presets for a range of scenarios, from mobile (720p) to ultra-high resolution (8K) testing.
 
-> For informationon on the [Metal](https://developer.apple.com/documentation/metal) API see the official documentation.
+> For information on the [Metal](https://developer.apple.com/documentation/metal) API see the official documentation.
 
 ### Statistical Analysis & Regression Detection
 - **Robust Statistical Analysis:** Implements [Welch's t-test](https://en.wikipedia.org/wiki/Welch%27s_t-test) for proper statistical analysis of samples with unequal variances, with configurable significance levels.
@@ -19,59 +19,30 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 - **Dual Detection Methods:** Supports both statistical significance testing and simple threshold-based regression detection.
 
 ### Professional Tooling
-- **Comprehensive CLI:** A rich command-line interface with multiple test modes and configuration options, designed for CI/CD integration.
 - **Baseline Management:** Advanced baseline creation, storage, and comparison against new test runs.
-- **Detailed Reporting:** Generates in-depth reports with statistical summaries and actionable performance insights.
 - **Configuration Validation:** Performs built-in validation for test parameters and GPU compatibility to prevent erroneous test runs.
+- **Detailed Reporting:** Generates in-depth reports with statistical summaries and actionable performance insights.
+- **CLI:** A rich command-line interface with multiple test modes and configuration options, designed for CI/CD integration.
 
 ## Upcoming Features
 
-### Dynamic Workload Scaling
-- **Automatic GPU Detection:** Intelligently detects M Series GPU performance tiers (M1/M2/M3/M4 base, Pro, Max, Ultra) and adjusts test complexity accordingly.
-- **Adaptive Test Configuration:** Automatically scales triangle count, geometry complexity, and resolution based on detected GPU capabilities.
-- **Cross-Platform Compatibility:** Ensures meaningful performance measurements across different M Series variants without manual configuration.
-- **Smart Workload Optimization:** Prevents trivial workloads on powerful GPUs and overly complex workloads on lower-end GPUs.
-
-**Why This Feature is Needed:**
-
-Currently, the tool uses fixed test configurations that may not be optimal for all GPU performance levels. A test configuration that works well for an M1 base might be too trivial for an M4 Ultra, while a configuration suitable for M4 Ultra might be too demanding for an M1 base. Dynamic Workload Scaling solves this by automatically detecting the GPU's performance tier and generating test configurations that provide meaningful, comparable results across the entire M Series lineup.
+For the list of upcoming features see [Upcoming Features](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Upcoming-Features).
 
 ## Use Cases
 
-For detailed examples of how to use the Metal Performance Tester in practical development scenarios, see [Use Cases](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Use-Cases). This document includes use cases for:
+For detailed examples of how to use the Metal Performance Tester in practical development scenarios, see [Use Cases](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Use-Cases). 
+
+This document includes uses for:
 
 - **Game Development** - Adding visual effects and performance validation
 - **Graphics Programming** - Shader optimization and pipeline analysis  
 - **QA Engineering** - Release validation and automated testing
 
-## Usage
+
+## Installation and Usage
 
 The Metal Performance Tester provides both Xcode and command-line interfaces for different workflows.
-
-### Xcode Interface (Recommended)
-
-The easiest way to use the tool is through Xcode's scheme selector:
-
-1. **Open Project:** Open `Metal-Performance-Tester.xcodeproj` in Xcode
-2. **Select Device:** Choose your target device (My Mac)
-3. **Run Baseline:** Select a baseline scheme (e.g., `Baseline-Ultra-High-Res`) and run it to establish performance baseline
-4. **Run Test:** Select the corresponding test scheme (e.g., `Test-Ultra-High-Res`) and run it to see analysis results
-5. **View Results:** Compare the baseline and test results in the console output
-
-### Command Line Interface
-
-For CI/CD workflows, use the command-line interface:
-
-```bash
-# Show help and usage information
-Metal-Performance-Tester --help
-
-# Update performance baseline (ultra-high-res configuration)
-Metal-Performance-Tester --update-baseline --ultra-high-res
-
-# Run performance test against the baseline (ultra-high-res configuration)
-Metal-Performance-Tester --run-test --ultra-high-res
-```
+> For detailed information on installation and usage, see [Installation and Usage](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Installation-and-Usage).
 
 > For detailed information about baseline output and interpretation, see the [Baseline Output guide](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Baseline-Output).
 
