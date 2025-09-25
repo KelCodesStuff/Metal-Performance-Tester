@@ -42,9 +42,11 @@ This document includes uses for:
 ## Installation and Usage
 
 The Metal Performance Tester provides both Xcode and command-line interfaces for different workflows.
-> For detailed information on installation and usage, see [Installation and Usage](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Installation-and-Usage).
+> For information on installation and usage, see [Installation and Usage](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Installation-and-Usage).
 
-> For detailed information about baseline output and interpretation, see the [Baseline Output guide](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Baseline-Output).
+> For information on the baseline output, see [Baseline Output](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Baseline-Output).
+
+> For information on the test results output, see [Test Results Output](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Test-Results-Output).
 
 ## Requirements
 
