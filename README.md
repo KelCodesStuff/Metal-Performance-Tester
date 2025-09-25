@@ -6,8 +6,7 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 
 ### Core Performance Measurement
 - **Precise GPU Timing:** Uses Metal's performance counter sampling API for accurate measurement of GPU execution time, frame time, and draw call timing.
-- **Advanced Hardware Counters:** Captures key metrics including stage utilization (vertex, fragment, geometry, compute), memory bandwidth, cache hit/miss rates, memory latency, and total instructions executed.
-- **Workload-Aware Analysis:** Intelligently scales and assesses performance impact based on triangle count, resolution, and geometry complexity.
+- **Advanced Hardware Counters:** Captures key metrics including stage utilization (vertex, fragment), memory bandwidth, memory utilization, cache hit/miss rates, and total instructions executed.
 - **Multiple Test Configurations:** Provides pre-defined presets for a range of scenarios, from mobile (720p) to ultra-high resolution (8K) testing.
 
 > For information on the [Metal](https://developer.apple.com/documentation/metal) API see the official documentation.
@@ -17,12 +16,6 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 - **Confidence Intervals:** Calculates 95% confidence intervals for performance differences to quantify the margin of error.
 - **Data Quality Assessment:** Automatically rates the quality and reliability of a test run based on its coefficient of variation.
 - **Dual Detection Methods:** Supports both statistical significance testing and simple threshold-based regression detection.
-
-### Professional Tooling
-- **Baseline Management:** Advanced baseline creation, storage, and comparison against new test runs.
-- **Configuration Validation:** Performs built-in validation for test parameters and GPU compatibility to prevent erroneous test runs.
-- **Detailed Reporting:** Generates in-depth reports with statistical summaries and actionable performance insights.
-- **CLI:** A rich command-line interface with multiple test modes and configuration options, designed for CI/CD integration.
 
 ## Upcoming Features
 
