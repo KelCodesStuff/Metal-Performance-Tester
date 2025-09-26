@@ -7,6 +7,15 @@
 
 import Metal
 
+/// Errors that can occur during rendering operations
+enum RendererError: Error {
+    case deviceNotAvailable
+    case encoderCreationFailed
+    case shaderCompilationFailed
+    case pipelineStateCreationFailed
+    case bufferCreationFailed
+}
+
 // A class dedicated to handling all Metal rendering logic.
 class Renderer {
     
@@ -139,8 +148,8 @@ class Renderer {
     /// Runs multiple graphics iterations and returns a graphics measurement set
     /// - Parameters:
     ///   - iterations: Number of iterations to run (default: 100 for both baseline and tests)
-    /// - Returns: GraphicsMeasurementSet if measurement was successful, nil if counter sampling is unsupported
-    func runMultipleGraphicsIterations(iterations: Int = 100) -> GraphicsMeasurementSet? {
+    /// - Returns: UnifiedPerformanceMeasurementSet if measurement was successful, nil if counter sampling is unsupported
+    func runMultipleGraphicsIterations(iterations: Int = 100) -> UnifiedPerformanceMeasurementSet? {
         guard let graphicsMetrics = graphicsPerformanceMetrics,
               graphicsMetrics.supportsCounterSampling else {
             return nil
@@ -156,9 +165,9 @@ class Renderer {
             }
         }
         
-        // Convert PerformanceResult to GraphicsResult
-        let graphicsResults = results.map { performanceResult in
-            GraphicsResult(
+        // Convert PerformanceResult to UnifiedPerformanceResult
+        let unifiedResults = results.map { performanceResult in
+            UnifiedPerformanceResult.graphics(
                 gpuTimeMs: performanceResult.gpuTimeMs,
                 deviceName: performanceResult.deviceName,
                 testConfig: performanceResult.testConfig,
@@ -167,21 +176,21 @@ class Renderer {
             )
         }
         
-        let measurementSet = GraphicsMeasurementSet(individualResults: graphicsResults)
+        let measurementSet = UnifiedPerformanceMeasurementSet(individualResults: unifiedResults)
         return measurementSet
     }
     
     /// Runs multiple compute iterations and returns a compute performance measurement set
     /// - Parameters:
     ///   - iterations: Number of iterations to run (default: 100 for both baseline and tests)
-    /// - Returns: ComputeMeasurementSet if measurement was successful, nil if counter sampling is unsupported
-    func runMultipleComputeIterations(iterations: Int = 100) -> ComputeMeasurementSet? {
+    /// - Returns: UnifiedPerformanceMeasurementSet if measurement was successful, nil if counter sampling is unsupported
+    func runMultipleComputeIterations(iterations: Int = 100) -> UnifiedPerformanceMeasurementSet? {
         guard let computeMetrics = computePerformanceMetrics,
               computeMetrics.supportsCounterSampling else {
             return nil
         }
         
-        var results: [ComputeResult] = []
+        var results: [UnifiedPerformanceResult] = []
         
         for _ in 0..<iterations {
             if let result = runCompute() {
@@ -191,36 +200,240 @@ class Renderer {
             }
         }
         
-        let measurementSet = ComputeMeasurementSet(individualResults: results)
+        let measurementSet = UnifiedPerformanceMeasurementSet(individualResults: results)
         return measurementSet
     }
     
     /// Executes the compute test and returns compute performance data
-    /// - Returns: ComputeResult if measurement was successful, nil if counter sampling is unsupported
-    func runCompute() -> ComputeResult? {
-        // For now, we'll simulate compute performance by using the existing graphics pipeline
-        // In a real implementation, this would dispatch compute shaders
-        guard let graphicsResult = draw() else {
+    /// - Returns: UnifiedPerformanceResult if measurement was successful, nil if counter sampling is unsupported
+    func runCompute() -> UnifiedPerformanceResult? {
+        guard let computeMetrics = computePerformanceMetrics,
+              computeMetrics.supportsCounterSampling else {
             return nil
         }
         
-        // Convert graphics result to compute result
-        // In a real implementation, this would be actual compute performance data
-        let computeUtilization = ComputeUtilizationMetrics(
-            computeUtilization: graphicsResult.stageUtilization?.fragmentUtilization,
-            memoryUtilization: graphicsResult.stageUtilization?.memoryUtilization,
-            totalUtilization: graphicsResult.stageUtilization?.totalUtilization,
-            memoryBandwidthUtilization: graphicsResult.stageUtilization?.memoryBandwidthUtilization,
-            threadgroupEfficiency: 85.0, // Simulated threadgroup efficiency
-            instructionsPerSecond: graphicsResult.statistics?.instructionsExecuted
-        )
+        // Start performance measurement
+        let startTime = CFAbsoluteTimeGetCurrent()
         
-        return ComputeResult(
-            gpuTimeMs: graphicsResult.gpuTimeMs,
-            deviceName: graphicsResult.deviceName,
-            testConfig: graphicsResult.testConfig,
+        do {
+            // Create command buffer
+            guard let commandBuffer = commandQueue.makeCommandBuffer() else {
+                return nil
+            }
+            
+            // Dispatch compute shaders based on test configuration
+            try dispatchComputeShaders(commandBuffer: commandBuffer, testConfig: testConfig)
+            
+            // Commit and wait for completion
+            commandBuffer.commit()
+            commandBuffer.waitUntilCompleted()
+            
+            // End performance measurement
+            let endTime = CFAbsoluteTimeGetCurrent()
+            let gpuTimeMs = (endTime - startTime) * 1000.0
+            
+            // Get compute performance metrics
+            let computeUtilization = try getComputeUtilizationMetrics()
+            let statistics = try getComputePerformanceStatistics()
+            
+            return UnifiedPerformanceResult.compute(
+                gpuTimeMs: gpuTimeMs,
+                deviceName: device.name,
+                testConfig: testConfig,
+                computeUtilization: computeUtilization,
+                statistics: statistics
+            )
+            
+        } catch {
+            print("Error executing compute shaders: \(error)")
+            return nil
+        }
+    }
+    
+    // MARK: - Compute Shader Execution
+    
+    /// Dispatches compute shaders based on test configuration
+    private func dispatchComputeShaders(commandBuffer: MTLCommandBuffer, testConfig: TestConfiguration) throws {
+        
+        // Create compute pipeline state
+        let computePipelineState = try createComputePipelineState()
+        
+        // Create compute encoder
+        guard let computeEncoder = commandBuffer.makeComputeCommandEncoder() else {
+            throw RendererError.encoderCreationFailed
+        }
+        
+        computeEncoder.setComputePipelineState(computePipelineState)
+        
+        // Create buffers and dispatch based on test configuration
+        if let complexity = testConfig.computeWorkloadComplexity {
+            switch complexity {
+            case 1...3:
+                try dispatchLowComputeWorkload(encoder: computeEncoder, device: device)
+            case 4...5:
+                try dispatchModerateComputeWorkload(encoder: computeEncoder, device: device)
+            case 6...7:
+                try dispatchComplexComputeWorkload(encoder: computeEncoder, device: device)
+            case 8...9:
+                try dispatchHighComputeWorkload(encoder: computeEncoder, device: device)
+            case 10:
+                try dispatchUltraHighComputeWorkload(encoder: computeEncoder, device: device)
+            default:
+                try dispatchModerateComputeWorkload(encoder: computeEncoder, device: device)
+            }
+        } else {
+            // Default to moderate compute workload
+            try dispatchModerateComputeWorkload(encoder: computeEncoder, device: device)
+        }
+        
+        computeEncoder.endEncoding()
+    }
+    
+    /// Creates compute pipeline state
+    private func createComputePipelineState() throws -> MTLComputePipelineState {
+        guard let library = device.makeDefaultLibrary(),
+              let function = library.makeFunction(name: "compute_simple") else {
+            throw RendererError.shaderCompilationFailed
+        }
+        
+        do {
+            return try device.makeComputePipelineState(function: function)
+        } catch {
+            throw RendererError.pipelineStateCreationFailed
+        }
+    }
+    
+    /// Dispatches low compute workload (128x128)
+    private func dispatchLowComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
+        let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
+        let gridSize = MTLSize(width: 128, height: 128, depth: 1)
+        
+        let inputBuffer = try createInputBuffer(device: device, size: 128 * 128)
+        let outputBuffer = try createOutputBuffer(device: device, size: 128 * 128)
+        
+        encoder.setBuffer(inputBuffer, offset: 0, index: 0)
+        encoder.setBuffer(outputBuffer, offset: 0, index: 1)
+        
+        encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupSize)
+    }
+    
+    /// Dispatches moderate compute workload (256x256)
+    private func dispatchModerateComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
+        let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
+        let gridSize = MTLSize(width: 256, height: 256, depth: 1)
+        
+        let inputBuffer = try createInputBuffer(device: device, size: 256 * 256)
+        let outputBuffer = try createOutputBuffer(device: device, size: 256 * 256)
+        
+        encoder.setBuffer(inputBuffer, offset: 0, index: 0)
+        encoder.setBuffer(outputBuffer, offset: 0, index: 1)
+        
+        encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupSize)
+    }
+    
+    /// Dispatches complex compute workload (384x384)
+    private func dispatchComplexComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
+        let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
+        let gridSize = MTLSize(width: 384, height: 384, depth: 1)
+        
+        let inputBuffer = try createInputBuffer(device: device, size: 384 * 384)
+        let outputBuffer = try createOutputBuffer(device: device, size: 384 * 384)
+        
+        encoder.setBuffer(inputBuffer, offset: 0, index: 0)
+        encoder.setBuffer(outputBuffer, offset: 0, index: 1)
+        
+        encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupSize)
+    }
+    
+    /// Dispatches high compute workload (512x512)
+    private func dispatchHighComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
+        let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
+        let gridSize = MTLSize(width: 512, height: 512, depth: 1)
+        
+        let inputBuffer = try createInputBuffer(device: device, size: 512 * 512)
+        let outputBuffer = try createOutputBuffer(device: device, size: 512 * 512)
+        
+        encoder.setBuffer(inputBuffer, offset: 0, index: 0)
+        encoder.setBuffer(outputBuffer, offset: 0, index: 1)
+        
+        encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupSize)
+    }
+    
+    /// Dispatches ultra-high compute workload (1024x1024)
+    private func dispatchUltraHighComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
+        let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
+        let gridSize = MTLSize(width: 1024, height: 1024, depth: 1)
+        
+        let inputBuffer = try createInputBuffer(device: device, size: 1024 * 1024)
+        let outputBuffer = try createOutputBuffer(device: device, size: 1024 * 1024)
+        
+        encoder.setBuffer(inputBuffer, offset: 0, index: 0)
+        encoder.setBuffer(outputBuffer, offset: 0, index: 1)
+        
+        encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupSize)
+    }
+    
+    /// Creates input buffer for compute shaders
+    private func createInputBuffer(device: MTLDevice, size: Int) throws -> MTLBuffer {
+        let bufferSize = size * MemoryLayout<Float>.size
+        guard let buffer = device.makeBuffer(length: bufferSize, options: [.storageModeShared]) else {
+            throw RendererError.bufferCreationFailed
+        }
+        
+        // Initialize with random data
+        let pointer = buffer.contents().bindMemory(to: Float.self, capacity: size)
+        for i in 0..<size {
+            pointer[i] = Float.random(in: 0.0...1.0)
+        }
+        
+        return buffer
+    }
+    
+    /// Creates output buffer for compute shaders
+    private func createOutputBuffer(device: MTLDevice, size: Int) throws -> MTLBuffer {
+        let bufferSize = size * MemoryLayout<Float>.size
+        guard let buffer = device.makeBuffer(length: bufferSize, options: [.storageModeShared]) else {
+            throw RendererError.bufferCreationFailed
+        }
+        
+        return buffer
+    }
+    
+    /// Gets compute utilization metrics
+    private func getComputeUtilizationMetrics() throws -> ComputeUtilizationMetrics {
+        // In a real implementation, this would query actual compute performance counters
+        // For now, we'll return simulated metrics based on workload
+        let computeUtilization = Double.random(in: 70.0...95.0)
+        let memoryUtilization = Double.random(in: 60.0...85.0)
+        let totalUtilization = (computeUtilization + memoryUtilization) / 2.0
+        let threadgroupEfficiency = Double.random(in: 80.0...95.0)
+        
+        return ComputeUtilizationMetrics(
             computeUtilization: computeUtilization,
-            statistics: graphicsResult.statistics
+            memoryUtilization: memoryUtilization,
+            totalUtilization: totalUtilization,
+            memoryBandwidthUtilization: memoryUtilization,
+            threadgroupEfficiency: threadgroupEfficiency,
+            instructionsPerSecond: Double.random(in: 1_000_000...10_000_000)
+        )
+    }
+    
+    /// Gets compute performance statistics
+    private func getComputePerformanceStatistics() throws -> GeneralStatistics {
+        // In a real implementation, this would query actual performance counters
+        // For now, we'll return simulated statistics
+        return GeneralStatistics(
+            verticesProcessed: nil,
+            primitivesProcessed: nil,
+            pixelsProcessed: nil,
+            memoryBandwidth: Double.random(in: 100_000...500_000), // MB/s
+            memoryBandwidthUsed: UInt64.random(in: 1_000_000...10_000_000),
+            cacheHits: Double.random(in: 1_000_000...10_000_000),
+            cacheMisses: Double.random(in: 100_000...1_000_000),
+            cacheHitRate: Double.random(in: 0.85...0.98),
+            instructionsExecuted: Double.random(in: 1_000_000...50_000_000),
+            memoryLatency: Double.random(in: 10.0...100.0),
+            textureCacheUtilization: Double.random(in: 0.7...0.95)
         )
     }
 
@@ -280,6 +493,7 @@ class Renderer {
                 gpuTimeMs: gpuTimeMs,
                 deviceName: device.name,
                 testConfig: testConfig,
+                testType: .graphics,
                 stageUtilization: stageUtilization,
                 statistics: statistics
             )
