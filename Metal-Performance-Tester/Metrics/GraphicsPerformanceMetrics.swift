@@ -178,19 +178,52 @@ class GraphicsPerformanceMetrics: BaseCounterManager {
     
     /// Calculates graphics-specific vertex shader utilization
     private func calculateGraphicsVertexUtilization(rawCounterValue: UInt64) -> Double {
-        // Base utilization from counter data (0-100 range)
-        let baseUtilization = Double(rawCounterValue & 0xFFFF).truncatingRemainder(dividingBy: 100)
+        // MARK: - Constants for Utilization Calculation
         
-        // Scale based on triangle count and complexity
+        /// Maximum utilization cap to prevent unrealistic values
+        let MAX_UTILIZATION_PERCENTAGE = 100.0
+        
+        /// Base multiplier when no workload scaling is applied
+        let BASE_MULTIPLIER = 1.0
+        
+        /// Maximum workload multiplier to prevent over-scaling
+        let MAX_WORKLOAD_MULTIPLIER = 1.5
+        
+        /// Triangle count scaling factor: sqrt(triangles) / 100
+        /// Rationale: Vertex processing scales sub-linearly with triangle count due to:
+        /// - Shared vertices in triangle meshes (typically 1.5-2x fewer unique vertices)
+        /// - GPU vertex cache efficiency
+        /// - Batch processing optimizations
+        let TRIANGLE_SCALING_DIVISOR = 100.0
+        
+        /// Geometry complexity scaling factor: complexity / 20
+        /// Rationale: Each complexity level (1-10) adds ~5% utilization overhead
+        /// - Level 1-3: Simple geometry (low overhead)
+        /// - Level 4-6: Moderate complexity (medium overhead)  
+        /// - Level 7-10: Complex geometry (high overhead)
+        let COMPLEXITY_SCALING_DIVISOR = 20.0
+        
+        // Extract base utilization from counter data (0-100 range)
+        let baseUtilization = Double(rawCounterValue & 0xFFFF).truncatingRemainder(dividingBy: MAX_UTILIZATION_PERCENTAGE)
+        
+        // Get workload parameters
         let triangleCount = Double(testConfig.triangleCount)
         let complexity = Double(testConfig.geometryComplexity)
         
-        // Vertex utilization scales with triangle count and geometry complexity
-        let workloadMultiplier = min(1.0 + (sqrt(triangleCount) / 100.0) + (complexity / 20.0), 1.5)
+        // Calculate workload multiplier based on triangle count and geometry complexity
+        // Formula: 1.0 + sqrt(triangles)/100 + complexity/20
+        // This creates a sub-linear scaling that reflects real GPU behavior:
+        // - More triangles = higher utilization, but with diminishing returns
+        // - Higher complexity = linear increase in processing overhead
+        let triangleScaling = sqrt(triangleCount) / TRIANGLE_SCALING_DIVISOR
+        let complexityScaling = complexity / COMPLEXITY_SCALING_DIVISOR
+        let workloadMultiplier = min(BASE_MULTIPLIER + triangleScaling + complexityScaling, MAX_WORKLOAD_MULTIPLIER)
+        
+        // Apply scaling to base utilization
         let scaledUtilization = baseUtilization * workloadMultiplier
         
-        // Cap at 100% to prevent impossible utilization values
-        return min(max(scaledUtilization, 0.0), 100.0)
+        // Clamp to valid range [0, 100] to prevent impossible utilization values
+        return min(max(scaledUtilization, 0.0), MAX_UTILIZATION_PERCENTAGE)
     }
     
     /// Calculates graphics-specific fragment shader utilization
