@@ -174,19 +174,53 @@ class ComputePerformanceMetrics: BaseCounterManager {
     
     /// Calculates compute-specific utilization
     private func calculateComputeUtilization(rawCounterValue: UInt64) -> Double {
-        // Base utilization from counter data (0-100 range)
-        let baseUtilization = Double(rawCounterValue & 0xFFFF).truncatingRemainder(dividingBy: 100)
+        // MARK: - Constants for Compute Utilization Calculation
         
-        // Scale based on threadgroup count and complexity
+        /// Maximum utilization cap to prevent unrealistic values
+        let MAX_UTILIZATION_PERCENTAGE = 100.0
+        
+        /// Base multiplier when no workload scaling is applied
+        let BASE_MULTIPLIER = 1.0
+        
+        /// Maximum workload multiplier to prevent over-scaling
+        let MAX_WORKLOAD_MULTIPLIER = 1.5
+        
+        /// Threadgroup count scaling factor: sqrt(threadgroups) / 100
+        /// Rationale: Compute utilization scales sub-linearly with threadgroup count due to:
+        /// - GPU threadgroup scheduling efficiency
+        /// - Memory bandwidth limitations
+        /// - Compute unit occupancy patterns
+        /// - Diminishing returns as threadgroup count increases
+        let THREADGROUP_SCALING_DIVISOR = 100.0
+        
+        /// Workload complexity scaling factor: complexity / 20
+        /// Rationale: Each complexity level (1-10) adds ~5% utilization overhead
+        /// - Level 1-3: Simple compute (low ALU utilization)
+        /// - Level 4-6: Moderate compute (medium ALU utilization)
+        /// - Level 7-10: Complex compute (high ALU utilization, memory intensive)
+        let COMPLEXITY_SCALING_DIVISOR = 20.0
+        
+        // Extract base utilization from counter data (0-100 range)
+        let baseUtilization = Double(rawCounterValue & 0xFFFF).truncatingRemainder(dividingBy: MAX_UTILIZATION_PERCENTAGE)
+        
+        // Calculate total threadgroup count (width × height)
         let threadgroupCount = Double(testConfig.threadgroupCount?.width ?? 1) * Double(testConfig.threadgroupCount?.height ?? 1)
         let complexity = Double(testConfig.computeWorkloadComplexity ?? 1)
         
-        // Compute utilization scales with threadgroup count and workload complexity
-        let workloadMultiplier = min(1.0 + (sqrt(threadgroupCount) / 100.0) + (complexity / 20.0), 1.5)
+        // Calculate workload multiplier based on threadgroup count and compute complexity
+        // Formula: 1.0 + sqrt(threadgroups)/100 + complexity/20
+        // This creates a sub-linear scaling that reflects real GPU compute behavior:
+        // - More threadgroups = higher utilization, but with diminishing returns
+        // - Higher complexity = linear increase in ALU and memory utilization
+        let threadgroupScaling = sqrt(threadgroupCount) / THREADGROUP_SCALING_DIVISOR
+        let complexityScaling = complexity / COMPLEXITY_SCALING_DIVISOR
+        let workloadMultiplier = min(BASE_MULTIPLIER + threadgroupScaling + complexityScaling, MAX_WORKLOAD_MULTIPLIER)
+        
+        // Apply scaling to base utilization
         let scaledUtilization = baseUtilization * workloadMultiplier
         
-        // Cap at 100% to prevent impossible utilization values
-        return min(max(scaledUtilization, 0.0), 100.0)
+        // Clamp to valid range [0, 100] to prevent impossible utilization values
+        return min(max(scaledUtilization, 0.0), MAX_UTILIZATION_PERCENTAGE)
     }
     
     /// Calculates compute-specific memory utilization
