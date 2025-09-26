@@ -55,8 +55,15 @@ jobs:
       # Test basic functionality of the command-line tool
       - name: Test Basic Functionality
         run: |
-          # Test help command
-          ./build/Debug/Metal-Performance-Tester --help
+          # Find and test the built executable
+          EXECUTABLE=$(find ~/Library/Developer/Xcode/DerivedData -name "Metal-Performance-Tester" -type f | head -1)
+          if [ -n "$EXECUTABLE" ]; then
+            echo "Found executable at: $EXECUTABLE"
+            "$EXECUTABLE" --help
+          else
+            echo "Executable not found"
+            exit 1
+          fi
 
   # Test job: Run basic functionality tests for the command-line tool
   test:
@@ -98,17 +105,26 @@ jobs:
       # Test command-line tool functionality
       - name: Test Command Line Interface
         run: |
+          # Find the built executable
+          EXECUTABLE=$(find ~/Library/Developer/Xcode/DerivedData -name "Metal-Performance-Tester" -type f | head -1)
+          if [ -z "$EXECUTABLE" ]; then
+            echo "Executable not found"
+            exit 1
+          fi
+          
+          echo "Found executable at: $EXECUTABLE"
+          
           # Test help command
           echo "Testing help command..."
-          ./build/Debug/Metal-Performance-Tester --help
+          "$EXECUTABLE" --help
           
           # Test invalid command (should show help)
           echo "Testing invalid command..."
-          ./build/Debug/Metal-Performance-Tester --invalid-command || true
+          "$EXECUTABLE" --invalid-command || true
           
           # Test version info (if available)
           echo "Testing version info..."
-          ./build/Debug/Metal-Performance-Tester --version || echo "Version command not implemented"
+          "$EXECUTABLE" --version || echo "Version command not implemented"
 
       # Store build artifacts
       - name: Store Build Artifacts
@@ -116,4 +132,4 @@ jobs:
         if: always()  # Upload artifacts even if tests fail
         with:
           name: Metal-Performance-Tester-build
-          path: build/Debug/Metal-Performance-Tester
+          path: ~/Library/Developer/Xcode/DerivedData/*/Build/Products/Debug/Metal-Performance-Tester
