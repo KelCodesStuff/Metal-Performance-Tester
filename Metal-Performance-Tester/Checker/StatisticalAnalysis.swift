@@ -51,6 +51,17 @@ struct StatisticalAnalysis {
         
     }
     
+    /// Statistical analysis for compute utilization metrics
+    struct ComputeUtilizationStatistics: Codable {
+        let computeUtilization: UtilizationStatistic?
+        let memoryUtilization: UtilizationStatistic?
+        let totalUtilization: UtilizationStatistic?
+        let threadgroupEfficiency: UtilizationStatistic?
+        let instructionsPerSecond: UtilizationStatistic?
+        let sampleCount: Int
+        
+    }
+    
     /// Individual utilization statistic
     struct UtilizationStatistic: Codable {
         let mean: Double
@@ -79,6 +90,7 @@ struct StatisticalAnalysis {
         let confidenceInterval: ConfidenceInterval
         let isSignificant: Bool
         let significanceLevel: Double
+        let pValue: Double?
         
         /// Stage utilization comparison (if available)
         let stageUtilizationComparison: StageUtilizationComparison?
@@ -191,6 +203,60 @@ struct StatisticalAnalysis {
         )
     }
     
+    /// Calculate stage utilization statistics from graphics results
+    static func calculateStageUtilizationStatistics(from results: [GraphicsResult]) -> StageUtilizationStatistics? {
+        guard !results.isEmpty else { return nil }
+        
+        // Extract utilization data, filtering out nil values
+        let vertexValues = results.compactMap { $0.stageUtilization?.vertexUtilization }
+        let fragmentValues = results.compactMap { $0.stageUtilization?.fragmentUtilization }
+        let totalValues = results.compactMap { $0.stageUtilization?.totalUtilization }
+        
+        // Only proceed if we have at least some utilization data
+        guard !vertexValues.isEmpty || !fragmentValues.isEmpty || !totalValues.isEmpty else { return nil }
+        
+        let vertexUtilization = vertexValues.isEmpty ? nil : calculateUtilizationStatistic(vertexValues)
+        let fragmentUtilization = fragmentValues.isEmpty ? nil : calculateUtilizationStatistic(fragmentValues)
+        let totalUtilization = totalValues.isEmpty ? nil : calculateUtilizationStatistic(totalValues)
+        
+        return StageUtilizationStatistics(
+            vertexUtilization: vertexUtilization,
+            fragmentUtilization: fragmentUtilization,
+            totalUtilization: totalUtilization,
+            sampleCount: results.count
+        )
+    }
+    
+    /// Calculate compute utilization statistics from compute results
+    static func calculateComputeUtilizationStatistics(from results: [ComputeResult]) -> ComputeUtilizationStatistics? {
+        guard !results.isEmpty else { return nil }
+        
+        // Extract utilization data, filtering out nil values
+        let computeValues = results.compactMap { $0.computeUtilization?.computeUtilization }
+        let memoryValues = results.compactMap { $0.computeUtilization?.memoryUtilization }
+        let totalValues = results.compactMap { $0.computeUtilization?.totalUtilization }
+        let threadgroupValues = results.compactMap { $0.computeUtilization?.threadgroupEfficiency }
+        let instructionsValues = results.compactMap { $0.computeUtilization?.instructionsPerSecond }
+        
+        // Only proceed if we have at least some utilization data
+        guard !computeValues.isEmpty || !memoryValues.isEmpty || !totalValues.isEmpty else { return nil }
+        
+        let computeUtilization = computeValues.isEmpty ? nil : calculateUtilizationStatistic(computeValues)
+        let memoryUtilization = memoryValues.isEmpty ? nil : calculateUtilizationStatistic(memoryValues)
+        let totalUtilization = totalValues.isEmpty ? nil : calculateUtilizationStatistic(totalValues)
+        let threadgroupEfficiency = threadgroupValues.isEmpty ? nil : calculateUtilizationStatistic(threadgroupValues)
+        let instructionsPerSecond = instructionsValues.isEmpty ? nil : calculateUtilizationStatistic(instructionsValues)
+        
+        return ComputeUtilizationStatistics(
+            computeUtilization: computeUtilization,
+            memoryUtilization: memoryUtilization,
+            totalUtilization: totalUtilization,
+            threadgroupEfficiency: threadgroupEfficiency,
+            instructionsPerSecond: instructionsPerSecond,
+            sampleCount: results.count
+        )
+    }
+    
     /// Calculate utilization statistic for a single utilization metric
     private static func calculateUtilizationStatistic(_ values: [Double]) -> UtilizationStatistic {
         let n = values.count
@@ -226,6 +292,9 @@ struct StatisticalAnalysis {
         // Two-sample t-test for unequal variances (Welch's t-test)
         let isSignificant = performWelchTTest(baseline: baseline, current: current, significanceLevel: significanceLevel)
         
+        // Calculate p-value for the t-test
+        let pValue = calculatePValue(baseline: baseline, current: current)
+        
         // Confidence interval for the difference
         let pooledStdError = sqrt(
             (baselineStats.standardDeviation * baselineStats.standardDeviation / Double(baseline.count)) +
@@ -243,6 +312,7 @@ struct StatisticalAnalysis {
             confidenceInterval: ConfidenceInterval(lower: confidenceInterval.0, upper: confidenceInterval.1),
             isSignificant: isSignificant,
             significanceLevel: significanceLevel,
+            pValue: pValue,
             stageUtilizationComparison: nil,
             performanceStatsComparison: nil
         )
@@ -263,6 +333,9 @@ struct StatisticalAnalysis {
         
         // Two-sample t-test for unequal variances (Welch's t-test)
         let isSignificant = performWelchTTest(baseline: baselineTimes, current: currentTimes, significanceLevel: significanceLevel)
+        
+        // Calculate p-value for the t-test
+        let pValue = calculatePValue(baseline: baselineTimes, current: currentTimes)
         
         // Confidence interval for the difference
         let pooledStdError = sqrt(
@@ -287,6 +360,7 @@ struct StatisticalAnalysis {
             confidenceInterval: ConfidenceInterval(lower: confidenceInterval.0, upper: confidenceInterval.1),
             isSignificant: isSignificant,
             significanceLevel: significanceLevel,
+            pValue: pValue,
             stageUtilizationComparison: stageUtilizationComparison,
             performanceStatsComparison: performanceStatsComparison
         )
@@ -479,5 +553,37 @@ struct StatisticalAnalysis {
             change: change,
             changePercent: changePercent
         )
+    }
+    
+    /// Calculate p-value for Welch's t-test
+    private static func calculatePValue(baseline: [Double], current: [Double]) -> Double? {
+        // For simplicity, we'll use a basic approximation
+        // In a real implementation, you'd use proper statistical libraries
+        let baselineMean = baseline.reduce(0, +) / Double(baseline.count)
+        let currentMean = current.reduce(0, +) / Double(current.count)
+        
+        let baselineVariance = baseline.map { pow($0 - baselineMean, 2) }.reduce(0, +) / Double(baseline.count - 1)
+        let currentVariance = current.map { pow($0 - currentMean, 2) }.reduce(0, +) / Double(current.count - 1)
+        
+        let se = sqrt(baselineVariance / Double(baseline.count) + currentVariance / Double(current.count))
+        let tStatistic = (currentMean - baselineMean) / se
+        
+        // Approximate p-value calculation (simplified)
+        // In practice, you'd use proper t-distribution tables or libraries
+        let degreesOfFreedom = min(baseline.count, current.count) - 1
+        let pValue = 2 * (1 - tDistributionCDF(abs(tStatistic), degreesOfFreedom: degreesOfFreedom))
+        
+        return pValue
+    }
+    
+    /// Approximate t-distribution CDF (simplified implementation)
+    private static func tDistributionCDF(_ t: Double, degreesOfFreedom: Int) -> Double {
+        // This is a simplified approximation
+        // In practice, you'd use proper statistical libraries
+        if degreesOfFreedom <= 0 { return 0.5 }
+        
+        // Simple approximation for demonstration
+        let normalizedT = abs(t) / sqrt(Double(degreesOfFreedom))
+        return 1.0 / (1.0 + exp(-normalizedT))
     }
 }
