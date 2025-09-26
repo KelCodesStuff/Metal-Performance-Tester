@@ -19,12 +19,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BA17B94C2E872E3400A3949F /* Unit-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA7950B72E7BB5A4007617C8 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		BAC23E5D2E7B29770047C51B /* Metal-Performance-Tester */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Metal-Performance-Tester"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC23E9A2E7BA8EA0047C51B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		BA17B94D2E872E3400A3949F /* Unit-Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Unit-Tests";
+			sourceTree = "<group>";
+		};
 		BAC23E5F2E7B29770047C51B /* Metal-Performance-Tester */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Metal-Performance-Tester";
@@ -38,6 +44,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		BA17B9492E872E3400A3949F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAC23E5A2E7B29770047C51B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -53,6 +66,7 @@
 			children = (
 				BAC23E5F2E7B29770047C51B /* Metal-Performance-Tester */,
 				BAC23EEB2E7BAB2A0047C51B /* TestPlans */,
+				BA17B94D2E872E3400A3949F /* Unit-Tests */,
 				BAC23E9A2E7BA8EA0047C51B /* README.md */,
 				BA7950B72E7BB5A4007617C8 /* LICENSE */,
 				BAC23E5E2E7B29770047C51B /* Products */,
@@ -63,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				BAC23E5D2E7B29770047C51B /* Metal-Performance-Tester */,
+				BA17B94C2E872E3400A3949F /* Unit-Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +85,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		BA17B94B2E872E3400A3949F /* Unit-Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA17B9502E872E3400A3949F /* Build configuration list for PBXNativeTarget "Unit-Tests" */;
+			buildPhases = (
+				BA17B9482E872E3400A3949F /* Sources */,
+				BA17B9492E872E3400A3949F /* Frameworks */,
+				BA17B94A2E872E3400A3949F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				BA17B94D2E872E3400A3949F /* Unit-Tests */,
+			);
+			name = "Unit-Tests";
+			packageProductDependencies = (
+			);
+			productName = "Unit-Tests";
+			productReference = BA17B94C2E872E3400A3949F /* Unit-Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		BAC23E5C2E7B29770047C51B /* Metal-Performance-Tester */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BAC23E642E7B29770047C51B /* Build configuration list for PBXNativeTarget "Metal-Performance-Tester" */;
@@ -103,6 +140,9 @@
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
+					BA17B94B2E872E3400A3949F = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
 					BAC23E5C2E7B29770047C51B = {
 						CreatedOnToolsVersion = 26.0;
 					};
@@ -123,11 +163,29 @@
 			projectRoot = "";
 			targets = (
 				BAC23E5C2E7B29770047C51B /* Metal-Performance-Tester */,
+				BA17B94B2E872E3400A3949F /* Unit-Tests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		BA17B94A2E872E3400A3949F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		BA17B9482E872E3400A3949F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAC23E592E7B29770047C51B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -138,6 +196,42 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		BA17B9512E872E3400A3949F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CT2P7VWHVS;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.OneVR.Unit-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		BA17B9522E872E3400A3949F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CT2P7VWHVS;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.OneVR.Unit-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		BAC23E622E7B29770047C51B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -289,6 +383,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BA17B9502E872E3400A3949F /* Build configuration list for PBXNativeTarget "Unit-Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA17B9512E872E3400A3949F /* Debug */,
+				BA17B9522E872E3400A3949F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BAC23E582E7B29770047C51B /* Build configuration list for PBXProject "Metal-Performance-Tester" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

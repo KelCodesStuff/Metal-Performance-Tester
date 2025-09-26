@@ -4,15 +4,25 @@
       "id" : "A1E10A50-9D61-444A-B2C1-82DADF28F819",
       "name" : "Configuration 1",
       "options" : {
-
+        "parallelizable" : true,
+        "randomExecutionOrdering" : false,
+        "testTimeoutsEnabled" : true
       }
     }
   ],
   "defaultOptions" : {
+    "parallelizable" : true,
+    "randomExecutionOrdering" : false,
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [
-
+    {
+      "target" : {
+        "containerPath" : "container:Metal-Performance-Tester.xcodeproj",
+        "identifier" : "BA17B94B2E872E3400A3949F",
+        "name" : "Unit-Tests"
+      }
+    }
   ],
   "version" : 1
 }
