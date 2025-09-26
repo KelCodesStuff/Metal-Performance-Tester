@@ -72,19 +72,15 @@ class ComputeTestManager {
         do {
             let baselineMeasurementSet = try computeBaselineManager.loadBaseline()
             
-            // Convert ComputeMeasurementSet to PerformanceMeasurementSet for comparison
-            // This is a temporary solution - in a real implementation, we'd have separate comparison methods
-            let currentPerformanceSet = convertToPerformanceMeasurementSet(currentMeasurementSet)
-            let baselinePerformanceSet = convertToPerformanceMeasurementSet(baselineMeasurementSet)
-            
-            let comparisonResult = RegressionChecker.compareStatistical(
-                current: currentPerformanceSet,
-                baseline: baselinePerformanceSet,
+            // Use unified comparison method
+            let comparisonResult = RegressionChecker.compareUnifiedStatistical(
+                current: currentMeasurementSet,
+                baseline: baselineMeasurementSet,
                 significanceLevel: 0.05
             )
             
             // Create and save test result
-            let testResult = ComputeTestResult(
+            let testResult = UnifiedPerformanceTestResult(
                 current: currentMeasurementSet,
                 baseline: baselineMeasurementSet,
                 comparison: comparisonResult
@@ -118,27 +114,11 @@ class ComputeTestManager {
         }
     }
     
-    /// Converts ComputeMeasurementSet to PerformanceMeasurementSet for compatibility
-    /// - Parameter computeSet: The compute measurement set to convert
-    /// - Returns: A performance measurement set with the same timing data
-    private func convertToPerformanceMeasurementSet(_ computeSet: ComputeMeasurementSet) -> PerformanceMeasurementSet {
-        let performanceResults = computeSet.individualResults.map { computeResult in
-            PerformanceResult(
-                gpuTimeMs: computeResult.gpuTimeMs,
-                deviceName: computeResult.deviceName,
-                testConfig: computeResult.testConfig,
-                stageUtilization: nil, // No stage utilization for compute
-                statistics: computeResult.statistics
-            )
-        }
-        
-        return PerformanceMeasurementSet(individualResults: performanceResults)
-    }
     
     /// Generates and prints a comprehensive compute statistical report
     private func generateAndPrintComputeStatisticalReport(
-        current: ComputeMeasurementSet,
-        baseline: ComputeMeasurementSet,
+        current: UnifiedPerformanceMeasurementSet,
+        baseline: UnifiedPerformanceMeasurementSet,
         result: StatisticalAnalysis.ComparisonResult
     ) {
         // Calculate FPS for both current and baseline

@@ -67,14 +67,14 @@ class GraphicsTestManager {
             do {
                 let baselineMeasurementSet = try graphicsBaselineManager.loadBaseline()
                 
-                let comparisonResult = RegressionChecker.compareGraphicsStatistical(
+                let comparisonResult = RegressionChecker.compareUnifiedStatistical(
                     current: currentMeasurementSet,
                     baseline: baselineMeasurementSet,
                     significanceLevel: 0.05
                 )
                 
                 // Create and save test result
-                let testResult = GraphicsTestResult(
+                let testResult = UnifiedPerformanceTestResult(
                     current: currentMeasurementSet,
                     baseline: baselineMeasurementSet,
                     comparison: comparisonResult
@@ -110,8 +110,8 @@ class GraphicsTestManager {
     
     /// Generates and prints a comprehensive graphics statistical report
     private func generateAndPrintGraphicsStatisticalReport(
-        current: GraphicsMeasurementSet,
-        baseline: GraphicsMeasurementSet,
+        current: UnifiedPerformanceMeasurementSet,
+        baseline: UnifiedPerformanceMeasurementSet,
         result: StatisticalAnalysis.ComparisonResult
     ) {
         // Calculate FPS for both current and baseline
