@@ -152,10 +152,10 @@ class CommandLineParser {
         
         COMMANDS:
         --update-graphics-baseline Run graphics test and save results as new baseline
-        --graphics-test          Run graphics performance test and compare against baseline
-        --update-compute-baseline Run compute test and save results as new baseline
-        --compute-test           Run compute performance test and compare against baseline
-        --help, -h               Show this help message
+        --graphics-test            Run graphics performance test and compare against baseline
+        --update-compute-baseline  Run compute test and save results as new baseline
+        --compute-test             Run compute performance test and compare against baseline
+        --help, -h                 Show this help message
         
         GRAPHICS TEST CONFIGURATIONS:
         --graphics-low         Low resolution (720p, mobile/low-end testing)
