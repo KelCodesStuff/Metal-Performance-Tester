@@ -88,18 +88,10 @@ class ComputeBaselineManager {
         if let lastResult = measurementSet.individualResults.last,
            let computeUtilization = lastResult.computeUtilization {
             print("Compute Utilization:")
-            if let computeUtil = computeUtilization.computeUtilization {
-                print("- Average Compute Utilization: \(String(format: "%.1f", computeUtil))%")
-            }
-            if let memoryUtil = computeUtilization.memoryUtilization {
-                print("- Average Memory Utilization: \(String(format: "%.1f", memoryUtil))%")
-            }
-            if let totalUtil = computeUtilization.totalUtilization {
-                print("- Average Total Utilization: \(String(format: "%.1f", totalUtil))%")
-            }
-            if let threadgroupEff = computeUtilization.threadgroupEfficiency {
-                print("- Average Threadgroup Efficiency: \(String(format: "%.1f", threadgroupEff))%")
-            }
+            print("- Average Compute Utilization: \(String(format: "%.1f", computeUtilization.computeUtilization))%")
+            print("- Average Memory Utilization: \(String(format: "%.1f", computeUtilization.memoryUtilization))%")
+            print("- Average Total Utilization: \(String(format: "%.1f", computeUtilization.totalUtilization))%")
+            print("- Average Threadgroup Efficiency: \(String(format: "%.1f", computeUtilization.threadgroupEfficiency))%")
             print()
         }
         
@@ -128,7 +120,7 @@ class ComputeBaselineManager {
     }
     
     /// Saves a compute measurement set as the new baseline
-    func saveBaseline(_ measurementSet: ComputeMeasurementSet) throws {
+    func saveBaseline(_ measurementSet: UnifiedPerformanceMeasurementSet) throws {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
@@ -159,7 +151,7 @@ class ComputeBaselineManager {
     }
     
     /// Loads the compute baseline
-    func loadBaseline() throws -> ComputeMeasurementSet {
+    func loadBaseline() throws -> UnifiedPerformanceMeasurementSet {
         let baselinesDirectory = getBaselineDirectory().appendingPathComponent("baselines")
         let files = try FileManager.default.contentsOfDirectory(at: baselinesDirectory, includingPropertiesForKeys: nil)
         
@@ -170,11 +162,11 @@ class ComputeBaselineManager {
         let data = try Data(contentsOf: baselineFile)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        return try decoder.decode(ComputeMeasurementSet.self, from: data)
+        return try decoder.decode(UnifiedPerformanceMeasurementSet.self, from: data)
     }
     
     /// Saves a compute test result
-    func saveTestResult(_ testResult: ComputeTestResult) throws {
+    func saveTestResult(_ testResult: UnifiedPerformanceTestResult) throws {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted

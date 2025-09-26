@@ -130,8 +130,8 @@ class GraphicsBaselineManager {
         }
     }
     
-    /// Saves a graphics measurement set as the new baseline
-    func saveBaseline(_ measurementSet: GraphicsMeasurementSet) throws {
+    /// Saves a unified measurement set as the new baseline
+    func saveBaseline(_ measurementSet: UnifiedPerformanceMeasurementSet) throws {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
@@ -162,7 +162,7 @@ class GraphicsBaselineManager {
     }
     
     /// Loads the graphics baseline
-    func loadBaseline() throws -> GraphicsMeasurementSet {
+    func loadBaseline() throws -> UnifiedPerformanceMeasurementSet {
         let baselinesDirectory = getBaselineDirectory().appendingPathComponent("baselines")
         let files = try FileManager.default.contentsOfDirectory(at: baselinesDirectory, includingPropertiesForKeys: nil)
         
@@ -173,11 +173,11 @@ class GraphicsBaselineManager {
         let data = try Data(contentsOf: baselineFile)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        return try decoder.decode(GraphicsMeasurementSet.self, from: data)
+        return try decoder.decode(UnifiedPerformanceMeasurementSet.self, from: data)
     }
     
     /// Saves a graphics test result
-    func saveTestResult(_ testResult: GraphicsTestResult) throws {
+    func saveTestResult(_ testResult: UnifiedPerformanceTestResult) throws {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
