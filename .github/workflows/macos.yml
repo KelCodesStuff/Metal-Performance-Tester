@@ -102,6 +102,17 @@ jobs:
             CODE_SIGN_IDENTITY="-" \
             CODE_SIGNING_REQUIRED=YES
 
+      # Run unit tests
+      - name: Run Unit Tests
+        run: |
+          xcodebuild test \
+            -project "${{ env.PROJECT_NAME }}" \
+            -scheme "${{ env.SCHEME_NAME }}" \
+            -destination "${{ env.DESTINATION }}" \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=YES
+
       # Test command-line tool functionality
       - name: Test Command Line Interface
         run: |
@@ -125,6 +136,14 @@ jobs:
           # Test version info (if available)
           echo "Testing version info..."
           "$EXECUTABLE" --version || echo "Version command not implemented"
+
+      # Store test results
+      - name: Store Test Results
+        uses: actions/upload-artifact@v4
+        if: always()  # Upload test results even if tests fail
+        with:
+          name: Metal-Performance-Tester-test-results
+          path: ~/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult
 
       # Store build artifacts
       - name: Store Build Artifacts
