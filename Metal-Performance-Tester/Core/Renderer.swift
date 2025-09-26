@@ -182,9 +182,9 @@ class Renderer {
     
     /// Runs multiple compute iterations and returns a compute performance measurement set
     /// - Parameters:
-    ///   - iterations: Number of iterations to run (default: 100 for both baseline and tests)
+    ///   - iterations: Number of iterations to run (default: 50 for both baseline and tests)
     /// - Returns: UnifiedPerformanceMeasurementSet if measurement was successful, nil if counter sampling is unsupported
-    func runMultipleComputeIterations(iterations: Int = 100) -> UnifiedPerformanceMeasurementSet? {
+    func runMultipleComputeIterations(iterations: Int = 50) -> UnifiedPerformanceMeasurementSet? {
         guard let computeMetrics = computePerformanceMetrics,
               computeMetrics.supportsCounterSampling else {
             return nil
@@ -306,71 +306,86 @@ class Renderer {
     /// Dispatches low compute workload (128x128)
     private func dispatchLowComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
         let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
-        let gridSize = MTLSize(width: 128, height: 128, depth: 1)
+        let threadgroupCount = MTLSize(width: 8, height: 8, depth: 1) // 128/16 = 8 threadgroups
+        let gridWidth = 128
         
-        let inputBuffer = try createInputBuffer(device: device, size: 128 * 128)
-        let outputBuffer = try createOutputBuffer(device: device, size: 128 * 128)
+        let inputBuffer = try createInputBuffer(device: device, size: gridWidth * gridWidth)
+        let outputBuffer = try createOutputBuffer(device: device, size: gridWidth * gridWidth)
+        let gridWidthBuffer = try createGridWidthBuffer(device: device, width: gridWidth)
         
         encoder.setBuffer(inputBuffer, offset: 0, index: 0)
         encoder.setBuffer(outputBuffer, offset: 0, index: 1)
+        encoder.setBuffer(gridWidthBuffer, offset: 0, index: 2)
         
-        encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupSize)
+        encoder.dispatchThreadgroups(threadgroupCount, threadsPerThreadgroup: threadgroupSize)
     }
     
     /// Dispatches moderate compute workload (256x256)
     private func dispatchModerateComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
         let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
-        let gridSize = MTLSize(width: 256, height: 256, depth: 1)
+        let threadgroupCount = MTLSize(width: 16, height: 16, depth: 1) // 256/16 = 16 threadgroups
+        let gridWidth = 256
         
-        let inputBuffer = try createInputBuffer(device: device, size: 256 * 256)
-        let outputBuffer = try createOutputBuffer(device: device, size: 256 * 256)
+        let inputBuffer = try createInputBuffer(device: device, size: gridWidth * gridWidth)
+        let outputBuffer = try createOutputBuffer(device: device, size: gridWidth * gridWidth)
+        let gridWidthBuffer = try createGridWidthBuffer(device: device, width: gridWidth)
         
         encoder.setBuffer(inputBuffer, offset: 0, index: 0)
         encoder.setBuffer(outputBuffer, offset: 0, index: 1)
+        encoder.setBuffer(gridWidthBuffer, offset: 0, index: 2)
         
-        encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupSize)
+        encoder.dispatchThreadgroups(threadgroupCount, threadsPerThreadgroup: threadgroupSize)
     }
     
     /// Dispatches complex compute workload (384x384)
     private func dispatchComplexComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
         let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
-        let gridSize = MTLSize(width: 384, height: 384, depth: 1)
+        let threadgroupCount = MTLSize(width: 24, height: 24, depth: 1) // 384/16 = 24 threadgroups
+        let gridWidth = 384
         
-        let inputBuffer = try createInputBuffer(device: device, size: 384 * 384)
-        let outputBuffer = try createOutputBuffer(device: device, size: 384 * 384)
+        let inputBuffer = try createInputBuffer(device: device, size: gridWidth * gridWidth)
+        let outputBuffer = try createOutputBuffer(device: device, size: gridWidth * gridWidth)
+        let gridWidthBuffer = try createGridWidthBuffer(device: device, width: gridWidth)
         
         encoder.setBuffer(inputBuffer, offset: 0, index: 0)
         encoder.setBuffer(outputBuffer, offset: 0, index: 1)
+        encoder.setBuffer(gridWidthBuffer, offset: 0, index: 2)
         
-        encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupSize)
+        encoder.dispatchThreadgroups(threadgroupCount, threadsPerThreadgroup: threadgroupSize)
     }
     
     /// Dispatches high compute workload (512x512)
     private func dispatchHighComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
         let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
-        let gridSize = MTLSize(width: 512, height: 512, depth: 1)
+        let threadgroupCount = MTLSize(width: 32, height: 32, depth: 1) // 512/16 = 32 threadgroups
+        let gridWidth = 512
         
-        let inputBuffer = try createInputBuffer(device: device, size: 512 * 512)
-        let outputBuffer = try createOutputBuffer(device: device, size: 512 * 512)
+        let inputBuffer = try createInputBuffer(device: device, size: gridWidth * gridWidth)
+        let outputBuffer = try createOutputBuffer(device: device, size: gridWidth * gridWidth)
+        let gridWidthBuffer = try createGridWidthBuffer(device: device, width: gridWidth)
         
         encoder.setBuffer(inputBuffer, offset: 0, index: 0)
         encoder.setBuffer(outputBuffer, offset: 0, index: 1)
+        encoder.setBuffer(gridWidthBuffer, offset: 0, index: 2)
         
-        encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupSize)
+        encoder.dispatchThreadgroups(threadgroupCount, threadsPerThreadgroup: threadgroupSize)
     }
     
     /// Dispatches ultra-high compute workload (1024x1024)
     private func dispatchUltraHighComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
         let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
-        let gridSize = MTLSize(width: 1024, height: 1024, depth: 1)
+        let threadgroupCount = MTLSize(width: 64, height: 64, depth: 1) // 1024/16 = 64 threadgroups
+        let gridWidth = 1024
         
-        let inputBuffer = try createInputBuffer(device: device, size: 1024 * 1024)
-        let outputBuffer = try createOutputBuffer(device: device, size: 1024 * 1024)
+        let inputBuffer = try createInputBuffer(device: device, size: gridWidth * gridWidth)
+        let outputBuffer = try createOutputBuffer(device: device, size: gridWidth * gridWidth)
+        let gridWidthBuffer = try createGridWidthBuffer(device: device, width: gridWidth)
         
         encoder.setBuffer(inputBuffer, offset: 0, index: 0)
         encoder.setBuffer(outputBuffer, offset: 0, index: 1)
+        encoder.setBuffer(gridWidthBuffer, offset: 0, index: 2)
         
-        encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupSize)
+        encoder.dispatchThreadgroups(threadgroupCount, threadsPerThreadgroup: threadgroupSize)
     }
     
     /// Creates input buffer for compute shaders
@@ -395,6 +410,20 @@ class Renderer {
         guard let buffer = device.makeBuffer(length: bufferSize, options: [.storageModeShared]) else {
             throw RendererError.bufferCreationFailed
         }
+        
+        return buffer
+    }
+    
+    /// Creates grid width buffer for compute shaders
+    private func createGridWidthBuffer(device: MTLDevice, width: Int) throws -> MTLBuffer {
+        let bufferSize = MemoryLayout<UInt32>.size
+        guard let buffer = device.makeBuffer(length: bufferSize, options: [.storageModeShared]) else {
+            throw RendererError.bufferCreationFailed
+        }
+        
+        // Set the grid width value
+        let pointer = buffer.contents().bindMemory(to: UInt32.self, capacity: 1)
+        pointer[0] = UInt32(width)
         
         return buffer
     }
