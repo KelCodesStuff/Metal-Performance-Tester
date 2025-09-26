@@ -12,7 +12,7 @@ on:
 env:
   PROJECT_NAME: Metal-Performance-Tester.xcodeproj  # Xcode project file name
   SCHEME_NAME: Metal-Performance-Tester            # Xcode scheme to build and test
-  DESTINATION: 'platform=iOS Simulator,name=iPhone 16 Pro Max,OS=latest'  # Simulator configuration
+  DESTINATION: 'platform=macOS'  # macOS platform for command-line tool
 
 # Define the jobs to run
 jobs:
