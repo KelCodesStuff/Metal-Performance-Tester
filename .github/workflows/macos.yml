@@ -1,5 +1,5 @@
 # A descriptive name for the workflow.
-name: macOS Build and Test
+name: Build and Test
 
 # Define when this workflow should be triggered
 on:
