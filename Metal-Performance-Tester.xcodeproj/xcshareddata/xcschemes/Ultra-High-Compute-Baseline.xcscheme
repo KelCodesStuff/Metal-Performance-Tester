@@ -53,11 +53,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--run-test"
+            argument = "--update-compute-baseline"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--ultra-high-res"
+            argument = "--compute-ultra-high"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
