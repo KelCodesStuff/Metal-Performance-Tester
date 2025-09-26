@@ -42,7 +42,7 @@ class GraphicsBaselineManager {
         
         // GRAPHICS BASELINE UPDATE OUTPUT: Iteration progress and completion
         print("Running 100 iterations to create graphics baseline...")
-        guard let measurementSet = renderer.runMultipleIterations(iterations: 100) else {
+        guard let measurementSet = renderer.runMultipleGraphicsIterations(iterations: 100) else {
             print("Graphics performance measurement not available on this GPU.")
             print("Counter sampling is not supported. Cannot establish graphics baseline.")
             return ExitCode.error.rawValue
@@ -131,7 +131,7 @@ class GraphicsBaselineManager {
     }
     
     /// Saves a graphics measurement set as the new baseline
-    func saveBaseline(_ measurementSet: PerformanceMeasurementSet) throws {
+    func saveBaseline(_ measurementSet: GraphicsMeasurementSet) throws {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted

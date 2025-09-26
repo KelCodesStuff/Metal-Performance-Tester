@@ -50,7 +50,7 @@ class GraphicsTestManager {
         
         // GRAPHICS PERFORMANCE TEST OUTPUT: Iteration progress and completion
         print("Running 100 iterations for statistical analysis...")
-        guard let currentMeasurementSet = renderer.runMultipleIterations(iterations: 100) else {
+        guard let currentMeasurementSet = renderer.runMultipleGraphicsIterations(iterations: 100) else {
             print("\nError: Graphics performance measurement not available on this GPU.")
             print("Counter sampling is not supported.")
             return ExitCode.error.rawValue
@@ -67,25 +67,22 @@ class GraphicsTestManager {
             do {
                 let baselineMeasurementSet = try graphicsBaselineManager.loadBaseline()
                 
-                // Convert PerformanceMeasurementSet to GraphicsMeasurementSet
-                let currentGraphicsSet = convertToGraphicsMeasurementSet(currentMeasurementSet)
-                
                 let comparisonResult = RegressionChecker.compareGraphicsStatistical(
-                    current: currentGraphicsSet,
+                    current: currentMeasurementSet,
                     baseline: baselineMeasurementSet,
                     significanceLevel: 0.05
                 )
                 
                 // Create and save test result
                 let testResult = GraphicsTestResult(
-                    current: currentGraphicsSet,
+                    current: currentMeasurementSet,
                     baseline: baselineMeasurementSet,
                     comparison: comparisonResult
                 )
                 
                 // Generate and print statistical report
                 generateAndPrintGraphicsStatisticalReport(
-                    current: currentGraphicsSet,
+                    current: currentMeasurementSet,
                     baseline: baselineMeasurementSet,
                     result: comparisonResult
                 )
@@ -191,18 +188,4 @@ class GraphicsTestManager {
         }
     }
     
-    /// Converts PerformanceMeasurementSet to GraphicsMeasurementSet
-    private func convertToGraphicsMeasurementSet(_ performanceSet: PerformanceMeasurementSet) -> GraphicsMeasurementSet {
-        let graphicsResults = performanceSet.individualResults.map { performanceResult in
-            GraphicsResult(
-                gpuTimeMs: performanceResult.gpuTimeMs,
-                deviceName: performanceResult.deviceName,
-                testConfig: performanceResult.testConfig,
-                stageUtilization: performanceResult.stageUtilization,
-                statistics: performanceResult.statistics
-            )
-        }
-        
-        return GraphicsMeasurementSet(individualResults: graphicsResults)
-    }
 }
