@@ -26,6 +26,15 @@ class RegressionChecker {
         return StatisticalAnalysis.compare(baseline: baseline, current: current, significanceLevel: significanceLevel)
     }
     
+    /// Compares unified performance results using statistical analysis
+    static func compareUnifiedStatistical(current: UnifiedPerformanceMeasurementSet, baseline: UnifiedPerformanceMeasurementSet, significanceLevel: Double = 0.05) -> StatisticalAnalysis.ComparisonResult {
+        // Extract GPU times for comparison
+        let currentTimes = current.individualResults.map { $0.gpuTimeMs }
+        let baselineTimes = baseline.individualResults.map { $0.gpuTimeMs }
+        
+        return StatisticalAnalysis.compare(baseline: baselineTimes, current: currentTimes, significanceLevel: significanceLevel)
+    }
+    
     /// Compares graphics performance results using statistical analysis
     static func compareGraphicsStatistical(current: GraphicsMeasurementSet, baseline: GraphicsMeasurementSet, significanceLevel: Double = 0.05) -> StatisticalAnalysis.ComparisonResult {
         // Convert GraphicsMeasurementSet to PerformanceMeasurementSet for comparison
@@ -41,6 +50,7 @@ class RegressionChecker {
                 gpuTimeMs: graphicsResult.gpuTimeMs,
                 deviceName: graphicsResult.deviceName,
                 testConfig: graphicsResult.testConfig,
+                testType: .graphics,
                 stageUtilization: graphicsResult.stageUtilization,
                 statistics: graphicsResult.statistics
             )
