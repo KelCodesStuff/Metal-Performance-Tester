@@ -54,9 +54,16 @@ fragment float4 fragment_main(VertexOut in [[stage_in]]) {
 // Simple compute shader for basic compute workload testing
 kernel void compute_simple(const device float* input [[buffer(0)]],
                           device float* output [[buffer(1)]],
-                          uint index [[thread_position_in_grid]]) {
+                          constant uint& grid_width [[buffer(2)]],
+                          uint2 index [[thread_position_in_grid]]) {
+    // Convert 2D thread position to 1D array index
+    uint linearIndex = index.y * grid_width + index.x;
+    
+    // Bounds check to prevent out-of-bounds access
+    if (linearIndex >= grid_width * grid_width) return;
+    
     // Simple mathematical operations to create compute workload
-    float x = input[index];
+    float x = input[linearIndex];
     float result = 0.0;
     
     // Perform multiple iterations of computation
@@ -65,7 +72,7 @@ kernel void compute_simple(const device float* input [[buffer(0)]],
         x = result * 0.1;
     }
     
-    output[index] = result;
+    output[linearIndex] = result;
 }
 
 // Memory-intensive compute shader for memory bandwidth testing
