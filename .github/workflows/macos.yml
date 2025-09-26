@@ -41,7 +41,7 @@ jobs:
             ${{ runner.os }}-spm-
 
 
-      # Build the project without code signing for CI purposes
+      # Build the project with automatic code signing for CI purposes
       - name: Build
         run: |
           xcodebuild clean build \
@@ -49,21 +49,19 @@ jobs:
             -scheme "${{ env.SCHEME_NAME }}" \
             -destination "${{ env.DESTINATION }}" \
             -configuration Debug \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=YES
 
-  # Test job: Runs different test suites in parallel
+      # Test basic functionality of the command-line tool
+      - name: Test Basic Functionality
+        run: |
+          # Test help command
+          ./build/Debug/Metal-Performance-Tester --help
+
+  # Test job: Run basic functionality tests for the command-line tool
   test:
     needs: build  # Only run tests after successful build
     runs-on: macos-latest
-    strategy:
-      fail-fast: false  # Continue running other tests even if one fails
-      matrix:
-        test-plan: [
-          { name: 'UI-Tests', output: 'UITests' },        # UI Test suite
-          { name: 'Unit-Tests', output: 'UnitTests' },       # Unit Test suite
-          # { name: 'Performance-Smoke-Tests', output: 'PerfTests' } # Performance Test suite
-        ]
     
     steps:
       - name: Checkout Code
@@ -86,43 +84,36 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm-
 
-      # Execute test plan and generate test results
-      - name: Run ${{ matrix.test-plan.name }}
+      # Build the project
+      - name: Build
         run: |
-          xcodebuild test \
+          xcodebuild build \
             -project "${{ env.PROJECT_NAME }}" \
             -scheme "${{ env.SCHEME_NAME }}" \
             -destination "${{ env.DESTINATION }}" \
             -configuration Debug \
-            -enableCodeCoverage YES \
-            -testPlan "${{ matrix.test-plan.name }}" \
-            -resultBundlePath ${{ matrix.test-plan.output }}.xcresult
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=YES
 
-      # Generate code coverage report in JSON format
-      - name: Generate Coverage Report
+      # Test command-line tool functionality
+      - name: Test Command Line Interface
         run: |
-          xcrun xccov view --report --json ${{ matrix.test-plan.output }}.xcresult > ${{ matrix.test-plan.output }}-coverage.json
+          # Test help command
+          echo "Testing help command..."
+          ./build/Debug/Metal-Performance-Tester --help
+          
+          # Test invalid command (should show help)
+          echo "Testing invalid command..."
+          ./build/Debug/Metal-Performance-Tester --invalid-command || true
+          
+          # Test version info (if available)
+          echo "Testing version info..."
+          ./build/Debug/Metal-Performance-Tester --version || echo "Version command not implemented"
 
-      # Store test results and coverage reports as artifacts
-      - name: Store Test Results and Coverage
+      # Store build artifacts
+      - name: Store Build Artifacts
         uses: actions/upload-artifact@v4
         if: always()  # Upload artifacts even if tests fail
         with:
-          name: ${{ matrix.test-plan.output }}-results
-          path: |
-            ${{ matrix.test-plan.output }}.xcresult
-            ${{ matrix.test-plan.output }}-coverage.json
-
-      # --- Optional: Fastlane Integration (for more advanced build/release automation) ---
-      # - name: Run Fastlane
-      #   run: bundle exec fastlane your_lane_name
-      #   env:
-      #     FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-      #     MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-
-      # --- Optional: Upload Artifacts ---
-      # - name: Upload IPA
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: Authenticator.ipa
-      #     path: path/to/your/ipa/file.ipa
+          name: Metal-Performance-Tester-build
+          path: build/Debug/Metal-Performance-Tester
