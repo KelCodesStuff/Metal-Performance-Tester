@@ -5,9 +5,10 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 ## Features
 
 ### Core Performance Measurement
-- **Precise GPU Timing:** Uses Metal's performance counter sampling API for accurate measurement of GPU execution time, frame time, and draw call timing.
-- **Advanced Hardware Counters:** Captures key metrics including stage utilization (vertex, fragment), memory bandwidth, memory utilization, cache hit/miss rates, and total instructions executed.
-- **Multiple Test Configurations:** Provides pre-defined presets for a range of scenarios, from mobile (720p) to ultra-high resolution (8K) testing.
+- **Real GPU Performance Counters:** Uses Metal performance counter data from GPU hardware for authentic performance measurement.
+- **Graphics & Compute Testing:** Separate testing pipelines for graphics rendering and compute workloads with dedicated baseline management.
+- **Hardware-Based Metrics:** Captures real GPU metrics including stage utilization, memory bandwidth, cache performance, and instruction counts directly from GPU hardware.
+- **Multiple Test Configurations:** Provides pre-defined presets for both graphics and compute scenarios, from low to ultra-high complexity testing.
 
 > For information on the [Metal](https://developer.apple.com/documentation/metal) API see the official documentation.
 
@@ -37,9 +38,9 @@ This document includes uses for:
 The Metal Performance Tester provides both Xcode and command-line interfaces for different workflows.
 > For information on installation and usage, see [Installation and Usage](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Installation-and-Usage).
 
-> For information on the baseline output, see [Baseline Output](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Baseline-Output).
+> For information on  graphics baselines, see [Graphics Baseline Output](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Graphics-Baseline-Output).
 
-> For information on the test results output, see [Test Results Output](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Test-Results-Output).
+> For information on the compute baselines, see [Compute Baseline Output](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Compute-Baseline-Output).
 
 ## Requirements
 
@@ -53,7 +54,14 @@ The Metal Performance Tester provides both Xcode and command-line interfaces for
 ## Supported GPUs
 
 ### Fully Supported
-- **Apple Silicon:** M1, M2, M3, M4 series (all variants)
+- **Apple Silicon:** Native Metal performance and compute counter support
+
+| Apple M1 | Apple M2 | Apple M3 | Apple M4 |
+|----------|----------|----------|----------|
+| Base     | Base     | Base     | Base     |
+| Pro      | Pro      | Pro      | Pro      |
+| Max      | Max      | Max      | Max      |
+| Ultra    | Ultra    | Ultra    |          | 
 
 ### Not Supported
 - **Apple Discrete GPUs:** Radeon Pro 5000/6000/7000 series (in Mac Pro, iMac Pro, and some MacBook Pro models)
@@ -63,7 +71,6 @@ The Metal Performance Tester provides both Xcode and command-line interfaces for
 
 ## Troubleshooting
 For troubleshooting see the [Troubleshooting guide](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Troubleshooting).
-
 
 ## License
 
