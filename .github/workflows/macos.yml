@@ -57,7 +57,7 @@ jobs:
       # Optional Step 5: Upload the build artifact.
       # This action uploads the built archive to be downloaded from the workflow run.
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: macOS-build
           path: build/Metal-Performance-Tester.xcarchive
