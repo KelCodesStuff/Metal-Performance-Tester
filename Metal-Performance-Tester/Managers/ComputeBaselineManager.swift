@@ -46,8 +46,8 @@ class ComputeBaselineManager {
         }
         
         // COMPUTE BASELINE UPDATE OUTPUT: Iteration progress and completion
-        print("Running 100 iterations to create compute baseline...")
-        guard let measurementSet = renderer.runMultipleComputeIterations(iterations: 100) else {
+        print("Running 50 iterations to create compute baseline...")
+        guard let measurementSet = renderer.runMultipleComputeIterations(iterations: 50) else {
             print("Compute performance measurement not available on this GPU.")
             print("Counter sampling is not supported. Cannot establish compute baseline.")
             return ExitCode.error.rawValue
@@ -191,11 +191,11 @@ class ComputeBaselineManager {
     
     /// Gets the baseline directory path
     private func getBaselineDirectory() -> URL {
-        // Use the user's Documents directory for baseline storage
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let baselinePath = documentsPath.appendingPathComponent("Metal-Performance-Tester").appendingPathComponent("Results")
+        // Use Application Support directory for baseline storage (proper macOS convention)
+        let applicationSupportPath = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let baselinePath = applicationSupportPath.appendingPathComponent("Metal-Performance-Tester")
         
-        // Create the Results directory if it doesn't exist
+        // Create the directory if it doesn't exist
         try? FileManager.default.createDirectory(at: baselinePath, withIntermediateDirectories: true)
         
         return baselinePath
