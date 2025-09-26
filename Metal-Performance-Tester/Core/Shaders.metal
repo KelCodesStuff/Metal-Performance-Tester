@@ -47,3 +47,82 @@ fragment float4 fragment_main(VertexOut in [[stage_in]]) {
     // creating a smooth gradient. We just return that interpolated color.
     return in.color;
 }
+
+// --- COMPUTE SHADERS ---
+// Compute shaders for performance testing
+
+// Simple compute shader for basic compute workload testing
+kernel void compute_simple(const device float* input [[buffer(0)]],
+                          device float* output [[buffer(1)]],
+                          constant uint& grid_width [[buffer(2)]],
+                          uint2 index [[thread_position_in_grid]]) {
+    // Convert 2D thread position to 1D array index
+    uint linearIndex = index.y * grid_width + index.x;
+    
+    // Bounds check to prevent out-of-bounds access
+    if (linearIndex >= grid_width * grid_width) return;
+    
+    // Simple mathematical operations to create compute workload
+    float x = input[linearIndex];
+    float result = 0.0;
+    
+    // Perform multiple iterations of computation
+    for (int i = 0; i < 100; i++) {
+        result += sin(x) * cos(x) * tan(x);
+        x = result * 0.1;
+    }
+    
+    output[linearIndex] = result;
+}
+
+// Memory-intensive compute shader for memory bandwidth testing
+kernel void compute_memory_intensive(const device float* input [[buffer(0)]],
+                                    device float* output [[buffer(1)]],
+                                    constant uint& data_size [[buffer(2)]],
+                                    uint index [[thread_position_in_grid]]) {
+    // Memory-intensive operations
+    float sum = 0.0;
+    uint stride = max(1u, data_size / 1024u); // Access every nth element
+    
+    for (uint i = 0; i < data_size; i += stride) {
+        if (i + index < data_size) {
+            sum += input[i + index];
+        }
+    }
+    
+    output[index] = sum;
+}
+
+// Arithmetic-intensive compute shader for ALU testing
+kernel void compute_arithmetic_intensive(const device float* input [[buffer(0)]],
+                                        device float* output [[buffer(1)]],
+                                        uint index [[thread_position_in_grid]]) {
+    // Arithmetic-intensive operations
+    float x = input[index];
+    float result = x;
+    
+    // Perform many arithmetic operations
+    for (int i = 0; i < 1000; i++) {
+        result = result * 1.1 + sin(result) + cos(result);
+        result = sqrt(abs(result)) + log(abs(result) + 1.0);
+        result = pow(result, 1.1) + tan(result);
+    }
+    
+    output[index] = result;
+}
+
+// Matrix multiplication compute shader for complex workload
+kernel void compute_matrix_multiply(const device float* matrix_a [[buffer(0)]],
+                                   const device float* matrix_b [[buffer(1)]],
+                                   device float* matrix_c [[buffer(2)]],
+                                   constant uint& matrix_size [[buffer(3)]],
+                                   uint2 index [[thread_position_in_grid]]) {
+    if (index.x >= matrix_size || index.y >= matrix_size) return;
+    
+    float sum = 0.0;
+    for (uint k = 0; k < matrix_size; k++) {
+        sum += matrix_a[index.y * matrix_size + k] * matrix_b[k * matrix_size + index.x];
+    }
+    
+    matrix_c[index.y * matrix_size + index.x] = sum;
+}

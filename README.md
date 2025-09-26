@@ -5,7 +5,7 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 ## Features
 
 ### Core Performance Measurement
-- **Real GPU Performance Counters:** Uses Metal performance counter data from GPU hardware for authentic performance measurement.
+- **Real GPU Performance Counters:** Uses actual Metal performance counter data from GPU hardware for authentic performance measurement.
 - **Graphics & Compute Testing:** Separate testing pipelines for graphics rendering and compute workloads with dedicated baseline management.
 - **Hardware-Based Metrics:** Captures real GPU metrics including stage utilization, memory bandwidth, cache performance, and instruction counts directly from GPU hardware.
 - **Multiple Test Configurations:** Provides pre-defined presets for both graphics and compute scenarios, from low to ultra-high complexity testing.
@@ -15,7 +15,7 @@ A comprehensive tool for testing GPU performance regressions in Metal applicatio
 ### Statistical Analysis & Regression Detection
 - **Robust Statistical Analysis:** Implements [Welch's t-test](https://en.wikipedia.org/wiki/Welch%27s_t-test) for proper statistical analysis of samples with unequal variances, with configurable significance levels.
 - **Confidence Intervals:** Calculates 95% confidence intervals for performance differences to quantify the margin of error.
-- **Data Quality Assessment:** Automatically rates the quality and reliability of a test run based on its coefficient of variation.
+- **Simplified Output:** Clean, focused performance metrics without unnecessary complexity for easier analysis.
 - **Dual Detection Methods:** Supports both statistical significance testing and simple threshold-based regression detection.
 
 ## Upcoming Features
@@ -38,7 +38,7 @@ This document includes uses for:
 The Metal Performance Tester provides both Xcode and command-line interfaces for different workflows.
 > For information on installation and usage, see [Installation and Usage](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Installation-and-Usage).
 
-> For information on  graphics baselines, see [Graphics Baseline Output](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Graphics-Baseline-Output).
+> For information on graphics baselines, see [Graphics Baseline Output](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Graphics-Baseline-Output).
 
 > For information on the compute baselines, see [Compute Baseline Output](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Compute-Baseline-Output).
 

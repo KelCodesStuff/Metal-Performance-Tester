@@ -26,24 +26,42 @@ func main() -> Int32 {
         CommandLineParser.printUsage()
         return ExitCode.success.rawValue
         
-    case .updateBaseline(let testConfig):
-        return runUpdateBaseline(testConfig: testConfig)
+    case .updateGraphicsBaseline(let testConfig):
+        return runUpdateGraphicsBaseline(testConfig: testConfig)
         
-    case .runTest(let threshold, let testConfig):
-        return runPerformanceTest(threshold: threshold, testConfig: testConfig)
+    case .runGraphicsTest(let threshold, let testConfig):
+        return runGraphicsPerformanceTest(threshold: threshold, testConfig: testConfig)
+        
+    case .updateComputeBaseline(let testConfig):
+        return runUpdateComputeBaseline(testConfig: testConfig)
+        
+    case .runComputeTest(let threshold, let testConfig):
+        return runComputePerformanceTest(threshold: threshold, testConfig: testConfig)
     }
 }
 
-// MARK: Baseline Update Operations
-func runUpdateBaseline(testConfig: TestConfiguration? = nil) -> Int32 {
-    let baselineManager = BaselineManager()
-    return baselineManager.runUpdateBaseline(testConfig: testConfig)
+// MARK: Graphics Baseline Update Operations
+func runUpdateGraphicsBaseline(testConfig: TestConfiguration? = nil) -> Int32 {
+    let graphicsBaselineManager = GraphicsBaselineManager()
+    return graphicsBaselineManager.runUpdateBaseline(testConfig: testConfig)
 }
 
-// MARK: Performance Test Operations
-func runPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil) -> Int32 {
-    let performanceTestManager = PerformanceTestManager()
-    return performanceTestManager.runPerformanceTest(threshold: threshold, testConfig: testConfig)
+// MARK: Graphics Performance Test Operations
+func runGraphicsPerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil) -> Int32 {
+    let graphicsTestManager = GraphicsTestManager()
+    return graphicsTestManager.runPerformanceTest(threshold: threshold, testConfig: testConfig)
+}
+
+// MARK: Compute Baseline Update Operations
+func runUpdateComputeBaseline(testConfig: TestConfiguration? = nil) -> Int32 {
+    let computeBaselineManager = ComputeBaselineManager()
+    return computeBaselineManager.runUpdateBaseline(testConfig: testConfig)
+}
+
+// MARK: Compute Performance Test Operations
+func runComputePerformanceTest(threshold: Double, testConfig: TestConfiguration? = nil) -> Int32 {
+    let computeTestManager = ComputeTestManager()
+    return computeTestManager.runPerformanceTest(threshold: threshold, testConfig: testConfig)
 }
 
 // Run the main function and exit with the appropriate code

@@ -51,6 +51,17 @@ struct StatisticalAnalysis {
         
     }
     
+    /// Statistical analysis for compute utilization metrics
+    struct ComputeUtilizationStatistics: Codable {
+        let computeUtilization: UtilizationStatistic?
+        let memoryUtilization: UtilizationStatistic?
+        let totalUtilization: UtilizationStatistic?
+        let threadgroupEfficiency: UtilizationStatistic?
+        let instructionsPerSecond: UtilizationStatistic?
+        let sampleCount: Int
+        
+    }
+    
     /// Individual utilization statistic
     struct UtilizationStatistic: Codable {
         let mean: Double
@@ -79,6 +90,7 @@ struct StatisticalAnalysis {
         let confidenceInterval: ConfidenceInterval
         let isSignificant: Bool
         let significanceLevel: Double
+        let pValue: Double?
         
         /// Stage utilization comparison (if available)
         let stageUtilizationComparison: StageUtilizationComparison?
@@ -167,6 +179,25 @@ struct StatisticalAnalysis {
         )
     }
     
+    /// Calculate compute utilization statistics from compute results
+    static func calculateComputeUtilizationStatistics(from results: [ComputeResult]) -> ComputeUtilizationStatistics? {
+        guard !results.isEmpty else { return nil }
+        
+        let computeUtils = results.compactMap { $0.computeUtilization?.computeUtilization }
+        let memoryUtils = results.compactMap { $0.computeUtilization?.memoryUtilization }
+        let totalUtils = results.compactMap { $0.computeUtilization?.totalUtilization }
+        let threadgroupEffs = results.compactMap { $0.computeUtilization?.threadgroupEfficiency }
+        
+        return ComputeUtilizationStatistics(
+            computeUtilization: computeUtils.isEmpty ? nil : calculateUtilizationStatistic(computeUtils),
+            memoryUtilization: memoryUtils.isEmpty ? nil : calculateUtilizationStatistic(memoryUtils),
+            totalUtilization: totalUtils.isEmpty ? nil : calculateUtilizationStatistic(totalUtils),
+            threadgroupEfficiency: threadgroupEffs.isEmpty ? nil : calculateUtilizationStatistic(threadgroupEffs),
+            instructionsPerSecond: nil,
+            sampleCount: results.count
+        )
+    }
+    
     /// Calculate stage utilization statistics from performance results
     static func calculateStageUtilizationStatistics(from results: [PerformanceResult]) -> StageUtilizationStatistics? {
         guard !results.isEmpty else { return nil }
@@ -190,6 +221,8 @@ struct StatisticalAnalysis {
             sampleCount: results.count
         )
     }
+    
+    
     
     /// Calculate utilization statistic for a single utilization metric
     private static func calculateUtilizationStatistic(_ values: [Double]) -> UtilizationStatistic {
@@ -226,6 +259,9 @@ struct StatisticalAnalysis {
         // Two-sample t-test for unequal variances (Welch's t-test)
         let isSignificant = performWelchTTest(baseline: baseline, current: current, significanceLevel: significanceLevel)
         
+        // Calculate p-value for the t-test
+        let pValue = calculatePValue(baseline: baseline, current: current)
+        
         // Confidence interval for the difference
         let pooledStdError = sqrt(
             (baselineStats.standardDeviation * baselineStats.standardDeviation / Double(baseline.count)) +
@@ -243,6 +279,7 @@ struct StatisticalAnalysis {
             confidenceInterval: ConfidenceInterval(lower: confidenceInterval.0, upper: confidenceInterval.1),
             isSignificant: isSignificant,
             significanceLevel: significanceLevel,
+            pValue: pValue,
             stageUtilizationComparison: nil,
             performanceStatsComparison: nil
         )
@@ -263,6 +300,9 @@ struct StatisticalAnalysis {
         
         // Two-sample t-test for unequal variances (Welch's t-test)
         let isSignificant = performWelchTTest(baseline: baselineTimes, current: currentTimes, significanceLevel: significanceLevel)
+        
+        // Calculate p-value for the t-test
+        let pValue = calculatePValue(baseline: baselineTimes, current: currentTimes)
         
         // Confidence interval for the difference
         let pooledStdError = sqrt(
@@ -287,6 +327,7 @@ struct StatisticalAnalysis {
             confidenceInterval: ConfidenceInterval(lower: confidenceInterval.0, upper: confidenceInterval.1),
             isSignificant: isSignificant,
             significanceLevel: significanceLevel,
+            pValue: pValue,
             stageUtilizationComparison: stageUtilizationComparison,
             performanceStatsComparison: performanceStatsComparison
         )
@@ -479,5 +520,106 @@ struct StatisticalAnalysis {
             change: change,
             changePercent: changePercent
         )
+    }
+    
+    /// Calculate p-value for Welch's t-test
+    private static func calculatePValue(baseline: [Double], current: [Double]) -> Double? {
+        let baselineMean = baseline.reduce(0, +) / Double(baseline.count)
+        let currentMean = current.reduce(0, +) / Double(current.count)
+        
+        let baselineVariance = baseline.map { pow($0 - baselineMean, 2) }.reduce(0, +) / Double(baseline.count - 1)
+        let currentVariance = current.map { pow($0 - currentMean, 2) }.reduce(0, +) / Double(current.count - 1)
+        
+        // Calculate Welch's t-statistic
+        let se1 = sqrt(baselineVariance / Double(baseline.count))
+        let se2 = sqrt(currentVariance / Double(current.count))
+        let pooledSE = sqrt(se1 * se1 + se2 * se2)
+        let tStatistic = (currentMean - baselineMean) / pooledSE
+        
+        // Calculate degrees of freedom using Welch-Satterthwaite equation
+        let df = pow(se1 * se1 + se2 * se2, 2) / 
+                (pow(se1 * se1, 2) / Double(baseline.count - 1) + pow(se2 * se2, 2) / Double(current.count - 1))
+        
+        // Calculate p-value using proper t-distribution CDF
+        let pValue = 2 * (1 - tDistributionCDF(abs(tStatistic), degreesOfFreedom: Int(df)))
+        
+        return pValue
+    }
+    
+    /// Approximate t-distribution CDF using numerical integration
+    private static func tDistributionCDF(_ t: Double, degreesOfFreedom: Int) -> Double {
+        if degreesOfFreedom <= 0 { return 0.5 }
+        
+        let df = Double(degreesOfFreedom)
+        let absT = abs(t)
+        
+        // For large degrees of freedom, approximate with normal distribution
+        if df >= 30 {
+            return normalCDF(absT)
+        }
+        
+        // For small degrees of freedom, use numerical integration
+        return integrateTDistribution(absT, degreesOfFreedom: df)
+    }
+    
+    /// Normal distribution CDF approximation
+    private static func normalCDF(_ x: Double) -> Double {
+        // Abramowitz and Stegun approximation
+        let t = 1.0 / (1.0 + 0.2316419 * abs(x))
+        let d = 0.3989423 * exp(-x * x / 2.0)
+        let p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.7814779 + t * (-1.8212560 + t * 1.3302744))))
+        
+        return x > 0 ? 1.0 - p : p
+    }
+    
+    /// Numerical integration for t-distribution CDF
+    private static func integrateTDistribution(_ t: Double, degreesOfFreedom: Double) -> Double {
+        // Simpson's rule integration for t-distribution
+        let n = 1000 // Number of integration steps
+        let h = t / Double(n)
+        var sum = 0.0
+        
+        // Calculate t-distribution density function
+        func tDensity(_ x: Double) -> Double {
+            let numerator = pow(1.0 + (x * x) / degreesOfFreedom, -(degreesOfFreedom + 1.0) / 2.0)
+            let denominator = sqrt(degreesOfFreedom * Double.pi) * gamma((degreesOfFreedom + 1.0) / 2.0) / gamma(degreesOfFreedom / 2.0)
+            return numerator / denominator
+        }
+        
+        // Simpson's rule
+        for i in 0...n {
+            let x = Double(i) * h
+            let weight = (i == 0 || i == n) ? 1.0 : (i % 2 == 0) ? 2.0 : 4.0
+            sum += weight * tDensity(x)
+        }
+        
+        return (h / 3.0) * sum
+    }
+    
+    /// Gamma function approximation using Stirling's formula
+    private static func gamma(_ z: Double) -> Double {
+        if z <= 0 { return Double.infinity }
+        if z == 1.0 { return 1.0 }
+        if z == 0.5 { return sqrt(Double.pi) }
+        
+        // Stirling's approximation for large z
+        if z > 10 {
+            return sqrt(2.0 * Double.pi / z) * pow(z / exp(1.0), z)
+        }
+        
+        // For smaller z, use recurrence relation
+        var result = 1.0
+        var current = z
+        while current > 1.0 {
+            current -= 1.0
+            result *= current
+        }
+        
+        if current < 1.0 {
+            // Use approximation for fractional part
+            result *= sqrt(2.0 * Double.pi / current) * pow(current / exp(1.0), current)
+        }
+        
+        return result
     }
 }

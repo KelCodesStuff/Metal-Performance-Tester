@@ -26,6 +26,38 @@ class RegressionChecker {
         return StatisticalAnalysis.compare(baseline: baseline, current: current, significanceLevel: significanceLevel)
     }
     
+    /// Compares unified performance results using statistical analysis
+    static func compareUnifiedStatistical(current: UnifiedPerformanceMeasurementSet, baseline: UnifiedPerformanceMeasurementSet, significanceLevel: Double = 0.05) -> StatisticalAnalysis.ComparisonResult {
+        // Extract GPU times for comparison
+        let currentTimes = current.individualResults.map { $0.gpuTimeMs }
+        let baselineTimes = baseline.individualResults.map { $0.gpuTimeMs }
+        
+        return StatisticalAnalysis.compare(baseline: baselineTimes, current: currentTimes, significanceLevel: significanceLevel)
+    }
+    
+    /// Compares graphics performance results using statistical analysis
+    static func compareGraphicsStatistical(current: GraphicsMeasurementSet, baseline: GraphicsMeasurementSet, significanceLevel: Double = 0.05) -> StatisticalAnalysis.ComparisonResult {
+        // Convert GraphicsMeasurementSet to PerformanceMeasurementSet for comparison
+        let currentPerformance = convertToPerformanceMeasurementSet(current)
+        let baselinePerformance = convertToPerformanceMeasurementSet(baseline)
+        return StatisticalAnalysis.compare(baseline: baselinePerformance, current: currentPerformance, significanceLevel: significanceLevel)
+    }
+    
+    /// Converts GraphicsMeasurementSet to PerformanceMeasurementSet
+    private static func convertToPerformanceMeasurementSet(_ graphicsSet: GraphicsMeasurementSet) -> PerformanceMeasurementSet {
+        let performanceResults = graphicsSet.individualResults.map { graphicsResult in
+            PerformanceResult(
+                gpuTimeMs: graphicsResult.gpuTimeMs,
+                deviceName: graphicsResult.deviceName,
+                testConfig: graphicsResult.testConfig,
+                testType: .graphics,
+                stageUtilization: graphicsResult.stageUtilization,
+                statistics: graphicsResult.statistics
+            )
+        }
+        return PerformanceMeasurementSet(individualResults: performanceResults)
+    }
+    
     /// Compares current performance result against baseline (legacy method for backward compatibility)
     /// - Parameters:
     ///   - current: Current performance measurement

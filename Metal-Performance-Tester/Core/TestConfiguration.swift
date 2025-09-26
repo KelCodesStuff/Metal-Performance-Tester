@@ -6,6 +6,32 @@
 //
 
 import Foundation
+import Metal
+
+/// Test type enumeration
+enum TestType: String, Codable {
+    case graphics = "graphics"
+    case compute = "compute"
+    case both = "both"
+}
+
+/// Threadgroup size structure for compute shaders
+struct ThreadgroupSize: Codable {
+    let width: Int
+    let height: Int
+    let depth: Int
+    
+    init(width: Int, height: Int, depth: Int) {
+        self.width = width
+        self.height = height
+        self.depth = depth
+    }
+    
+    /// Convert to MTLSize
+    func toMTLSize() -> MTLSize {
+        return MTLSize(width: width, height: height, depth: depth)
+    }
+}
 
 /// Configuration parameters for the performance test
 struct TestConfiguration: Codable {
@@ -34,10 +60,26 @@ struct TestConfiguration: Codable {
     /// Name of the baseline configuration
     let baselineName: String
     
+    // MARK: - Compute Testing Parameters
+    
+    /// Threadgroup size for compute shaders (width x height x depth)
+    let threadgroupSize: ThreadgroupSize?
+    
+    /// Number of threadgroups to dispatch
+    let threadgroupCount: ThreadgroupSize?
+    
+    /// Compute workload complexity (1-10 scale)
+    let computeWorkloadComplexity: Int?
+    
+    /// Test type (graphics, compute, or both)
+    let testType: TestType
+    
     /// Creates a test configuration with default values
     init(width: Int = 1920, height: Int = 1080, pixelFormat: String = "MTLPixelFormat(rawValue: 80)", 
          triangleCount: Int = 1, geometryComplexity: Int = 1, resolutionScale: Double = 1.0, 
-         testMode: String = "simple", baselineName: String = "Simple Baseline") {
+         testMode: String = "simple", baselineName: String = "Simple Baseline",
+         threadgroupSize: ThreadgroupSize? = nil, threadgroupCount: ThreadgroupSize? = nil, 
+         computeWorkloadComplexity: Int? = nil, testType: TestType = .graphics) {
         self.width = width
         self.height = height
         self.pixelFormat = pixelFormat
@@ -47,6 +89,10 @@ struct TestConfiguration: Codable {
         self.testMode = testMode
         self.timestamp = Date()
         self.baselineName = baselineName
+        self.threadgroupSize = threadgroupSize
+        self.threadgroupCount = threadgroupCount
+        self.computeWorkloadComplexity = computeWorkloadComplexity
+        self.testType = testType
     }
     
     /// Creates a test configuration from current renderer settings (backwards compatibility)
@@ -60,6 +106,10 @@ struct TestConfiguration: Codable {
         self.testMode = "legacy"
         self.timestamp = Date()
         self.baselineName = "Legacy Baseline"
+        self.threadgroupSize = nil
+        self.threadgroupCount = nil
+        self.computeWorkloadComplexity = nil
+        self.testType = .graphics
     }
     
     /// Calculates the effective resolution after scaling
@@ -98,6 +148,13 @@ enum TestPreset {
     case highRes          // 3840×2160, Display scaling testing
     case ultraHighRes     // 7680×4320, Ultra-high resolution testing
     
+    // MARK: - Compute Test Presets
+    case computeLow       // Low compute workload
+    case computeModerate  // Moderate compute workload
+    case computeComplex   // Complex compute workload
+    case computeHigh      // High compute workload
+    case computeUltraHigh // Ultra-high compute workload
+    
     /// Creates a test configuration for this preset
     func createConfiguration() -> TestConfiguration {
         switch self {
@@ -105,31 +162,77 @@ enum TestPreset {
             // Low GPU Load: 1280×720 @ 1000 triangles, complexity 6/10
             return TestConfiguration(width: 1280, height: 720, triangleCount: 4000,
                                    geometryComplexity: 6, resolutionScale: 1.0, testMode: "low-res",
-                                   baselineName: "Low Baseline")
+                                   baselineName: "Low Graphics Baseline")
             
         case .moderate:
             // Medium GPU Load: 1920×1080 @ 2000 triangles, complexity 7/10
             return TestConfiguration(width: 1920, height: 1080, triangleCount: 4000, 
                                    geometryComplexity: 7, resolutionScale: 1.0, testMode: "moderate",
-                                   baselineName: "Moderate Baseline")
+                                   baselineName: "Moderate Graphics Baseline")
             
         case .complex:
             // High GPU Load: 2560x1440 @ 5000 triangles, complexity 9/10
             return TestConfiguration(width: 2560, height: 1440, triangleCount: 5000,
                                    geometryComplexity: 9, resolutionScale: 1.0, testMode: "complex",
-                                   baselineName: "Complex Baseline")
+                                   baselineName: "Complex Graphics Baseline")
             
         case .highRes:
             // Very High GPU Load: 3840×2160 @ 8000 triangles, complexity 9/10
             return TestConfiguration(width: 3840, height: 2160, triangleCount: 8000,
                                    geometryComplexity: 9, resolutionScale: 1.0, testMode: "high-res",
-                                   baselineName: "High Baseline")
+                                   baselineName: "High Graphics Baseline")
             
         case .ultraHighRes:
             // Extreme GPU Load: 7680×4320 @ 15000 triangles, complexity 10/10
             return TestConfiguration(width: 7680, height: 4320, triangleCount: 10000,
                                    geometryComplexity: 10, resolutionScale: 1.0, testMode: "ultra-high-res",
-                                   baselineName: "Ultra High Baseline")
+                                   baselineName: "Ultra High Graphics Baseline")
+            
+        // MARK: - Compute Test Configurations
+        case .computeLow:
+            // Low Compute Load: 128x128 threadgroups, complexity 3/10
+            return TestConfiguration(width: 128, height: 128, triangleCount: 0,
+                                   geometryComplexity: 1, resolutionScale: 1.0, testMode: "compute-low",
+                                   baselineName: "Low Compute Baseline",
+                                   threadgroupSize: ThreadgroupSize(width: 16, height: 16, depth: 1),
+                                   threadgroupCount: ThreadgroupSize(width: 8, height: 8, depth: 1),
+                                   computeWorkloadComplexity: 3, testType: .compute)
+            
+        case .computeModerate:
+            // Moderate Compute Load: 256x256 threadgroups, complexity 5/10
+            return TestConfiguration(width: 256, height: 256, triangleCount: 0,
+                                   geometryComplexity: 1, resolutionScale: 1.0, testMode: "compute-moderate",
+                                   baselineName: "Moderate Compute Baseline",
+                                   threadgroupSize: ThreadgroupSize(width: 16, height: 16, depth: 1),
+                                   threadgroupCount: ThreadgroupSize(width: 16, height: 16, depth: 1),
+                                   computeWorkloadComplexity: 5, testType: .compute)
+            
+        case .computeComplex:
+            // Complex Compute Load: 384x384 threadgroups, complexity 7/10
+            return TestConfiguration(width: 384, height: 384, triangleCount: 0,
+                                   geometryComplexity: 1, resolutionScale: 1.0, testMode: "compute-complex",
+                                   baselineName: "Complex Compute Baseline",
+                                   threadgroupSize: ThreadgroupSize(width: 16, height: 16, depth: 1),
+                                   threadgroupCount: ThreadgroupSize(width: 24, height: 24, depth: 1),
+                                   computeWorkloadComplexity: 7, testType: .compute)
+            
+        case .computeHigh:
+            // High Compute Load: 512x512 threadgroups, complexity 8/10
+            return TestConfiguration(width: 512, height: 512, triangleCount: 0,
+                                   geometryComplexity: 1, resolutionScale: 1.0, testMode: "compute-high",
+                                   baselineName: "High Compute Baseline",
+                                   threadgroupSize: ThreadgroupSize(width: 16, height: 16, depth: 1),
+                                   threadgroupCount: ThreadgroupSize(width: 32, height: 32, depth: 1),
+                                   computeWorkloadComplexity: 8, testType: .compute)
+            
+        case .computeUltraHigh:
+            // Ultra-High Compute Load: 1024x1024 threadgroups, complexity 10/10
+            return TestConfiguration(width: 1024, height: 1024, triangleCount: 0,
+                                   geometryComplexity: 1, resolutionScale: 1.0, testMode: "compute-ultra-high",
+                                   baselineName: "Ultra High Compute Baseline",
+                                   threadgroupSize: ThreadgroupSize(width: 16, height: 16, depth: 1),
+                                   threadgroupCount: ThreadgroupSize(width: 64, height: 64, depth: 1),
+                                   computeWorkloadComplexity: 10, testType: .compute)
         }
     }
     
@@ -141,35 +244,17 @@ enum TestPreset {
         case .complex: return "Complex (1080p, Feature Development)"
         case .highRes: return "High Resolution (4K, Display Scaling)"
         case .ultraHighRes: return "Ultra High Resolution (8K, Ultra-High Resolution Testing)"
+        case .computeLow: return "Compute Low (128x128, Basic Compute Testing)"
+        case .computeModerate: return "Compute Moderate (256x256, Daily Compute Testing)"
+        case .computeComplex: return "Compute Complex (384x384, Feature Compute Testing)"
+        case .computeHigh: return "Compute High (512x512, High-Performance Compute Testing)"
+        case .computeUltraHigh: return "Compute Ultra-High (1024x1024, Ultra-High Compute Testing)"
         }
     }
 }
 
 /// Helper functions for test configuration management
 struct TestConfigurationHelper {
-    
-    /// Constants for performance impact calculation
-    private struct PerformanceImpactConstants {
-        // Reference resolution for normalization (1080p baseline)
-        static let referencePixelCount = 1920 * 1080
-        
-        // Scaling factors for different impact components
-        static let vertexImpactDivisor = 10.0  // Used with square root for vertex impact
-        static let complexityMaxLevel = 10.0   // Maximum geometry complexity level
-        
-        // Weight factors for combining impact components
-        // Based on GPU processing characteristics: vertex processing is most critical
-        static let vertexWeight = 0.5      // Primary factor for geometry processing
-        static let pixelWeight = 0.3       // Secondary factor for fragment processing  
-        static let complexityWeight = 0.2  // Tertiary factor for shader complexity
-        
-        // Impact categorization thresholds
-        // These values were calibrated through testing with different baseline configurations
-        static let lowImpactThreshold = 0.8      // Below this: Low Impact
-        static let mediumImpactThreshold = 1.6   // Below this: Medium Impact  
-        static let highImpactThreshold = 2.5     // Below this: High Impact
-        static let veryHighImpactThreshold = 8.1 // Below this: Very High Impact
-    }
     
     /// Generates triangle vertices based on complexity level
     static func generateTriangleVertices(count: Int, complexity: Int) -> [Float] {
@@ -222,77 +307,4 @@ struct TestConfigurationHelper {
                config.resolutionScale > 0.1 && config.resolutionScale <= 4.0
     }
     
-    /// Estimates the relative performance impact based on actual GPU performance results
-    static func calculatePerformanceImpactFromResults(
-        gpuTimeMs: Double,
-        totalUtilization: Double?,
-        memoryBandwidth: Double?,
-        instructionsExecuted: Double?
-    ) -> String {
-        // Calculate impact score based on actual performance metrics
-        var impactScore: Double = 0.0
-        
-        // GPU Time impact (primary factor)
-        let gpuTimeImpact = gpuTimeMs / 10.0  // Normalize to 10ms baseline
-        impactScore += gpuTimeImpact * 0.4    // 40% weight for execution time
-        
-        // Utilization impact (secondary factor)
-        if let utilization = totalUtilization {
-            let utilizationImpact = utilization / 100.0
-            impactScore += utilizationImpact * 0.3  // 30% weight for utilization
-        }
-        
-        // Memory bandwidth impact (tertiary factor)
-        if let bandwidth = memoryBandwidth {
-            let bandwidthImpact = bandwidth / 50.0  // Normalize to 50 MB/s baseline
-            impactScore += bandwidthImpact * 0.2    // 20% weight for memory bandwidth
-        }
-        
-        // Instructions impact (quaternary factor)
-        if let instructions = instructionsExecuted {
-            let instructionImpact = instructions / 1000.0  // Normalize to 1000 instructions baseline
-            impactScore += instructionImpact * 0.1         // 10% weight for instruction count
-        }
-        
-        // Categorize impact level based on actual performance results
-        if impactScore < 0.5 {
-            return "Low Impact"
-        } else if impactScore < 1.0 {
-            return "Medium Impact"
-        } else if impactScore < 2.0 {
-            return "High Impact"
-        } else {
-            return "Very High Impact"
-        }
-    }
-    
-    /// Estimates the relative performance impact of a configuration (legacy method for configuration-based estimation)
-    static func estimatePerformanceImpact(_ config: TestConfiguration) -> String {
-        let pixelCount = config.effectiveWidth * config.effectiveHeight
-        let triangleCount = config.triangleCount
-        let complexity = config.geometryComplexity
-        
-        // Normalize impacts to be more balanced
-        let pixelImpact = Double(pixelCount) / Double(PerformanceImpactConstants.referencePixelCount)
-        let vertexImpact = sqrt(Double(triangleCount)) / PerformanceImpactConstants.vertexImpactDivisor
-        let complexityImpact = Double(complexity) / PerformanceImpactConstants.complexityMaxLevel
-        
-        // Weighted combination based on GPU processing characteristics
-        let totalImpact = (vertexImpact * PerformanceImpactConstants.vertexWeight) + 
-                         (pixelImpact * PerformanceImpactConstants.pixelWeight) + 
-                         (complexityImpact * PerformanceImpactConstants.complexityWeight)
-        
-        // Categorize impact level based on calibrated thresholds
-        if totalImpact < PerformanceImpactConstants.lowImpactThreshold {
-            return "Low Impact"
-        } else if totalImpact < PerformanceImpactConstants.mediumImpactThreshold {
-            return "Medium Impact"
-        } else if totalImpact < PerformanceImpactConstants.highImpactThreshold {
-            return "High Impact"
-        } else if totalImpact < PerformanceImpactConstants.veryHighImpactThreshold {
-            return "Very High Impact"
-        } else {
-            return "Extreme Impact"
-        }
-    }
 }

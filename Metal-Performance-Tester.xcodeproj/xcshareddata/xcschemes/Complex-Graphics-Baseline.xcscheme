@@ -53,11 +53,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--run-test"
+            argument = "--update-graphics-baseline"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--moderate"
+            argument = "--graphics-complex"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
