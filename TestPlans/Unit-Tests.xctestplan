@@ -19,7 +19,7 @@
     {
       "target" : {
         "containerPath" : "container:Metal-Performance-Tester.xcodeproj",
-        "identifier" : "BA76234E2E8719F7003133A4",
+        "identifier" : "BA17B94B2E872E3400A3949F",
         "name" : "Unit-Tests"
       }
     }
