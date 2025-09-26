@@ -54,15 +54,15 @@ class ComputeTestManager {
         }
         
         // COMPUTE PERFORMANCE TEST OUTPUT: Iteration progress and completion
-        print("Running 100 iterations for statistical analysis...")
-        guard let currentMeasurementSet = renderer.runMultipleComputeIterations(iterations: 100) else {
+        print("Running 50 iterations for statistical analysis...")
+        guard let currentMeasurementSet = renderer.runMultipleComputeIterations(iterations: 50) else {
             print("\nError: Compute performance measurement not available on this GPU.")
             print("Counter sampling is not supported.")
             return ExitCode.error.rawValue
         }
         
         // COMPUTE PERFORMANCE TEST OUTPUT: Progress completion and main results header
-        print("Progress: (100/100)")
+        print("Progress: (50/50)")
         let separator = String(repeating: "-", count: 60)
         print(separator)
         print("COMPUTE PERFORMANCE TEST RESULTS")
