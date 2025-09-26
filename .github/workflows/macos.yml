@@ -1,0 +1,63 @@
+# A descriptive name for the workflow.
+name: macOS Build and Test
+
+# The events that will trigger this workflow.
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch.
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to the main branch.
+
+# Define the jobs to be executed.
+jobs:
+  build:
+    # Specify the runner environment. Use 'macos-latest' for the latest available macOS.
+    runs-on: macos-latest
+
+    # The steps that make up the 'build' job.
+    steps:
+      # Step 1: Check out the repository code.
+      # This action checks out your repository onto the runner.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Select a specific version of Xcode.
+      # This is crucial for macOS projects to ensure a consistent build environment.
+      - name: Select Xcode version
+        uses: actions/setup-xcode@v2
+        with:
+          # Use a specific Xcode version number, e.g., '16.3.0'.
+          # You can also use 'latest' or 'latest-stable'.
+          xcode-version: '16.3.0'
+
+      # Step 3: Clean, build, and archive the project.
+      # Replace 'YourProject.xcodeproj' and 'YourScheme' with your project details.
+      # 'clean' removes previous build products.
+      # 'build' compiles the project.
+      # 'archive' creates an archive of the app for distribution.
+      - name: Build and archive project
+        run: |
+          xcodebuild clean build archive \
+          -project "Metal-Performance-Tester.xcodeproj" \
+          -scheme "Metal-Performance-Tester" \
+          -configuration Release \
+          -archivePath "build/YourApp.xcarchive"
+
+      # Step 4: Run tests.
+      # This step builds and runs all tests in the specified scheme.
+      - name: Run tests
+        run: |
+          xcodebuild test \
+          -project "Metal-Performance-Tester.xcodeproj" \
+          -scheme "Metal-Performance-Tester" \
+          -destination "platform=macOS,arch=x86_64"
+
+      # Optional Step 5: Upload the build artifact.
+      # This action uploads the built archive to be downloaded from the workflow run.
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: macOS-build
+          path: build/Metal-Performance-Tester.xcarchive
