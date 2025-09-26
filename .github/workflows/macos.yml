@@ -107,7 +107,7 @@ jobs:
         run: |
           xcodebuild test \
             -project "${{ env.PROJECT_NAME }}" \
-            -target "Unit-Tests" \
+            -scheme "${{ env.SCHEME_NAME }}" \
             -destination "${{ env.DESTINATION }}" \
             -configuration Debug \
             CODE_SIGN_IDENTITY="-" \
