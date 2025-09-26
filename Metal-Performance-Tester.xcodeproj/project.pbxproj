@@ -30,11 +30,6 @@
 			path = "Metal-Performance-Tester";
 			sourceTree = "<group>";
 		};
-		BAC23EE92E7BAB0C0047C51B /* Tests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Tests;
-			sourceTree = "<group>";
-		};
 		BAC23EEB2E7BAB2A0047C51B /* TestPlans */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TestPlans;
@@ -58,7 +53,6 @@
 			children = (
 				BAC23E5F2E7B29770047C51B /* Metal-Performance-Tester */,
 				BAC23EEB2E7BAB2A0047C51B /* TestPlans */,
-				BAC23EE92E7BAB0C0047C51B /* Tests */,
 				BAC23E9A2E7BA8EA0047C51B /* README.md */,
 				BA7950B72E7BB5A4007617C8 /* LICENSE */,
 				BAC23E5E2E7B29770047C51B /* Products */,
@@ -90,7 +84,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				BAC23E5F2E7B29770047C51B /* Metal-Performance-Tester */,
-				BAC23EE92E7BAB0C0047C51B /* Tests */,
 				BAC23EEB2E7BAB2A0047C51B /* TestPlans */,
 			);
 			name = "Metal-Performance-Tester";
