@@ -1,6 +1,11 @@
-# Metal Performance Tester
+# Metal Performance Tester  
 
-A comprehensive tool for testing GPU performance regressions in Metal applications. This tool provides precise GPU performance measurement, statistical analysis, and automated regression detection for Metal-based applications.
+Metal Performance Tester is a comprehensive tool for testing GPU performance regressions in Metal applications. 
+
+This tool provides precise GPU performance measurement, statistical analysis, and automated regression detection for Metal-based applications.
+
+[![Build and Test](https://github.com/KelCodesStuff/Metal-Performance-Tester/actions/workflows/macos.yml/badge.svg)](https://github.com/KelCodesStuff/Metal-Performance-Tester/actions/workflows/macos.yml)
+![Platforms](https://img.shields.io/badge/Platform%20Compatibility-iOS%2016+%20|%20iPadOS%2016+-red?logo=apple&?color=red)
 
 ## Features
 
