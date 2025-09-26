@@ -9,8 +9,10 @@ import Foundation
 
 /// Represents the different modes the performance tester can run in
 enum TestMode {
-    case runTest(threshold: Double, testConfig: TestConfiguration?)
-    case updateBaseline(testConfig: TestConfiguration?)
+    case runGraphicsTest(threshold: Double, testConfig: TestConfiguration?)
+    case updateGraphicsBaseline(testConfig: TestConfiguration?)
+    case runComputeTest(threshold: Double, testConfig: TestConfiguration?)
+    case updateComputeBaseline(testConfig: TestConfiguration?)
     case help
 }
 
@@ -31,15 +33,25 @@ class CommandLineParser {
         let firstArg = arguments[0]
         
         switch firstArg {
-        case "--run-test":
+        case "--graphics-test":
             // Parse optional threshold argument
             let threshold = parseThreshold(from: arguments, defaultThreshold: defaultThreshold)
-            let testConfig = parseTestConfiguration(from: arguments)
-            return .runTest(threshold: threshold, testConfig: testConfig)
+            let testConfig = parseGraphicsTestConfiguration(from: arguments)
+            return .runGraphicsTest(threshold: threshold, testConfig: testConfig)
             
-        case "--update-baseline":
-            let testConfig = parseTestConfiguration(from: arguments)
-            return .updateBaseline(testConfig: testConfig)
+        case "--update-graphics-baseline":
+            let testConfig = parseGraphicsTestConfiguration(from: arguments)
+            return .updateGraphicsBaseline(testConfig: testConfig)
+            
+        case "--compute-test":
+            // Parse optional threshold argument
+            let threshold = parseThreshold(from: arguments, defaultThreshold: defaultThreshold)
+            let testConfig = parseComputeTestConfiguration(from: arguments)
+            return .runComputeTest(threshold: threshold, testConfig: testConfig)
+            
+        case "--update-compute-baseline":
+            let testConfig = parseComputeTestConfiguration(from: arguments)
+            return .updateComputeBaseline(testConfig: testConfig)
             
         case "--help", "-h":
             return .help
@@ -77,23 +89,49 @@ class CommandLineParser {
         return defaultThreshold
     }
     
-    /// Parses test configuration from command-line arguments
+    /// Parses graphics test configuration from command-line arguments
     /// - Parameter arguments: All command-line arguments
     /// - Returns: TestConfiguration if specified, nil for default
-    private static func parseTestConfiguration(from arguments: [String]) -> TestConfiguration? {
-        // Check for preset arguments first
+    private static func parseGraphicsTestConfiguration(from arguments: [String]) -> TestConfiguration? {
+        // Check for graphics preset arguments first
         for arg in arguments {
             switch arg {
-            case "--low-res":
+            case "--graphics-low":
                 return TestPreset.lowRes.createConfiguration()
-            case "--moderate":
+            case "--graphics-moderate":
                 return TestPreset.moderate.createConfiguration()
-            case "--complex":
+            case "--graphics-complex":
                 return TestPreset.complex.createConfiguration()
-            case "--high-res":
+            case "--graphics-high":
                 return TestPreset.highRes.createConfiguration()
-            case "--ultra-high-res":
+            case "--graphics-ultra-high":
                 return TestPreset.ultraHighRes.createConfiguration()
+            default:
+                continue
+            }
+        }
+        
+        // Return nil for default configuration
+        return nil
+    }
+    
+    /// Parses compute test configuration from command-line arguments
+    /// - Parameter arguments: All command-line arguments
+    /// - Returns: TestConfiguration if specified, nil for default
+    private static func parseComputeTestConfiguration(from arguments: [String]) -> TestConfiguration? {
+        // Check for compute preset arguments first
+        for arg in arguments {
+            switch arg {
+            case "--compute-low":
+                return TestPreset.computeLow.createConfiguration()
+            case "--compute-moderate":
+                return TestPreset.computeModerate.createConfiguration()
+            case "--compute-complex":
+                return TestPreset.computeComplex.createConfiguration()
+            case "--compute-high":
+                return TestPreset.computeHigh.createConfiguration()
+            case "--compute-ultra-high":
+                return TestPreset.computeUltraHigh.createConfiguration()
             default:
                 continue
             }
@@ -107,29 +145,49 @@ class CommandLineParser {
     static func printUsage() {
         print("""
         Metal Performance Tester
+        A comprehensive tool for testing GPU performance regressions in Metal applications
         
         USAGE:
-        Metal-Performance-Tester [OPTIONS]
+        Metal-Performance-Tester [COMMAND] [OPTIONS]
         
-        BASIC OPTIONS:
-        --update-baseline
-        Run test and save results as new baseline
+        COMMANDS:
+        --update-graphics-baseline Run graphics test and save results as new baseline
+        --graphics-test          Run graphics performance test and compare against baseline
+        --update-compute-baseline Run compute test and save results as new baseline
+        --compute-test           Run compute performance test and compare against baseline
+        --help, -h               Show this help message
         
-        --run-test
-        Run performance test and compare against baseline
+        GRAPHICS TEST CONFIGURATIONS:
+        --graphics-low         Low resolution (720p, mobile/low-end testing)
+        --graphics-moderate    Moderate test (1080p, daily development testing) [DEFAULT]
+        --graphics-complex     Complex test (1440p, feature development)
+        --graphics-high        High resolution (4K, display scaling testing)
+        --graphics-ultra-high  Ultra high resolution (8K, ultra-high resolution testing)
         
-        --help, -h
-        Show this help message
+        COMPUTE TEST CONFIGURATIONS:
+        --compute-low        Low compute workload (128x128, basic compute testing)
+        --compute-moderate   Moderate compute workload (256x256, daily compute testing)
+        --compute-complex    Complex compute workload (384x384, feature compute testing)
+        --compute-high       High compute workload (512x512, high-performance compute testing)
+        --compute-ultra-high Ultra-high compute workload (1024x1024, ultra-high compute testing)
         
-        TEST CONFIGURATION:
-        --low-res         Low resolution (720p, mobile/low-end testing)
-        --moderate        Moderate test (1080p, daily development testing)
-        --complex         Complex test (1440p, feature development)
-        --high-res        High resolution (4K, display scaling testing)
-        --ultra-high-res  Ultra high resolution (8K, ultra-high resolution testing)
+        EXAMPLES:
+        # Graphics Testing
+        Metal-Performance-Tester --update-graphics-baseline --graphics-moderate
+        Metal-Performance-Tester --graphics-test --graphics-moderate
         
-        PARAMETERS:
-        --threshold N     Performance threshold percentage (0-100)
+        # Compute Testing
+        Metal-Performance-Tester --update-compute-baseline --compute-moderate
+        Metal-Performance-Tester --compute-test --compute-high
+        
+        # Quick tests with default settings
+        Metal-Performance-Tester --graphics-test
+        Metal-Performance-Tester --compute-test
+        
+        REQUIREMENTS:
+        • macOS 15.0 or later
+        • Apple Silicon GPU (M1/M2/M3/M4 series)
+        • Metal 2.0 or later
         
         -----
         
@@ -137,6 +195,8 @@ class CommandLineParser {
         0 - Test passed (performance within threshold)
         1 - Test failed (performance regression detected)
         2 - Error (missing baseline, unsupported GPU, etc.)
+        
+        For more information, visit: https://github.com/KelCodesStuff/Metal-Performance-Tester
         """)
     }
 }
