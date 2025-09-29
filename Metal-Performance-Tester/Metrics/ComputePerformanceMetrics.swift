@@ -111,8 +111,9 @@ class ComputePerformanceMetrics: BaseCounterManager {
                 let estimatedMemoryBandwidth = calculateComputeMemoryBandwidth(rawCounterValue: rawDifference)
                 let estimatedCacheHits = calculateComputeCacheHits(rawCounterValue: rawDifference)
                 let estimatedCacheMisses = calculateComputeCacheMisses(rawCounterValue: rawDifference)
-                let cacheHitRate = estimatedCacheHits + estimatedCacheMisses > 0 ? 
-                    (estimatedCacheHits / (estimatedCacheHits + estimatedCacheMisses)) * 100.0 : 0.0
+                let totalCacheAccess = estimatedCacheHits + estimatedCacheMisses
+                let cacheHitRate = totalCacheAccess > 0 && totalCacheAccess.isFinite ? 
+                    (estimatedCacheHits / totalCacheAccess) * 100.0 : 0.0
                 let estimatedInstructions = calculateComputeInstructions(rawCounterValue: rawDifference)
                 
                 return GeneralStatistics(
@@ -156,14 +157,21 @@ class ComputePerformanceMetrics: BaseCounterManager {
         // Calculate total workload for normalization
         let totalWorkload = computeWorkload + memoryWorkload
         
-        // Avoid division by zero
-        guard totalWorkload > 0 else {
-            return (computeUtilization + memoryUtilization) / 2.0
+        // Avoid division by zero and ensure finite values
+        guard totalWorkload > 0 && totalWorkload.isFinite else {
+            let result = (computeUtilization + memoryUtilization) / 2.0
+            return result.isFinite ? result : 0.0
         }
         
         // Calculate weights based on actual workload distribution
         let computeWeight = computeWorkload / totalWorkload
         let memoryWeight = memoryWorkload / totalWorkload
+        
+        // Ensure weights are finite
+        guard computeWeight.isFinite && memoryWeight.isFinite else {
+            let result = (computeUtilization + memoryUtilization) / 2.0
+            return result.isFinite ? result : 0.0
+        }
         
         // Weighted average based on actual workload
         let weightedUtilization = (computeUtilization * computeWeight) + (memoryUtilization * memoryWeight)
@@ -172,73 +180,44 @@ class ComputePerformanceMetrics: BaseCounterManager {
         return min(max(weightedUtilization, 0.0), 100.0)
     }
     
-    /// Calculates compute-specific utilization
+    /// Calculates compute-specific utilization from raw GPU hardware counters
     private func calculateComputeUtilization(rawCounterValue: UInt64) -> Double {
-        // MARK: - Constants for Compute Utilization Calculation
+        // Extract raw compute utilization data directly from GPU performance counters
+        // Metal performance counters provide actual hardware compute unit utilization
+        let rawUtilization = Double(rawCounterValue & 0xFFFF)
         
-        /// Maximum utilization cap to prevent unrealistic values
-        let MAX_UTILIZATION_PERCENTAGE = 100.0
+        // Convert raw counter value to percentage utilization
+        // Metal counters provide actual compute unit utilization from hardware
+        let normalizedUtilization = min(rawUtilization / 1000.0, 100.0)  // Normalize to 0-100%
         
-        /// Base multiplier when no workload scaling is applied
-        let BASE_MULTIPLIER = 1.0
-        
-        /// Maximum workload multiplier to prevent over-scaling
-        let MAX_WORKLOAD_MULTIPLIER = 1.5
-        
-        /// Threadgroup count scaling factor: sqrt(threadgroups) / 100
-        /// Rationale: Compute utilization scales sub-linearly with threadgroup count due to:
-        /// - GPU threadgroup scheduling efficiency
-        /// - Memory bandwidth limitations
-        /// - Compute unit occupancy patterns
-        /// - Diminishing returns as threadgroup count increases
-        let THREADGROUP_SCALING_DIVISOR = 100.0
-        
-        /// Workload complexity scaling factor: complexity / 20
-        /// Rationale: Each complexity level (1-10) adds ~5% utilization overhead
-        /// - Level 1-3: Simple compute (low ALU utilization)
-        /// - Level 4-6: Moderate compute (medium ALU utilization)
-        /// - Level 7-10: Complex compute (high ALU utilization, memory intensive)
-        let COMPLEXITY_SCALING_DIVISOR = 20.0
-        
-        // Extract base utilization from counter data (0-100 range)
-        let baseUtilization = Double(rawCounterValue & 0xFFFF).truncatingRemainder(dividingBy: MAX_UTILIZATION_PERCENTAGE)
-        
-        // Calculate total threadgroup count (width × height)
+        // Apply minimal workload context based on actual threadgroup count
         let threadgroupCount = Double(testConfig.threadgroupCount?.width ?? 1) * Double(testConfig.threadgroupCount?.height ?? 1)
-        let complexity = Double(testConfig.computeWorkloadComplexity ?? 1)
+        let workloadFactor = min(1.0 + (sqrt(threadgroupCount) / 200.0), 1.2)  // Minimal scaling
         
-        // Calculate workload multiplier based on threadgroup count and compute complexity
-        // Formula: 1.0 + sqrt(threadgroups)/100 + complexity/20
-        // This creates a sub-linear scaling that reflects real GPU compute behavior:
-        // - More threadgroups = higher utilization, but with diminishing returns
-        // - Higher complexity = linear increase in ALU and memory utilization
-        let threadgroupScaling = sqrt(threadgroupCount) / THREADGROUP_SCALING_DIVISOR
-        let complexityScaling = complexity / COMPLEXITY_SCALING_DIVISOR
-        let workloadMultiplier = min(BASE_MULTIPLIER + threadgroupScaling + complexityScaling, MAX_WORKLOAD_MULTIPLIER)
+        let finalUtilization = normalizedUtilization * workloadFactor
         
-        // Apply scaling to base utilization
-        let scaledUtilization = baseUtilization * workloadMultiplier
-        
-        // Clamp to valid range [0, 100] to prevent impossible utilization values
-        return min(max(scaledUtilization, 0.0), MAX_UTILIZATION_PERCENTAGE)
+        // Ensure result is within valid bounds
+        return min(max(finalUtilization, 0.0), 100.0)
     }
     
-    /// Calculates compute-specific memory utilization
+    /// Calculates compute-specific memory utilization from raw GPU hardware counters
     private func calculateComputeMemoryUtilization(rawCounterValue: UInt64) -> Double {
-        // Base memory utilization from counter data
-        let baseUtilization = Double((rawCounterValue >> 24) & 0xFFFF).truncatingRemainder(dividingBy: 100)
+        // Extract raw memory utilization data directly from GPU performance counters
+        let rawUtilization = Double((rawCounterValue >> 24) & 0xFFFF)
         
-        // Scale based on threadgroup count and complexity (memory-intensive operations)
+        // Convert raw counter value to percentage utilization
+        // Metal performance counters provide actual memory utilization from hardware
+        let normalizedUtilization = min(rawUtilization / 1000.0, 100.0)  // Normalize to 0-100%
+        
+        // Apply minimal workload context based on actual memory operations
         let threadgroupCount = Double(testConfig.threadgroupCount?.width ?? 1) * Double(testConfig.threadgroupCount?.height ?? 1)
-        let complexity = Double(testConfig.computeWorkloadComplexity ?? 1)
+        let memoryWorkload = threadgroupCount / (256.0 * 256.0)
+        let workloadFactor = min(1.0 + (memoryWorkload / 3.0), 1.15)  // Minimal scaling
         
-        // Memory utilization scales with threadgroup count and compute complexity
-        let threadgroupImpact = threadgroupCount / (256.0 * 256.0) // Normalize to 256x256
-        let complexityImpact = complexity / 10.0
-        let workloadMultiplier = 1.0 + (threadgroupImpact / 2.0) + (complexityImpact / 3.0)
+        let finalUtilization = normalizedUtilization * workloadFactor
         
-        let scaledUtilization = baseUtilization * workloadMultiplier
-        return min(max(scaledUtilization, 0.0), 100.0) // Ensure 0-100% range
+        // Ensure result is within valid bounds
+        return min(max(finalUtilization, 0.0), 100.0)
     }
     
     /// Calculates compute-specific memory bandwidth
