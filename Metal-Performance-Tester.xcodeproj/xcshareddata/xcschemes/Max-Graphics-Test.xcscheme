@@ -53,11 +53,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--update-graphics-baseline"
+            argument = "--graphics-test"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--graphics-ultra-high"
+            argument = "--graphics-max"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

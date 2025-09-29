@@ -97,15 +97,15 @@ class CommandLineParser {
         for arg in arguments {
             switch arg {
             case "--graphics-low":
-                return TestPreset.lowRes.createConfiguration()
+                return TestPreset.graphicsLow.createConfiguration()
             case "--graphics-moderate":
-                return TestPreset.moderate.createConfiguration()
+                return TestPreset.graphicsModerate.createConfiguration()
             case "--graphics-complex":
-                return TestPreset.complex.createConfiguration()
+                return TestPreset.graphicsComplex.createConfiguration()
             case "--graphics-high":
-                return TestPreset.highRes.createConfiguration()
-            case "--graphics-ultra-high":
-                return TestPreset.ultraHighRes.createConfiguration()
+                return TestPreset.graphicsHigh.createConfiguration()
+            case "--graphics-max":
+                return TestPreset.graphicsMax.createConfiguration()
             default:
                 continue
             }
@@ -130,8 +130,8 @@ class CommandLineParser {
                 return TestPreset.computeComplex.createConfiguration()
             case "--compute-high":
                 return TestPreset.computeHigh.createConfiguration()
-            case "--compute-ultra-high":
-                return TestPreset.computeUltraHigh.createConfiguration()
+            case "--compute-max":
+                return TestPreset.computeMax.createConfiguration()
             default:
                 continue
             }
@@ -151,25 +151,25 @@ class CommandLineParser {
         Metal-Performance-Tester [COMMAND] [OPTIONS]
         
         COMMANDS:
-        --update-graphics-baseline Run graphics test and save results as new baseline
-        --graphics-test            Run graphics performance test and compare against baseline
-        --update-compute-baseline  Run compute test and save results as new baseline
-        --compute-test             Run compute performance test and compare against baseline
-        --help, -h                 Show this help message
+        --update-graphics-baseline  Run graphics test and save results as new baseline
+        --graphics-test             Run graphics performance test and compare against baseline
+        --update-compute-baseline   Run compute test and save results as new baseline
+        --compute-test              Run compute performance test and compare against baseline
+        --help, -h                  Show this help message
         
         GRAPHICS TEST CONFIGURATIONS:
-        --graphics-low         Low resolution (720p, mobile/low-end testing)
-        --graphics-moderate    Moderate test (1080p, daily development testing) [DEFAULT]
-        --graphics-complex     Complex test (1440p, feature development)
-        --graphics-high        High resolution (4K, display scaling testing)
-        --graphics-ultra-high  Ultra high resolution (8K, ultra-high resolution testing)
+        --graphics-low              Low resolution (720p, mobile/low-end testing)
+        --graphics-moderate         Moderate test (1080p, daily development testing) [DEFAULT]
+        --graphics-complex          Complex test (1440p, feature development)
+        --graphics-high             High resolution (4K, display scaling testing)
+        --graphics-max              Max resolution (8K, max resolution testing)
         
         COMPUTE TEST CONFIGURATIONS:
-        --compute-low        Low compute workload (128x128, basic compute testing)
-        --compute-moderate   Moderate compute workload (256x256, daily compute testing)
-        --compute-complex    Complex compute workload (384x384, feature compute testing)
-        --compute-high       High compute workload (512x512, high-performance compute testing)
-        --compute-ultra-high Ultra-high compute workload (1024x1024, ultra-high compute testing)
+        --compute-low               Low compute workload (128x128, basic compute testing)
+        --compute-moderate          Moderate compute workload (256x256, daily compute testing)
+        --compute-complex           Complex compute workload (384x384, feature compute testing)
+        --compute-high              High compute workload (512x512, high-performance compute testing)
+        --compute-max               Max compute workload (1024x1024, max compute testing)
         
         EXAMPLES:
         # Graphics Testing

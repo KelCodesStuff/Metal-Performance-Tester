@@ -17,14 +17,6 @@ class ComputeTestManager {
         print("Running compute performance test...")
         print()
         
-        // Check if compute baseline exists
-        let computeBaselineManager = ComputeBaselineManager()
-        guard computeBaselineManager.baselineExists() else {
-            print("\nError: No compute baseline found.")
-            print("Run with --update-compute-baseline first to establish a compute performance baseline.")
-            return ExitCode.error.rawValue
-        }
-        
         // Initialize Metal and renderer
         guard let device = MTLCreateSystemDefaultDevice() else {
             print("\nError: Metal is not supported on this device.")
@@ -32,6 +24,14 @@ class ComputeTestManager {
         }
         
         let config = testConfig ?? TestPreset.computeModerate.createConfiguration()
+        
+        // Check if compute baseline exists for this specific test configuration
+        let computeBaselineManager = ComputeBaselineManager()
+        guard computeBaselineManager.baselineExists(for: config) else {
+            print("\nError: No compute baseline found for test configuration '\(config.testMode)'.")
+            print("Run with --update-compute-baseline --\(config.testMode) first to establish a compute performance baseline.")
+            return ExitCode.error.rawValue
+        }
         
         // COMPUTE PERFORMANCE TEST OUTPUT: Test configuration section
         print("Compute Test Configuration:")
@@ -68,9 +68,9 @@ class ComputeTestManager {
         print("COMPUTE PERFORMANCE TEST RESULTS")
         print()
         
-        // Load compute baseline and compare statistically
-        do {
-            let baselineMeasurementSet = try computeBaselineManager.loadBaseline()
+            // Load compute baseline and compare statistically
+            do {
+                let baselineMeasurementSet = try computeBaselineManager.loadBaseline(for: config)
             
             // Use unified comparison method
             let comparisonResult = RegressionChecker.compareUnifiedStatistical(
@@ -121,18 +121,18 @@ class ComputeTestManager {
         baseline: UnifiedPerformanceMeasurementSet,
         result: StatisticalAnalysis.ComparisonResult
     ) {
-        // Calculate FPS for both current and baseline
-        let currentMeanFPS = 1000.0 / current.statistics.mean
-        let baselineMeanFPS = 1000.0 / baseline.statistics.mean
+        // Calculate compute throughput for both current and baseline
+        let currentThroughput = 1000.0 / current.statistics.mean
+        let baselineThroughput = 1000.0 / baseline.statistics.mean
         
         // Performance comparison section
         print("Performance Comparison:")
-        print("- Current FPS: \(String(format: "%.1f", currentMeanFPS))")
-        print("- Baseline FPS: \(String(format: "%.1f", baselineMeanFPS))")
+        print("- Current Throughput: \(String(format: "%.1f", currentThroughput)) ops/sec")
+        print("- Baseline Throughput: \(String(format: "%.1f", baselineThroughput)) ops/sec")
         
-        let fpsChange = ((currentMeanFPS - baselineMeanFPS) / baselineMeanFPS) * 100
-        let fpsChangeString = fpsChange >= 0 ? "+\(String(format: "%.1f", fpsChange))%" : "\(String(format: "%.1f", fpsChange))%"
-        print("- FPS Change: \(fpsChangeString)")
+        let throughputChange = ((currentThroughput - baselineThroughput) / baselineThroughput) * 100
+        let throughputChangeString = throughputChange >= 0 ? "+\(String(format: "%.1f", throughputChange))%" : "\(String(format: "%.1f", throughputChange))%"
+        print("- Throughput Change: \(throughputChangeString)")
         print()
         
         // Statistical analysis section

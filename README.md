@@ -13,7 +13,7 @@ This tool provides precise GPU performance measurement, statistical analysis, an
 - **Real GPU Performance Counters:** Uses actual Metal performance counter data from GPU hardware for authentic performance measurement.
 - **Graphics & Compute Testing:** Separate testing pipelines for graphics rendering and compute workloads with dedicated baseline management.
 - **Hardware-Based Metrics:** Captures real GPU metrics including stage utilization, memory bandwidth, cache performance, and instruction counts directly from GPU hardware.
-- **Multiple Test Configurations:** Provides pre-defined presets for both graphics and compute scenarios, from low to ultra-high complexity testing.
+- **Multiple Test Configurations:** Provides pre-defined presets for both graphics and compute scenarios, from low to max complexity testing.
 
 > For information on the [Metal](https://developer.apple.com/documentation/metal) API see the official documentation.
 
