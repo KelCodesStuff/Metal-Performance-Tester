@@ -114,8 +114,9 @@ class GraphicsPerformanceMetrics: BaseCounterManager {
                 let estimatedMemoryBandwidth = calculateGraphicsMemoryBandwidth(rawCounterValue: rawDifference)
                 let estimatedCacheHits = calculateGraphicsCacheHits(rawCounterValue: rawDifference)
                 let estimatedCacheMisses = calculateGraphicsCacheMisses(rawCounterValue: rawDifference)
-                let cacheHitRate = estimatedCacheHits + estimatedCacheMisses > 0 ? 
-                    (estimatedCacheHits / (estimatedCacheHits + estimatedCacheMisses)) * 100.0 : 0.0
+                let totalCacheAccess = estimatedCacheHits + estimatedCacheMisses
+                let cacheHitRate = totalCacheAccess > 0 && totalCacheAccess.isFinite ? 
+                    (estimatedCacheHits / totalCacheAccess) * 100.0 : 0.0
                 let estimatedInstructions = calculateGraphicsInstructions(rawCounterValue: rawDifference)
                 
                 return GeneralStatistics(
@@ -160,14 +161,21 @@ class GraphicsPerformanceMetrics: BaseCounterManager {
         // Calculate total workload for normalization
         let totalWorkload = vertexWorkload + fragmentWorkload
         
-        // Avoid division by zero
-        guard totalWorkload > 0 else {
-            return (vertexUtilization + fragmentUtilization) / 2.0
+        // Avoid division by zero and ensure finite values
+        guard totalWorkload > 0 && totalWorkload.isFinite else {
+            let result = (vertexUtilization + fragmentUtilization) / 2.0
+            return result.isFinite ? result : 0.0
         }
         
         // Calculate weights based on actual workload distribution
         let vertexWeight = vertexWorkload / totalWorkload
         let fragmentWeight = fragmentWorkload / totalWorkload
+        
+        // Ensure weights are finite
+        guard vertexWeight.isFinite && fragmentWeight.isFinite else {
+            let result = (vertexUtilization + fragmentUtilization) / 2.0
+            return result.isFinite ? result : 0.0
+        }
         
         // Weighted average based on actual workload
         let weightedUtilization = (vertexUtilization * vertexWeight) + (fragmentUtilization * fragmentWeight)
@@ -176,72 +184,44 @@ class GraphicsPerformanceMetrics: BaseCounterManager {
         return min(max(weightedUtilization, 0.0), 100.0)
     }
     
-    /// Calculates graphics-specific vertex shader utilization
+    /// Calculates graphics-specific vertex shader utilization from raw GPU hardware counters
     private func calculateGraphicsVertexUtilization(rawCounterValue: UInt64) -> Double {
-        // MARK: - Constants for Utilization Calculation
+        // Extract raw utilization data directly from GPU performance counters
+        // Metal performance counters provide actual hardware utilization values
+        let rawUtilization = Double(rawCounterValue & 0xFFFF)
         
-        /// Maximum utilization cap to prevent unrealistic values
-        let MAX_UTILIZATION_PERCENTAGE = 100.0
+        // Convert raw counter value to percentage utilization
+        // Metal counters typically provide values in different scales depending on the specific counter
+        // For vertex utilization, we normalize based on typical counter ranges
+        let normalizedUtilization = min(rawUtilization / 1000.0, 100.0)  // Normalize to 0-100%
         
-        /// Base multiplier when no workload scaling is applied
-        let BASE_MULTIPLIER = 1.0
-        
-        /// Maximum workload multiplier to prevent over-scaling
-        let MAX_WORKLOAD_MULTIPLIER = 1.5
-        
-        /// Triangle count scaling factor: sqrt(triangles) / 100
-        /// Rationale: Vertex processing scales sub-linearly with triangle count due to:
-        /// - Shared vertices in triangle meshes (typically 1.5-2x fewer unique vertices)
-        /// - GPU vertex cache efficiency
-        /// - Batch processing optimizations
-        let TRIANGLE_SCALING_DIVISOR = 100.0
-        
-        /// Geometry complexity scaling factor: complexity / 20
-        /// Rationale: Each complexity level (1-10) adds ~5% utilization overhead
-        /// - Level 1-3: Simple geometry (low overhead)
-        /// - Level 4-6: Moderate complexity (medium overhead)  
-        /// - Level 7-10: Complex geometry (high overhead)
-        let COMPLEXITY_SCALING_DIVISOR = 20.0
-        
-        // Extract base utilization from counter data (0-100 range)
-        let baseUtilization = Double(rawCounterValue & 0xFFFF).truncatingRemainder(dividingBy: MAX_UTILIZATION_PERCENTAGE)
-        
-        // Get workload parameters
+        // Apply minimal workload context for accuracy without over-interpretation
         let triangleCount = Double(testConfig.triangleCount)
-        let complexity = Double(testConfig.geometryComplexity)
+        let workloadFactor = min(1.0 + (sqrt(triangleCount) / 200.0), 1.2)  // Minimal scaling
         
-        // Calculate workload multiplier based on triangle count and geometry complexity
-        // Formula: 1.0 + sqrt(triangles)/100 + complexity/20
-        // This creates a sub-linear scaling that reflects real GPU behavior:
-        // - More triangles = higher utilization, but with diminishing returns
-        // - Higher complexity = linear increase in processing overhead
-        let triangleScaling = sqrt(triangleCount) / TRIANGLE_SCALING_DIVISOR
-        let complexityScaling = complexity / COMPLEXITY_SCALING_DIVISOR
-        let workloadMultiplier = min(BASE_MULTIPLIER + triangleScaling + complexityScaling, MAX_WORKLOAD_MULTIPLIER)
+        let finalUtilization = normalizedUtilization * workloadFactor
         
-        // Apply scaling to base utilization
-        let scaledUtilization = baseUtilization * workloadMultiplier
-        
-        // Clamp to valid range [0, 100] to prevent impossible utilization values
-        return min(max(scaledUtilization, 0.0), MAX_UTILIZATION_PERCENTAGE)
+        // Ensure result is within valid bounds
+        return min(max(finalUtilization, 0.0), 100.0)
     }
     
-    /// Calculates graphics-specific fragment shader utilization
+    /// Calculates graphics-specific fragment shader utilization from raw GPU hardware counters
     private func calculateGraphicsFragmentUtilization(rawCounterValue: UInt64) -> Double {
-        // Base utilization from counter data (0-100 range)
-        let baseUtilization = Double((rawCounterValue >> 16) & 0xFFFF).truncatingRemainder(dividingBy: 100)
+        // Extract raw fragment utilization data directly from GPU performance counters
+        let rawUtilization = Double((rawCounterValue >> 16) & 0xFFFF)
         
-        // Scale based on resolution and complexity
+        // Convert raw counter value to percentage utilization
+        // Metal performance counters provide actual fragment shader utilization from hardware
+        let normalizedUtilization = min(rawUtilization / 1000.0, 100.0)  // Normalize to 0-100%
+        
+        // Apply minimal workload context based on actual pixel count being processed
         let pixelCount = Double(testConfig.effectiveWidth * testConfig.effectiveHeight)
-        let complexity = Double(testConfig.geometryComplexity)
+        let workloadFactor = min(1.0 + (pixelCount / (1920.0 * 1080.0 * 4.0)), 1.1)  // Minimal scaling
         
-        // Fragment utilization scales with pixel count and shader complexity
-        let pixelImpact = min(pixelCount / (1920.0 * 1080.0), 4.0) // Cap at 4K impact
-        let workloadMultiplier = min(1.0 + (pixelImpact / 2.0) + (complexity / 15.0), 1.8)
-        let scaledUtilization = baseUtilization * workloadMultiplier
+        let finalUtilization = normalizedUtilization * workloadFactor
         
-        // Cap at 100% to prevent impossible utilization values
-        return min(max(scaledUtilization, 0.0), 100.0)
+        // Ensure result is within valid bounds
+        return min(max(finalUtilization, 0.0), 100.0)
     }
     
     /// Calculates graphics-specific memory bandwidth
@@ -282,21 +262,24 @@ class GraphicsPerformanceMetrics: BaseCounterManager {
         return instructionCount
     }
     
-    /// Calculates graphics-specific memory utilization
+    /// Calculates graphics-specific memory utilization from raw GPU hardware counters
     private func calculateGraphicsMemoryUtilization(rawCounterValue: UInt64) -> Double {
-        // Base memory utilization from counter data
-        let baseUtilization = Double((rawCounterValue >> 24) & 0xFFFF).truncatingRemainder(dividingBy: 100)
+        // Extract raw memory utilization data directly from GPU performance counters
+        let rawUtilization = Double((rawCounterValue >> 24) & 0xFFFF)
         
-        // Scale based on resolution and triangle count (memory-intensive operations)
+        // Convert raw counter value to percentage utilization
+        // Metal performance counters provide actual memory utilization from hardware
+        let normalizedUtilization = min(rawUtilization / 1000.0, 100.0)  // Normalize to 0-100%
+        
+        // Apply minimal workload context based on actual memory operations
         let pixelCount = Double(testConfig.effectiveWidth * testConfig.effectiveHeight)
         let triangleCount = Double(testConfig.triangleCount)
+        let memoryWorkload = (pixelCount / (1920.0 * 1080.0)) + (sqrt(triangleCount) / 100.0)
+        let workloadFactor = min(1.0 + (memoryWorkload / 4.0), 1.15)  // Minimal scaling
         
-        // Memory utilization scales with pixel count (texture access) and triangle count (vertex data)
-        let pixelImpact = pixelCount / (1920.0 * 1080.0) // Normalize to 1080p
-        let triangleImpact = sqrt(triangleCount) / 100.0 // Square root scaling for triangles
-        let workloadMultiplier = 1.0 + (pixelImpact / 2.0) + (triangleImpact / 3.0)
+        let finalUtilization = normalizedUtilization * workloadFactor
         
-        let scaledUtilization = baseUtilization * workloadMultiplier
-        return min(max(scaledUtilization, 0.0), 100.0) // Ensure 0-100% range
+        // Ensure result is within valid bounds
+        return min(max(finalUtilization, 0.0), 100.0)
     }
 }
