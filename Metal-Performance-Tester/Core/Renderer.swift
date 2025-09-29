@@ -45,7 +45,7 @@ class Renderer {
 
     // MARK: - Initialization
 
-    init?(device: MTLDevice, testConfig: TestConfiguration = TestPreset.moderate.createConfiguration()) {
+    init?(device: MTLDevice, testConfig: TestConfiguration = TestPreset.graphicsModerate.createConfiguration()) {
         self.device = device
         self.testConfig = testConfig
         
@@ -277,7 +277,7 @@ class Renderer {
             case 8...9:
                 try dispatchHighComputeWorkload(encoder: computeEncoder, device: device)
             case 10:
-                try dispatchUltraHighComputeWorkload(encoder: computeEncoder, device: device)
+                try dispatchMaxComputeWorkload(encoder: computeEncoder, device: device)
             default:
                 try dispatchModerateComputeWorkload(encoder: computeEncoder, device: device)
             }
@@ -371,8 +371,8 @@ class Renderer {
         encoder.dispatchThreadgroups(threadgroupCount, threadsPerThreadgroup: threadgroupSize)
     }
     
-    /// Dispatches ultra-high compute workload (1024x1024)
-    private func dispatchUltraHighComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
+    /// Dispatches max compute workload (1024x1024)
+    private func dispatchMaxComputeWorkload(encoder: MTLComputeCommandEncoder, device: MTLDevice) throws {
         let threadgroupSize = MTLSize(width: 16, height: 16, depth: 1)
         let threadgroupCount = MTLSize(width: 64, height: 64, depth: 1) // 1024/16 = 64 threadgroups
         let gridWidth = 1024
