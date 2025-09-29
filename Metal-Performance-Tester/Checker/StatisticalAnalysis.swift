@@ -90,7 +90,6 @@ struct StatisticalAnalysis {
         let confidenceInterval: ConfidenceInterval
         let isSignificant: Bool
         let significanceLevel: Double
-        let pValue: Double?
         
         /// Stage utilization comparison (if available)
         let stageUtilizationComparison: StageUtilizationComparison?
@@ -157,7 +156,9 @@ struct StatisticalAnalysis {
         let mean = values.reduce(0, +) / Double(n)
         let variance = values.map { pow($0 - mean, 2) }.reduce(0, +) / Double(n - 1)
         let standardDeviation = sqrt(variance)
-        let coefficientOfVariation = standardDeviation / mean
+        // Calculate coefficient of variation with NaN protection
+        let coefficientOfVariation = (mean != 0 && mean.isFinite) ? 
+            (standardDeviation.isFinite ? standardDeviation / mean : 0.0) : 0.0
         
         // Percentiles
         let median = calculatePercentile(sortedValues, 50.0)
@@ -232,7 +233,9 @@ struct StatisticalAnalysis {
         let mean = values.reduce(0, +) / Double(n)
         let variance = values.map { pow($0 - mean, 2) }.reduce(0, +) / Double(n - 1)
         let standardDeviation = sqrt(variance)
-        let coefficientOfVariation = standardDeviation / mean
+        // Calculate coefficient of variation with NaN protection
+        let coefficientOfVariation = (mean != 0 && mean.isFinite) ? 
+            (standardDeviation.isFinite ? standardDeviation / mean : 0.0) : 0.0
         
         let median = calculatePercentile(sortedValues, 50.0)
         
@@ -254,13 +257,11 @@ struct StatisticalAnalysis {
         let meanDifference = currentStats.mean - baselineStats.mean
         // Calculate percentage difference (already multiplied by 100 to get percentage value)
         // This value is ready for display as a percentage (e.g., 0.42 represents 0.42%)
-        let meanDifferencePercent = (meanDifference / baselineStats.mean) * 100
+        let meanDifferencePercent = (baselineStats.mean != 0 && baselineStats.mean.isFinite) ? 
+            (meanDifference.isFinite ? (meanDifference / baselineStats.mean) * 100 : 0.0) : 0.0
         
         // Two-sample t-test for unequal variances (Welch's t-test)
         let isSignificant = performWelchTTest(baseline: baseline, current: current, significanceLevel: significanceLevel)
-        
-        // Calculate p-value for the t-test
-        let pValue = calculatePValue(baseline: baseline, current: current)
         
         // Confidence interval for the difference
         let pooledStdError = sqrt(
@@ -279,7 +280,6 @@ struct StatisticalAnalysis {
             confidenceInterval: ConfidenceInterval(lower: confidenceInterval.0, upper: confidenceInterval.1),
             isSignificant: isSignificant,
             significanceLevel: significanceLevel,
-            pValue: pValue,
             stageUtilizationComparison: nil,
             performanceStatsComparison: nil
         )
@@ -296,13 +296,11 @@ struct StatisticalAnalysis {
         let meanDifference = currentStats.mean - baselineStats.mean
         // Calculate percentage difference (already multiplied by 100 to get percentage value)
         // This value is ready for display as a percentage (e.g., 0.42 represents 0.42%)
-        let meanDifferencePercent = (meanDifference / baselineStats.mean) * 100
+        let meanDifferencePercent = (baselineStats.mean != 0 && baselineStats.mean.isFinite) ? 
+            (meanDifference.isFinite ? (meanDifference / baselineStats.mean) * 100 : 0.0) : 0.0
         
         // Two-sample t-test for unequal variances (Welch's t-test)
         let isSignificant = performWelchTTest(baseline: baselineTimes, current: currentTimes, significanceLevel: significanceLevel)
-        
-        // Calculate p-value for the t-test
-        let pValue = calculatePValue(baseline: baselineTimes, current: currentTimes)
         
         // Confidence interval for the difference
         let pooledStdError = sqrt(
@@ -327,7 +325,6 @@ struct StatisticalAnalysis {
             confidenceInterval: ConfidenceInterval(lower: confidenceInterval.0, upper: confidenceInterval.1),
             isSignificant: isSignificant,
             significanceLevel: significanceLevel,
-            pValue: pValue,
             stageUtilizationComparison: stageUtilizationComparison,
             performanceStatsComparison: performanceStatsComparison
         )
@@ -497,7 +494,8 @@ struct StatisticalAnalysis {
         guard let baseline = baseline, let current = current else { return nil }
         
         let change = current - baseline
-        let changePercent = baseline != 0 ? (change / baseline) * 100 : 0
+        let changePercent = (baseline != 0 && baseline.isFinite) ? 
+            (change.isFinite ? (change / baseline) * 100 : 0.0) : 0.0
         
         return UtilizationComparison(
             baseline: baseline,
@@ -512,7 +510,8 @@ struct StatisticalAnalysis {
         guard let baseline = baseline, let current = current else { return nil }
         
         let change = current - baseline
-        let changePercent = baseline != 0 ? (change / baseline) * 100 : 0
+        let changePercent = (baseline != 0 && baseline.isFinite) ? 
+            (change.isFinite ? (change / baseline) * 100 : 0.0) : 0.0
         
         return PerformanceStatComparison(
             baseline: baseline,
@@ -522,29 +521,6 @@ struct StatisticalAnalysis {
         )
     }
     
-    /// Calculate p-value for Welch's t-test
-    private static func calculatePValue(baseline: [Double], current: [Double]) -> Double? {
-        let baselineMean = baseline.reduce(0, +) / Double(baseline.count)
-        let currentMean = current.reduce(0, +) / Double(current.count)
-        
-        let baselineVariance = baseline.map { pow($0 - baselineMean, 2) }.reduce(0, +) / Double(baseline.count - 1)
-        let currentVariance = current.map { pow($0 - currentMean, 2) }.reduce(0, +) / Double(current.count - 1)
-        
-        // Calculate Welch's t-statistic
-        let se1 = sqrt(baselineVariance / Double(baseline.count))
-        let se2 = sqrt(currentVariance / Double(current.count))
-        let pooledSE = sqrt(se1 * se1 + se2 * se2)
-        let tStatistic = (currentMean - baselineMean) / pooledSE
-        
-        // Calculate degrees of freedom using Welch-Satterthwaite equation
-        let df = pow(se1 * se1 + se2 * se2, 2) / 
-                (pow(se1 * se1, 2) / Double(baseline.count - 1) + pow(se2 * se2, 2) / Double(current.count - 1))
-        
-        // Calculate p-value using proper t-distribution CDF
-        let pValue = 2 * (1 - tDistributionCDF(abs(tStatistic), degreesOfFreedom: Int(df)))
-        
-        return pValue
-    }
     
     /// Approximate t-distribution CDF using numerical integration
     private static func tDistributionCDF(_ t: Double, degreesOfFreedom: Int) -> Double {
