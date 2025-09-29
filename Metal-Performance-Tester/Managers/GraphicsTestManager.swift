@@ -17,21 +17,21 @@ class GraphicsTestManager {
         print("Running graphics performance test...")
         print()
         
-        // Check if graphics baseline exists
-        let graphicsBaselineManager = GraphicsBaselineManager()
-        guard graphicsBaselineManager.baselineExists() else {
-            print("\nError: No graphics baseline found.")
-            print("Run with --update-graphics-baseline first to establish a graphics performance baseline.")
-            return ExitCode.error.rawValue
-        }
-        
         // Initialize Metal and renderer
         guard let device = MTLCreateSystemDefaultDevice() else {
             print("\nError: Metal is not supported on this device.")
             return ExitCode.error.rawValue
         }
         
-        let config = testConfig ?? TestPreset.moderate.createConfiguration()
+        let config = testConfig ?? TestPreset.graphicsModerate.createConfiguration()
+        
+        // Check if graphics baseline exists for this specific test configuration
+        let graphicsBaselineManager = GraphicsBaselineManager()
+        guard graphicsBaselineManager.baselineExists(for: config) else {
+            print("\nError: No graphics baseline found for test configuration '\(config.testMode)'.")
+            print("Run with --update-graphics-baseline --\(config.testMode) first to establish a graphics performance baseline.")
+            return ExitCode.error.rawValue
+        }
         
         // GRAPHICS PERFORMANCE TEST OUTPUT: Test configuration section
         print("Graphics Test Configuration:")
@@ -65,7 +65,7 @@ class GraphicsTestManager {
         
             // Load graphics baseline and compare statistically
             do {
-                let baselineMeasurementSet = try graphicsBaselineManager.loadBaseline()
+                let baselineMeasurementSet = try graphicsBaselineManager.loadBaseline(for: config)
                 
                 let comparisonResult = RegressionChecker.compareUnifiedStatistical(
                     current: currentMeasurementSet,
