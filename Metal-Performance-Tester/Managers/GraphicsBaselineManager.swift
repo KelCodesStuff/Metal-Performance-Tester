@@ -23,7 +23,7 @@ class GraphicsBaselineManager {
             return ExitCode.error.rawValue
         }
         
-        let config = testConfig ?? TestPreset.moderate.createConfiguration()
+        let config = testConfig ?? TestPreset.graphicsModerate.createConfiguration()
         
         // GRAPHICS BASELINE CONFIGURATION OUTPUT
         print("Graphics Baseline Configuration:")
@@ -138,7 +138,7 @@ class GraphicsBaselineManager {
         
         // Create a unique filename based on the test configuration
         let config = measurementSet.testConfig
-        let presetName = config.testMode.replacingOccurrences(of: "-", with: "_")
+        let presetName = generateCleanFilename(from: config.testMode)
         let filename = "\(presetName)_graphics_baseline.json"
         
         // Create the baselines directory if it doesn't exist
@@ -154,20 +154,50 @@ class GraphicsBaselineManager {
         print("Graphics baseline saved to: \(specificBaselinePath.path)")
     }
     
-    /// Checks if a graphics baseline exists
-    func baselineExists() -> Bool {
+    /// Checks if a graphics baseline exists for the given test configuration
+    func baselineExists(for testConfig: TestConfiguration? = nil) -> Bool {
         let baselinesDirectory = getBaselineDirectory().appendingPathComponent("baselines")
         let files = try? FileManager.default.contentsOfDirectory(at: baselinesDirectory, includingPropertiesForKeys: nil)
-        return files?.contains { $0.lastPathComponent.contains("_graphics_baseline.json") } ?? false
+        
+        if let config = testConfig {
+            // Check for specific baseline based on test configuration
+            let presetName = generateCleanFilename(from: config.testMode)
+            let expectedFilename = "\(presetName)_graphics_baseline.json"
+            return files?.contains { $0.lastPathComponent == expectedFilename } ?? false
+        } else {
+            // Check if any graphics baseline exists (legacy behavior)
+            return files?.contains { $0.lastPathComponent.contains("_graphics_baseline.json") } ?? false
+        }
     }
     
-    /// Loads the graphics baseline
-    func loadBaseline() throws -> UnifiedPerformanceMeasurementSet {
+    /// Loads the graphics baseline for the given test configuration
+    func loadBaseline(for testConfig: TestConfiguration? = nil) throws -> UnifiedPerformanceMeasurementSet {
         let baselinesDirectory = getBaselineDirectory().appendingPathComponent("baselines")
         let files = try FileManager.default.contentsOfDirectory(at: baselinesDirectory, includingPropertiesForKeys: nil)
         
-        guard let baselineFile = files.first(where: { $0.lastPathComponent.contains("_graphics_baseline.json") }) else {
-            throw NSError(domain: "GraphicsBaselineManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "No graphics baseline found"])
+        let baselineFile: URL
+        
+        if let config = testConfig {
+            // Load specific baseline based on test configuration
+            let presetName = generateCleanFilename(from: config.testMode)
+            let expectedFilename = "\(presetName)_graphics_baseline.json"
+            
+            guard let specificFile = files.first(where: { $0.lastPathComponent == expectedFilename }) else {
+                throw NSError(
+                    domain: "GraphicsBaselineManager", 
+                    code: 1, 
+                    userInfo: [
+                        NSLocalizedDescriptionKey: "No graphics baseline found for test configuration '\(config.testMode)'. Expected file: \(expectedFilename). Run with --update-graphics-baseline --\(config.testMode) first to establish a baseline."
+                    ]
+                )
+            }
+            baselineFile = specificFile
+        } else {
+            // Legacy behavior: load the first available graphics baseline
+            guard let firstFile = files.first(where: { $0.lastPathComponent.contains("_graphics_baseline.json") }) else {
+                throw NSError(domain: "GraphicsBaselineManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "No graphics baseline found"])
+            }
+            baselineFile = firstFile
         }
         
         let data = try Data(contentsOf: baselineFile)
@@ -184,7 +214,7 @@ class GraphicsBaselineManager {
         
         // Create a unique filename based on the test configuration
         let config = testResult.testConfig
-        let presetName = config.testMode.replacingOccurrences(of: "-", with: "_")
+        let presetName = generateCleanFilename(from: config.testMode)
         let filename = "\(presetName)_graphics_results.json"
         
         // Create the results directory if it doesn't exist
@@ -210,5 +240,18 @@ class GraphicsBaselineManager {
         try? FileManager.default.createDirectory(at: baselinePath, withIntermediateDirectories: true)
         
         return baselinePath
+    }
+    
+    /// Generates clean filenames by extracting the key part of the test mode
+    /// Examples: "graphics-max" -> "max", "compute-moderate" -> "moderate"
+    private func generateCleanFilename(from testMode: String) -> String {
+        // Remove the prefix (graphics- or compute-) and return the key part
+        if testMode.hasPrefix("graphics-") {
+            return String(testMode.dropFirst("graphics-".count))
+        } else if testMode.hasPrefix("compute-") {
+            return String(testMode.dropFirst("compute-".count))
+        }
+        // Fallback: replace dashes with underscores for other formats
+        return testMode.replacingOccurrences(of: "-", with: "_")
     }
 }
