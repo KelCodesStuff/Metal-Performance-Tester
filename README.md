@@ -23,10 +23,6 @@ This tool provides precise GPU performance measurement, statistical analysis, an
 - **Simplified Output:** Clean, focused performance metrics without unnecessary complexity for easier analysis.
 - **Dual Detection Methods:** Supports both statistical significance testing and simple threshold-based regression detection.
 
-## Upcoming Features
-
-For the list of upcoming features see [Upcoming Features](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Upcoming-Features).
-
 ## Use Cases
 
 For detailed examples of how to use the Metal Performance Tester in practical development scenarios, see [Use Cases](https://github.com/KelCodesStuff/Metal-Performance-Tester/wiki/Use-Cases). 
