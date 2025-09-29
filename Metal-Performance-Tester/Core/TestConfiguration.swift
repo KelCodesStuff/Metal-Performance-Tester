@@ -257,8 +257,10 @@ struct TestConfigurationHelper {
             let xOffset = (Float(col) - 50.0) * 0.02  // Spread across screen
             let yOffset = (Float(row) - 30.0) * 0.02  // Spread vertically
             
-            // Generate triangle vertices with slight variations
-            let size = Float(baseSize) * (0.8 + 0.4 * Float.random(in: 0...1))
+            // Generate triangle vertices with deterministic variations for consistent performance
+            // Use triangle index to create predictable size variations
+            let sizeVariation = sin(Float(i) * 0.1) * 0.2 + 1.0  // Deterministic size variation
+            let size = Float(baseSize) * sizeVariation
             let rotation = Float(i) * 0.1  // Slight rotation per triangle
             
             // Calculate rotated triangle vertices
