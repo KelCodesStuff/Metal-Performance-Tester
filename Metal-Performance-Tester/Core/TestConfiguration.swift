@@ -95,23 +95,6 @@ struct TestConfiguration: Codable {
         self.testType = testType
     }
     
-    /// Creates a test configuration from current renderer settings (backwards compatibility)
-    init(width: Int, height: Int, pixelFormat: String, vertexCount: Int) {
-        self.width = width
-        self.height = height
-        self.pixelFormat = pixelFormat
-        self.triangleCount = vertexCount / 3  // Convert vertices to triangles
-        self.geometryComplexity = 1
-        self.resolutionScale = 1.0
-        self.testMode = "legacy"
-        self.timestamp = Date()
-        self.baselineName = "Legacy Baseline"
-        self.threadgroupSize = nil
-        self.threadgroupCount = nil
-        self.computeWorkloadComplexity = nil
-        self.testType = .graphics
-    }
-    
     /// Calculates the effective resolution after scaling
     var effectiveWidth: Int {
         return Int(Double(width) * resolutionScale)
@@ -142,51 +125,53 @@ struct TestConfiguration: Codable {
 
 /// Predefined test configurations for common scenarios
 enum TestPreset {
-    case lowRes           // 1280×720, Mobile/low-end testing
-    case moderate         // 1920×1080, Daily development testing
-    case complex          // 2560×1440, Feature development
-    case highRes          // 3840×2160, Display scaling testing
-    case ultraHighRes     // 7680×4320, Ultra-high resolution testing
+    // MARK: - Graphics Test Presets
+    case graphicsLow        // 1280×720, Mobile/low-end testing
+    case graphicsModerate   // 1920×1080, Daily development testing
+    case graphicsComplex    // 2560×1440, Feature development
+    case graphicsHigh       // 3840×2160, Display scaling testing
+    case graphicsMax        // 7680×4320, Max resolution testing
     
     // MARK: - Compute Test Presets
-    case computeLow       // Low compute workload
-    case computeModerate  // Moderate compute workload
-    case computeComplex   // Complex compute workload
-    case computeHigh      // High compute workload
-    case computeUltraHigh // Ultra-high compute workload
+    case computeLow         // Low compute workload
+    case computeModerate    // Moderate compute workload
+    case computeComplex     // Complex compute workload
+    case computeHigh        // High compute workload
+    case computeMax         // Max compute workload
     
     /// Creates a test configuration for this preset
     func createConfiguration() -> TestConfiguration {
         switch self {
-        case .lowRes:
+            // MARK: - Graphics Test Configurations
+        case .graphicsLow:
             // Low GPU Load: 1280×720 @ 1000 triangles, complexity 6/10
             return TestConfiguration(width: 1280, height: 720, triangleCount: 4000,
-                                   geometryComplexity: 6, resolutionScale: 1.0, testMode: "low-res",
+                                   geometryComplexity: 6, resolutionScale: 1.0, testMode: "graphics-low",
                                    baselineName: "Low Graphics Baseline")
             
-        case .moderate:
-            // Medium GPU Load: 1920×1080 @ 2000 triangles, complexity 7/10
-            return TestConfiguration(width: 1920, height: 1080, triangleCount: 4000, 
-                                   geometryComplexity: 7, resolutionScale: 1.0, testMode: "moderate",
+        case .graphicsModerate:
+            // Moderate GPU Load: 1920×1080 @ 2000 triangles, complexity 7/10
+            return TestConfiguration(width: 1920, height: 1080, triangleCount: 4000,
+                                   geometryComplexity: 7, resolutionScale: 1.0, testMode: "graphics-moderate",
                                    baselineName: "Moderate Graphics Baseline")
             
-        case .complex:
-            // High GPU Load: 2560x1440 @ 5000 triangles, complexity 9/10
+        case .graphicsComplex:
+            // Complex GPU Load: 2560x1440 @ 5000 triangles, complexity 9/10
             return TestConfiguration(width: 2560, height: 1440, triangleCount: 5000,
-                                   geometryComplexity: 9, resolutionScale: 1.0, testMode: "complex",
+                                   geometryComplexity: 9, resolutionScale: 1.0, testMode: "graphics-complex",
                                    baselineName: "Complex Graphics Baseline")
             
-        case .highRes:
-            // Very High GPU Load: 3840×2160 @ 8000 triangles, complexity 9/10
+        case .graphicsHigh:
+            // High GPU Load: 3840×2160 @ 8000 triangles, complexity 9/10
             return TestConfiguration(width: 3840, height: 2160, triangleCount: 8000,
-                                   geometryComplexity: 9, resolutionScale: 1.0, testMode: "high-res",
+                                   geometryComplexity: 9, resolutionScale: 1.0, testMode: "graphics-high",
                                    baselineName: "High Graphics Baseline")
             
-        case .ultraHighRes:
-            // Extreme GPU Load: 7680×4320 @ 15000 triangles, complexity 10/10
+        case .graphicsMax:
+            // Max GPU Load: 7680×4320 @ 15000 triangles, complexity 10/10
             return TestConfiguration(width: 7680, height: 4320, triangleCount: 10000,
-                                   geometryComplexity: 10, resolutionScale: 1.0, testMode: "ultra-high-res",
-                                   baselineName: "Ultra High Graphics Baseline")
+                                   geometryComplexity: 10, resolutionScale: 1.0, testMode: "graphics-max",
+                                   baselineName: "Max Graphics Baseline")
             
         // MARK: - Compute Test Configurations
         case .computeLow:
@@ -225,11 +210,11 @@ enum TestPreset {
                                    threadgroupCount: ThreadgroupSize(width: 32, height: 32, depth: 1),
                                    computeWorkloadComplexity: 8, testType: .compute)
             
-        case .computeUltraHigh:
-            // Ultra-High Compute Load: 1024x1024 threadgroups, complexity 10/10
+        case .computeMax:
+            // Max Compute Load: 1024x1024 threadgroups, complexity 10/10
             return TestConfiguration(width: 1024, height: 1024, triangleCount: 0,
-                                   geometryComplexity: 1, resolutionScale: 1.0, testMode: "compute-ultra-high",
-                                   baselineName: "Ultra High Compute Baseline",
+                                   geometryComplexity: 1, resolutionScale: 1.0, testMode: "compute-max",
+                                   baselineName: "Max Compute Baseline",
                                    threadgroupSize: ThreadgroupSize(width: 16, height: 16, depth: 1),
                                    threadgroupCount: ThreadgroupSize(width: 64, height: 64, depth: 1),
                                    computeWorkloadComplexity: 10, testType: .compute)
@@ -239,16 +224,16 @@ enum TestPreset {
     /// Name of the preset
     var name: String {
         switch self {
-        case .lowRes: return "Low Resolution (720p, Mobile Testing)"
-        case .moderate: return "Moderate (1080p, Daily Development)"
-        case .complex: return "Complex (1080p, Feature Development)"
-        case .highRes: return "High Resolution (4K, Display Scaling)"
-        case .ultraHighRes: return "Ultra High Resolution (8K, Ultra-High Resolution Testing)"
+        case .graphicsLow: return "Low Resolution (720p, Mobile Testing)"
+        case .graphicsModerate: return "Moderate (1080p, Daily Development)"
+        case .graphicsComplex: return "Complex (1080p, Feature Development)"
+        case .graphicsHigh: return "High Resolution (4K, Display Scaling)"
+        case .graphicsMax: return "Max Resolution (8K, Max Resolution Testing)"
         case .computeLow: return "Compute Low (128x128, Basic Compute Testing)"
         case .computeModerate: return "Compute Moderate (256x256, Daily Compute Testing)"
         case .computeComplex: return "Compute Complex (384x384, Feature Compute Testing)"
         case .computeHigh: return "Compute High (512x512, High-Performance Compute Testing)"
-        case .computeUltraHigh: return "Compute Ultra-High (1024x1024, Ultra-High Compute Testing)"
+        case .computeMax: return "Compute Max (1024x1024, Max Compute Testing)"
         }
     }
 }
