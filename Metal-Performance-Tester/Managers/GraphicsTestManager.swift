@@ -131,12 +131,7 @@ class GraphicsTestManager {
         // Statistical analysis section
         print("Statistical Analysis:")
         print("- Mean Difference: \(String(format: "%.3f", result.meanDifference)) ms")
-        print("- 95% Confidence Interval: [\(String(format: "%.3f", result.confidenceInterval.lower)), \(String(format: "%.3f", result.confidenceInterval.upper))] ms")
-        if let pValue = result.pValue {
-            print("- P-value: \(String(format: "%.6f", pValue))")
-        } else {
-            print("- P-value: N/A")
-        }
+        print("- Confidence Interval: [\(String(format: "%.3f", result.confidenceInterval.lower)), \(String(format: "%.3f", result.confidenceInterval.upper))] ms")
         print("- Statistical Significance: \(result.isSignificant ? "Yes" : "No")")
         print("- Regression Detected: \(result.isRegression ? "Yes" : "No")")
         print()
